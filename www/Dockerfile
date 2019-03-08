@@ -27,7 +27,6 @@ RUN npm install --loglevel warn
 
 # Install npm libraries on container to speed up builds
 COPY ${SERVICE_DIR}/hooks.json \
-     ${SERVICE_DIR}/site/yarn.* \
      ${SERVICE_DIR}/site/package* \
      /service/site/
 RUN rm -f /service/site/hooks.json

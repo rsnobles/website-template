@@ -8,8 +8,8 @@ if [ ! -d ./site ]; then
 elif [ -f ./site/package.json ]; then
   # Gatsby development
   cd /service/site && \
-  yarn install && \
-  yarn run develop
+  npm install && \
+  npm run develop
 elif [ -f ./site/Gemfile ]; then
   # Jekyll development
   cd /service/site && \

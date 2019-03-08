@@ -7,7 +7,7 @@ if [ ! -d ./site ]; then
 elif [ -f ./site/package.json ]; then
   # Gatsby build
   cd site && \
-  yarn run build && \
+  npm run build && \
   cp -rf ./public/* /build
 elif [ -f ./site/Gemfile ]; then
   # Jekyll build
