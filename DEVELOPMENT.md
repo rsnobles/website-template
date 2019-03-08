@@ -145,16 +145,52 @@ Run `taito open vc conventions` in the project directory to see organization spe
 
 ### Static site generator
 
-Gatsby is enabled by default. If you use some other static site generator than Gatsby, copy the corresponding files from `www/alternatives/GENERATOR/` to `www/`.
+Configure static site generator of your choice with the following instructions. Currently instructions are provided only for Gatsby, Hugo and Jekyll, but with some extra work the website-template may easily be used with any static site generator.
 
-Create a new site to directory `www/site` according to the static site generator instructions. Example for Gatsby:
+Start containers, and start a shell inside the www Docker container:
 
-    cd www                                       # Move to www directory
-    rm -rf site                                  # Remove the example site
-    npx gatsby new site STARTER-OF-MY-CHOICE     # Create a new site based on a starter: https://www.gatsbyjs.org/starters?v=2
-    rm -rf site/.git                             # Remove the obsolete .git directory
-    EDIT site/package.json                       # Expose Gatsby development port outside the Docker container by
-                                                 # adding options `--host 0.0.0.0 --port 8080` to the develop script.
+    taito install
+    taito start
+    taito shell:www
+
+*FOR JEKYLL ONLY:* Create a new site:
+
+    jekyll new site
+    exit
+
+*FOR HUGO ONLY:* Create a new Hugo site (See [Hugo quickstart](https://gohugo.io/getting-started/quick-start/) for more details):
+
+    hugo new site site
+    cd site
+    git clone https://github.com/budparr/gohugo-theme-ananke.git themes/ananke
+    echo 'theme = "ananke"' >> config.toml
+    hugo new posts/my-first-post.md
+    exit
+
+*FOR GATSBY ONLY:* Create a new Gatsby site based on one of the [starters](https://www.gatsbyjs.org/starters?v=2):
+
+    npx gatsby new site STARTER-SOURCE-URL-OF-MY-CHOICE
+    rm -rf site/.git
+    exit
+
+*FOR GATSBY ONLY:* Expose Gatsby development port outside the Docker container by adding options `--host 0.0.0.0 --port 8080` to the develop script:
+
+    EDIT www/site/package.json
+
+*FOR GATSBY ONLY:* Enable `/service/site/node_modules` mount in `docker-compose.yaml`:
+
+    EDIT docker-compose.yaml
+
+Restart containers and open the site on browser:
+
+    taito stop
+    taito start
+    taito open www
+
+*OPTIONAL:* Remove those static site generators that you do not use from dockerfiles:
+
+    EDIT www/Dockerfile
+    EDIT www/Dockerfile.build
 
 ### Hosting
 

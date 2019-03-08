@@ -25,22 +25,25 @@ services:
       - "./www:/service:delegated"
       - "/service/node_modules"
       - "/service/site/node_modules"
+      # FOR GATSBY ONLY:
+      # - "/service/site/node_modules"
 
-  website-template-webhook:
-    container_name: website-template-webhook
-    build:
-      context: ./www
-      dockerfile: Dockerfile.webhook
-    restart: unless-stopped
-    networks:
-      - default
-    ports:
-      - "9000:9000"
-    environment:
-      COMMON_ENV: dev
-      GIT_REPOSITORY_URL: github.com/TaitoUnited/website-template.git
-      WEBHOOK_URL_PREFIX: SECRET
-      WEBHOOK_GIT_TOKEN: SECRET
+  # NOTE: For testing build webhook locally
+  # website-template-webhook:
+  #   container_name: website-template-webhook
+  #   build:
+  #     context: ./www
+  #     dockerfile: Dockerfile.webhook
+  #   restart: unless-stopped
+  #   networks:
+  #     - default
+  #   ports:
+  #     - "9000:9000"
+  #   environment:
+  #     COMMON_ENV: dev
+  #     GIT_REPOSITORY_URL: github.com/TaitoUnited/website-template.git
+  #     WEBHOOK_URL_PREFIX: SECRET
+  #     WEBHOOK_GIT_TOKEN: SECRET
 
 networks:
   default:

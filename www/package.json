@@ -1,11 +1,11 @@
 {
   "name": "website-template-www",
   "scripts": {
-    "install-site": "cd site && yarn install",
+    "install-site": "if [ -f ./site/package.json ]; then cd site && yarn install; fi",
     "lint": "echo Linting disabled",
-    "unit": "cd site && npm run test",
+    "unit": "if [ -d ./site ]; then cd site && npm run test; fi",
     "test": "echo No tests for www",
-    "build": "cd site && yarn run build && cp -rf ./public/* /build",
+    "build": "./build-site.sh",
     "cypress:run": "cypress run -s test/integration/**/${test_name}.spec.js",
     "cypress:open": "cypress open"
   },

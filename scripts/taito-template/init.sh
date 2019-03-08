@@ -33,6 +33,10 @@
 # TODO leave a reference to the original?
 rm LICENSE
 
+# Remove the example site
+rm -rf www/site
+sed -i -- '/    - "\/service\/site\/node_modules"/d' docker-compose.yaml
+
 # Replace repository url in package.json
 sed -i -- "s|TaitoUnited/website-template.git|${taito_organization}/${taito_vc_repository}.git|g" package.json
 

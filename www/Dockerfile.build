@@ -3,6 +3,20 @@ FROM taitounited/cypress:3.14-node10 as builder
 ARG SERVICE_DIR=.
 ARG TARGET_ENV=prod
 ARG BUILD_VERSION
+
+# Install Hugo. NOTE: You may remove this if you do not use Hugo.
+RUN apt-get -y update && \
+    apt-get -y install hugo
+
+# Install Jekyll. NOTE: You may remove this if you do not use Jekyll.
+RUN apt-get -y update && \
+    apt-get -y install ruby-full build-essential && \
+    echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc && \
+    echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc && \
+    echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc && \
+    . ~/.bashrc && \
+    gem install jekyll bundler
+
 WORKDIR /service
 COPY ${SERVICE_DIR}/package.json \
      ${SERVICE_DIR}/package-lock.* \
@@ -18,14 +32,9 @@ RUN npm ci --loglevel warn
 COPY ${SERVICE_DIR} /service
 RUN npm run unit
 
-# For gatsby-site
-COPY ${SERVICE_DIR}/site/package.json \
-     ${SERVICE_DIR}/site/package-lock.* \
-     /service/site/
-RUN cd /service/site && \
-    npm install --loglevel warn && \
-    npm run build && \
-    mv ./public /build
+RUN mkdir -p /build && \
+    npm run install-site && \
+    npm run build
 
 # Production runtime
 FROM nginx:1.15-alpine

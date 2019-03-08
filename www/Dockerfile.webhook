@@ -11,6 +11,19 @@ RUN apk add --update-cache build-base python git fontconfig \
       autoconf automake libtool
 COPY --from=webhook /usr/local/bin/webhook /usr/local/bin/webhook
 
+# Install Hugo. NOTE: You may remove this if you do not use Hugo.
+RUN apt-get -y update && \
+    apt-get -y install hugo
+
+# Install Jekyll. NOTE: You may remove this if you do not use Jekyll.
+RUN apt-get -y update && \
+    apt-get -y install ruby-full build-essential && \
+    echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc && \
+    echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc && \
+    echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc && \
+    . ~/.bashrc && \
+    gem install jekyll bundler
+
 WORKDIR /service
 COPY ${SERVICE_DIR} /service
 RUN mkdir -p /etc/webhook && \
@@ -23,5 +36,5 @@ RUN mkdir -p /build && \
     mv /build /build-orig
 
 EXPOSE 9000
-CMD ./build.sh install && \
+CMD ./build-webhook.sh install && \
     /usr/local/bin/webhook -verbose -port 9000 -urlprefix $WEBHOOK_URL_PREFIX
