@@ -260,7 +260,7 @@ steps:
 - id: ci-build-webhook
   waitFor: ['ci-release-pre']
   name: '${_TEMPLATE_DEFAULT_TAITO_IMAGE}'
-  args: ['ci-build:webhook:$BRANCH_NAME', '$COMMIT_SHA', './www', './www', , 'Dockerfile.webhook']
+  args: ['ci-build:webhook:$BRANCH_NAME', '$COMMIT_SHA', './www', './www', 'Dockerfile.webhook']
   env:
     - taito_mode=ci
     - template_default_taito_image=${_TEMPLATE_DEFAULT_TAITO_IMAGE}
