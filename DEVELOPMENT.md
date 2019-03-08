@@ -150,10 +150,11 @@ Gatsby is enabled by default. If you use some other static site generator than G
 Create a new site to directory `www/site` according to the static site generator instructions. Example for Gatsby:
 
     cd www                                       # Move to www directory
-    npx gatsby new site STARTER-OF-MY-CHOICE     # Create a site based on a starter: https://www.gatsbyjs.org/starters?v=2
+    rm -rf site                                  # Remove the example site
+    npx gatsby new site STARTER-OF-MY-CHOICE     # Create a new site based on a starter: https://www.gatsbyjs.org/starters?v=2
     rm -rf site/.git                             # Remove the obsolete .git directory
     EDIT site/package.json                       # Expose Gatsby development port outside the Docker container by
-                                                 # adding options `--port 8080 --host 0.0.0.0` to the develop script.
+                                                 # adding options `--host 0.0.0.0 --port 8080` to the develop script.
 
 ### Hosting
 
@@ -176,6 +177,10 @@ If basic auth (htpasswd) is used only for hiding non-production environments, yo
 > See [6. Remote environments](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/05-remote-environments.md) chapter of Taito CLI tutorial for more thorough instructions.
 
 > Operations on production and staging environments usually require admin rights. Please contact DevOps personnel if necessary.
+
+### Preview changes on a remote environment
+
+TODO
 
 ### Kubernetes
 
