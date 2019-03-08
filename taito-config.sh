@@ -50,6 +50,7 @@ taito_static_url=
 
 # Repositories
 taito_vc_repository=$taito_project
+taito_vc_repository_url=github.com/${template_default_github_organization:?}/$taito_vc_repository
 taito_image_registry=${template_default_registry:?}/$taito_zone/$taito_vc_repository
 
 # Stack
@@ -157,6 +158,10 @@ esac
 taito_resource_namespace_id=$taito_resource_namespace
 
 # URLs
+taito_webhook_url=$taito_app_url/webhook/SECRET/build
+if [[ "$taito_target_env" == "local" ]]; then
+  taito_webhook_url=http://localhost:9000/SECRET/build
+fi
 
 # Google Cloud plugin
 gcloud_region=$taito_provider_region
@@ -170,8 +175,9 @@ kubectl_user=$kubectl_cluster
 # Link plugin
 link_urls="
   * www[:ENV]=$taito_app_url Application (:ENV)
-  * git=https://github.com/${template_default_github_organization:?}/$taito_vc_repository GitHub repository
-  * project=https://github.com/${template_default_github_organization:?}/$taito_vc_repository/projects Project management
+  * webhook[:ENV]=$taito_webhook_url Application (:ENV)
+  * git=https://$taito_vc_repository_url GitHub repository
+  * project=https://$taito_vc_repository_url/projects Project management
   * builds=https://console.cloud.google.com/cloud-build/builds?project=$taito_zone&query=source.repo_source.repo_name%3D%22github_${template_default_github_organization:?}_$taito_vc_repository%22 Build logs
   * logs:ENV=https://console.cloud.google.com/logs/viewer?project=$taito_zone&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F$kubectl_name%2Fnamespace_id%2F$taito_namespace Logs (:ENV)
   * errors:ENV=https://sentry.io/${template_default_sentry_organization:?}/$taito_project/?query=is%3Aunresolved+environment%3A$taito_target_env Sentry errors (:ENV)
@@ -183,11 +189,16 @@ link_urls="
 taito_secrets="
   github-buildbot.token:read/devops
   $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
-  $taito_project-$taito_env-webhook.urlprefix:random
-  $taito_project-$taito_env-webhook.gittoken:manual
 "
 
-
+# Additional build webhook secrets for dev environment
+if [[ "$taito_target_env" == "dev" ]]; then
+  taito_secrets="
+    ${taito_secrets}
+    $taito_project-$taito_env-webhook.urlprefix:random
+    $taito_project-$taito_env-webhook.gittoken:manual
+  "
+fi
 
 # ------ Test suite settings ------
 # NOTE: Variable is passed to the test without the test_TARGET_ prefix

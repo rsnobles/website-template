@@ -148,7 +148,7 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /serviceaccount/{{ regexFind "[a-zA-Z]*$" .serviceAccount.secret }}
             {{- end }}
-            {{- range $name, $value := .env }}
+            {{- range $name, $value := .sidecar.env }}
             - name: {{ $name }}
               value: {{ $value | quote }}
             {{- end }}

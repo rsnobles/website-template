@@ -2,15 +2,26 @@ FROM almir/webhook:2.6.9 as webhook
 
 FROM node:10-alpine as builder
 ARG SERVICE_DIR=.
+ARG BUILD_VERSION
+LABEL version=${BUILD_VERSION} \
+      company=companyname \
+      project=website-template \
+      role=webhook
+RUN apk add --update-cache build-base python git fontconfig \
+      autoconf automake libtool
 COPY --from=webhook /usr/local/bin/webhook /usr/local/bin/webhook
 
 WORKDIR /service
-COPY ${SERVICE_DIR}/build.sh \
-     ${SERVICE_DIR}/hooks.json \
-     /service/
+COPY ${SERVICE_DIR} /service
 RUN mkdir -p /etc/webhook && \
     ln -s /service/hooks.json /etc/webhook/hooks.json
 
+# Prepare build-orig that contains the original build
+RUN mkdir -p /build && \
+    npm run install-site && \
+    npm run build && \
+    mv /build /build-orig
+
 EXPOSE 9000
 CMD ./build.sh install && \
-    /usr/local/bin/webhook -port 9000 -urlprefix $WEBHOOK_URL_PREFIX
+    /usr/local/bin/webhook -verbose -port 9000 -urlprefix $WEBHOOK_URL_PREFIX

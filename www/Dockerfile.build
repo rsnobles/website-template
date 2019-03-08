@@ -33,7 +33,7 @@ ARG BUILD_VERSION
 LABEL version=${BUILD_VERSION} \
       company=companyname \
       project=website-template \
-      role=client
+      role=www
 WORKDIR /service
 RUN chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /service && \

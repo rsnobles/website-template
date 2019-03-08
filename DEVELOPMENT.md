@@ -158,7 +158,9 @@ Create a new site to directory `www/site` according to the static site generator
 
 ### Hosting
 
-TODO
+By default the template deploys the site to Kubernetes running on Google Cloud.
+
+TODO other options.
 
 ### Basic project settings
 
@@ -178,9 +180,13 @@ If basic auth (htpasswd) is used only for hiding non-production environments, yo
 
 > Operations on production and staging environments usually require admin rights. Please contact DevOps personnel if necessary.
 
-### Preview changes on a remote environment
+### Real-time preview on a remote environment
 
-TODO
+To enable real-time preview on dev environment:
+
+1. Uncomment lines on `helm-dev.yaml`
+2. Make sure that urlprefix and personal git token have been set for webhook by running `taito secrets:dev`. If they are unset, set them with `taito env rotate:dev webhook`
+3. Configure a git webhook for your git repository that calls url https://USER:PASSWORD@DEV-DOMAIN/webhook/URLPREFIX/build when changes are pushed to the git repository. For more information see the [GitHub Webhooks Guide](https://developer.github.com/webhooks/).
 
 ### Kubernetes
 

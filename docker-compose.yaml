@@ -37,9 +37,10 @@ services:
     ports:
       - "9000:9000"
     environment:
+      COMMON_ENV: dev
       GIT_REPOSITORY_URL: github.com/TaitoUnited/website-template.git
-      WEBHOOK_URL_PREFIX: secret
-      WEBHOOK_GIT_TOKEN: secret
+      WEBHOOK_URL_PREFIX: SECRET
+      WEBHOOK_GIT_TOKEN: SECRET
 
 networks:
   default:
