@@ -2,7 +2,7 @@ images: [
   '$_IMAGE_REGISTRY/$_REPO_NAME/www:$COMMIT_SHA',
   '$_IMAGE_REGISTRY/$_REPO_NAME/webhook:$COMMIT_SHA'
 ]
-timeout: 1000s
+timeout: 1500s
 
 # If you want to grant outsiders access to your build logs, you may save
 # the logs to a separate bucket determined by the logsBucket setting and
