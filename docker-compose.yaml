@@ -1,0 +1,45 @@
+version: '3.5'
+services:
+  website-template-ingress:
+    container_name: website-template-ingress
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    networks:
+      - default
+    ports:
+      - "9999:80"
+    volumes:
+      - "./docker-nginx.conf:/etc/nginx/nginx.conf:delegated"
+
+  website-template-www:
+    container_name: website-template-www
+    build:
+      context: ./www
+      dockerfile: ${dockerfile}
+    restart: unless-stopped
+    networks:
+      - default
+    ports:
+      - "8080"
+    volumes:
+      - "./www:/service:delegated"
+      - "/service/node_modules"
+      - "/service/site/node_modules"
+
+  website-template-webhook:
+    container_name: website-template-webhook
+    build:
+      context: ./www
+      dockerfile: Dockerfile.webhook
+    restart: unless-stopped
+    networks:
+      - default
+    ports:
+      - "9000:9000"
+    environment:
+      GIT_REPOSITORY_URL: github.com/TaitoUnited/website-template.git
+      WEBHOOK_URL_PREFIX: secret
+      WEBHOOK_GIT_TOKEN: secret
+
+networks:
+  default:

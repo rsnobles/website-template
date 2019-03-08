@@ -1,0 +1,56 @@
+global:
+  domain: ${taito_domain}
+  url: https://${taito_domain}
+  logFormat: stackdriver
+  logLevel: info    # trace, debug, info, warn, error, fatal
+  registry: ${taito_image_registry}
+  imagePullPolicy: ''
+
+website-template:
+  # Ingress
+  ingress:
+    class: nginx
+    tls: true
+    maxBodySize: 1m
+    basicAuth:
+      enabled: true
+      htpasswdSecret: ${taito_project}-${taito_env}-basic-auth
+    domains:
+      - name: ${taito_domain}
+
+  # Stack
+  services:
+    www: true
+
+  # Defaults
+  serviceDefaults:
+    image: # 3rd party container image
+    path:
+    port: 8080
+    livenessPath: /healthz
+    replicas: ${kubectl_replicas}
+    autoscale: false
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 50
+    env:
+      # Environment variables
+      COMMON_ENV: ${taito_env}
+    secrets:
+      # Secrets
+    command:
+      # Command
+
+  # Services
+
+  www:
+    path: /
+    tier: frontend
+
+  # TODO configure resources
+  # resources: {}
+    #  cpu: 100m
+    #  memory: 128Mi
+    #requests:
+    #  cpu: 100m
+    #  memory: 128Mi

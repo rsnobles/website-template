@@ -1,0 +1,16 @@
+FROM almir/webhook:2.6.9 as webhook
+
+FROM node:10-alpine
+ARG SERVICE_DIR=.
+COPY --from=webhook /usr/local/bin/webhook /usr/local/bin/webhook
+
+WORKDIR /service
+COPY ${SERVICE_DIR}/build.sh \
+     ${SERVICE_DIR}/hooks.json \
+     /service/
+RUN mkdir -p /etc/webhook && \
+    ln -s /service/hooks.json /etc/webhook/hooks.json
+
+EXPOSE 9000
+CMD ./build.sh install && \
+    /usr/local/bin/webhook -port 9000 -urlprefix $WEBHOOK_URL_PREFIX

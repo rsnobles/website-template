@@ -1,0 +1,7 @@
+[
+  {
+    "id": "build",
+    "execute-command": "/service/build.sh",
+    "command-working-directory": "/service"
+  }
+]
