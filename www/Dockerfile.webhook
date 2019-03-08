@@ -1,6 +1,6 @@
 FROM almir/webhook:2.6.9 as webhook
 
-FROM node:10-alpine
+FROM node:10-alpine as builder
 ARG SERVICE_DIR=.
 COPY --from=webhook /usr/local/bin/webhook /usr/local/bin/webhook
 
