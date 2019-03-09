@@ -187,10 +187,9 @@ Restart containers and open the site on browser:
     taito start
     taito open www
 
-*OPTIONAL:* Remove those static site generators that you do not use from dockerfiles:
+Remove static site generators that you do not use from `www/install.sh`.
 
-    EDIT www/Dockerfile
-    EDIT www/Dockerfile.build
+    EDIT www/install.sh
 
 ### Basic project settings
 

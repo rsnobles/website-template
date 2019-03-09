@@ -4,18 +4,7 @@ ARG SERVICE_DIR=.
 ARG TARGET_ENV=prod
 ARG BUILD_VERSION
 
-# Install Hugo. NOTE: You may remove this if you do not use Hugo.
-RUN apt-get -y update && \
-    apt-get -y install hugo
-
-# Install Jekyll. NOTE: You may remove this if you do not use Jekyll.
-RUN apt-get -y update && \
-    apt-get -y install ruby-full build-essential && \
-    echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc && \
-    echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc && \
-    echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc && \
-    . ~/.bashrc && \
-    gem install jekyll bundler
+RUN ./install.sh
 
 WORKDIR /service
 COPY ${SERVICE_DIR}/package.json \
