@@ -8,9 +8,9 @@ LABEL version=${BUILD_VERSION} \
 RUN apt-get -y update && \
     apt-get -y install git webhook
 
-RUN ./install.sh
-
 WORKDIR /service
+COPY ${SERVICE_DIR}/*.sh /service/
+RUN . ./install.sh
 COPY ${SERVICE_DIR} /service
 RUN mkdir -p /etc/webhook && \
     ln -s /service/hooks.json /etc/webhook/hooks.json
@@ -22,5 +22,6 @@ RUN mkdir -p /build && \
     mv /build /build-orig
 
 EXPOSE 9000
-CMD ./build-webhook.sh install && \
+CMD . ~/.bashrc && \
+    ./build-webhook.sh install && \
     webhook -verbose -port 9000 -urlprefix $WEBHOOK_URL_PREFIX

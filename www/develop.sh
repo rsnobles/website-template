@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -x
 
@@ -13,6 +13,7 @@ elif [ -f ./site/package.json ]; then
 elif [ -f ./site/Gemfile ]; then
   # Jekyll development
   cd /service/site && \
+  bundle update && \
   bundle exec jekyll serve --host 0.0.0.0 --port 8080 \
     --baseurl http://localhost:9999 \
     --livereload --livereload-port 9999

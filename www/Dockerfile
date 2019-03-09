@@ -1,17 +1,15 @@
 # Builder, tester and runtime container for local development
 FROM taitounited/cypress:3.14-node10
 ARG SERVICE_DIR=.
-
-RUN ./install.sh
-
-WORKDIR /service
-COPY ${SERVICE_DIR}/*.sh \
-     ${SERVICE_DIR}/package.json \
-     ${SERVICE_DIR}/package-lock.* \
-     /service/
 ENV NODE_ENV development
 ENV API_ROOT ''
 ENV API_URL /api
+
+WORKDIR /service
+COPY ${SERVICE_DIR}/*.sh \
+     ${SERVICE_DIR}/package* \
+     /service/
+RUN . ./install.sh
 RUN npm install --loglevel warn
 
 # Install npm libraries on container to speed up builds
@@ -25,4 +23,4 @@ RUN mkdir -p /build && \
 
 # Start development
 EXPOSE 8080
-CMD ./develop.sh
+CMD . ~/.bashrc && ./develop.sh

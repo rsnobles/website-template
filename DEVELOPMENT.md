@@ -155,7 +155,9 @@ Start containers, and start a shell inside the www Docker container:
 
 *FOR JEKYLL ONLY:* Create a new site:
 
+    bash
     jekyll new site
+    exit
     exit
 
 *FOR HUGO ONLY:* Create a new Hugo site (See [Hugo quickstart](https://gohugo.io/getting-started/quick-start/) for more details):

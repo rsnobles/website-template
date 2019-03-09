@@ -3,20 +3,18 @@ FROM taitounited/cypress:3.14-node10 as builder
 ARG SERVICE_DIR=.
 ARG TARGET_ENV=prod
 ARG BUILD_VERSION
-
-RUN ./install.sh
-
-WORKDIR /service
-COPY ${SERVICE_DIR}/package.json \
-     ${SERVICE_DIR}/package-lock.* \
-     ${SERVICE_DIR}/.flowconfi* \
-     /service/
 ENV TARGET_ENV ${TARGET_ENV}
 ENV BUILD_VERSION ${BUILD_VERSION}
 ENV NODE_ENV development
 ENV API_ROOT ''
 ENV API_URL /api
 ENV APP_SENTRY_PUBLIC_DSN #sentryPublicDSN
+
+WORKDIR /service
+COPY ${SERVICE_DIR}/*.sh \
+     ${SERVICE_DIR}/package* \
+     /service/
+RUN . ./install.sh
 RUN npm ci --loglevel warn
 COPY ${SERVICE_DIR} /service
 RUN npm run unit
