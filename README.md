@@ -60,7 +60,7 @@ You can edit the website directly on GitHub.
 5) Commit your changes by pressing the **Commit changes** button on bottom of the page.
 6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page.
 
-### Preview and release the changes
+### Preview and release changes
 
 1) Open the [development site](https://my-project-dev.mydomain.com) on a new incognito window (on Chrome: click the link with right mouse button and select *Open Link in Incognito Window).
 2) Check that your changes look ok on the development site.

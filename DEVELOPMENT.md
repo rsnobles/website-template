@@ -213,7 +213,7 @@ If basic auth (htpasswd) is used only for hiding non-production environments, yo
 
 ### Real-time preview on a remote environment
 
-You can edit the site on GitHub web GUI and preview the changes on a remote environment. This is how you enable preview for dev environment:
+You can edit the site on GitHub web GUI and preview changes on a remote environment. This is how you enable preview for dev environment:
 
 1. Enable build webhook by editing `scripts/helm-dev.yaml`.
 2. Enable builds for all branches by changing `ci_exec_build=false` to `ci_exec_build=true` in `taito-config.sh`. This is required because GitHub web GUI does not support merging with fast-forward.
