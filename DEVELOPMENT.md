@@ -192,17 +192,11 @@ Restart containers and open the site on browser:
     EDIT www/Dockerfile
     EDIT www/Dockerfile.build
 
-### Hosting
-
-By default the template deploys the site to Kubernetes running on Google Cloud.
-
-TODO other options.
-
 ### Basic project settings
 
-1. Modify `taito-config.sh` if you need to change some settings. The default settings are ok for most projects.
-2. Run `taito project apply`
-3. Commit and push changes
+1. Modify `taito-config.sh` if you need to change some settings. By default the template deploys the site to Kubernetes running on Google Cloud.
+2. Run `taito project apply`.
+3. Commit and push changes.
 
 ### Remote environments
 
@@ -218,25 +212,20 @@ If basic auth (htpasswd) is used only for hiding non-production environments, yo
 
 ### Real-time preview on a remote environment
 
-To enable real-time preview on dev environment:
+You can edit the site on GitHub web GUI and preview the changes on a remote environment. This is how you enable preview for dev environment:
 
-1. Uncomment lines on `helm-dev.yaml`
-2. Make sure that urlprefix and personal git token have been set for webhook by running `taito secrets:dev`. If they are unset, set them with `taito env rotate:dev webhook`
-3. Configure a git webhook for your git repository that calls url https://USER:PASSWORD@DEV-DOMAIN/webhook/URLPREFIX/build when changes are pushed to the git repository. For more information see the [GitHub Webhooks Guide](https://developer.github.com/webhooks/).
+1. Enable build webhook by editing `scripts/helm-dev.yaml`.
+2. Enable builds for all branches by changing `ci_exec_build=false` to `ci_exec_build=true` in `taito-config.sh`. This is required because GitHub web GUI does not support merging with fast-forward.
+3. Make sure that urlprefix and personal git token have been set for webhook by running `taito secrets:dev`. If they are unset, set them with `taito env rotate:dev webhook`
+4. Configure a git webhook for your git repository. It should call url https://USER:PASSWORD@DEV-DOMAIN/webhook/URLPREFIX/build when changes are pushed to the git repository. For more information see the [GitHub Webhooks Guide](https://developer.github.com/webhooks/).
 
-### Kubernetes
+You can enable the build webhook also for staging, if you like.
 
-The `scripts/heml.yaml` file contains default Kubernetes settings for all environments and the `scripts/helm-*.yaml` files contain environment specific overrides for them. By modying these files you can easily configure environment variables, resource requirements and autoscaling for your containers.
+### Upgrading to the latest version of the WEBSITE-TEMPLATE template
 
-You can deploy configuration changes without rebuilding with the `taito deployment deploy:ENV` command.
+Run `taito project upgrade`. The command copies the latest versions of reusable Helm charts and CI/CD scripts to your project folder, and also this README.md file. You should not make project specific modifications to them as they are designed to be reusable and easily configurable for various needs. Improve the originals instead, and then upgrade.
 
-> Do not modify the helm template located in `./scripts/helm` directory. Improve the original helm template located in [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/) repository instead.
-
-### Upgrading to the latest version of the project template
-
-Run `taito project upgrade`. The command copies the latest versions of reusable Helm charts, terraform templates and CI/CD scripts to your project folder, and also this README.md file. You should not make project specific modifications to them as they are designed to be reusable and easily configurable for various needs. Improve the originals instead, and then upgrade.
-
-### Without Taito CLI
+## Without Taito CLI
 
 You can use this template also without Taito CLI.
 

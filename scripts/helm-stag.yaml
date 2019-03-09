@@ -1,4 +1,4 @@
-# NOTE: Enable build webhook for dev environment by uncommenting these lines
+# NOTE: Enable build webhook for stag environment by uncommenting these lines
 # website-template:
 #   www:
 #     sidecar:
