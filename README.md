@@ -28,7 +28,7 @@ Table of contents:
 
 ## Editing the website
 
-You can edit the website directly on GitHub.
+You can edit the website directly on GitHub. Basic auth credentials for non-production environments: `USER` / `PASS`.
 
 > NOTE: These are example instructions provided by the website-template. Modify these so that they apply to your site. If there are multiple people working on the website, and dev branch is being actively developed, it is recommended to configure the project so that new content is created to stag branch instead of dev.
 
@@ -75,7 +75,7 @@ You can edit the website directly on GitHub.
 
 ## Links
 
-Non-production basic auth credentials: CREDENTIALS
+See [Editing the website](#editing-the-website) for basic auth credentials.
 
 [//]: # (GENERATED LINKS START)
 

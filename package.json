@@ -4,7 +4,7 @@
     "install-ci": "echo '# No additional dependencies need to be installed in ci mode'",
     "install-dev": "echo '# Installing all libraries on host for code editor support. TODO how to minimize as --only=dev affects devDepencies also?' && npm run install-all",
     "install-all": "npm-run-all install-all:www",
-    "install-all:www": "cd www && npm install && cd site && npm install",
+    "install-all:www": "cd www && npm install && if [ -d ./site ]; then cd site && npm install; fi",
     "taito-init": "taito -z init:${taito_env}",
     "taito-init:clean": "taito -z init:${taito_env} --clean",
     "taito-init:local:clean": "npm run taito-init:clean",

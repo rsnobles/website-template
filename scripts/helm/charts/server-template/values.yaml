@@ -24,8 +24,8 @@ global:
   registry: ${taito_image_registry}
   imagePullPolicy: ''
 
-# Values for website-template chart
-website-template:
+# Values for server-template chart
+server-template:
 
   # Ingress
   ingress:

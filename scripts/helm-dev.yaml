@@ -1,5 +1,5 @@
 # NOTE: Enable build webhook for dev environment by uncommenting these lines
-# website-template:
+# server-template:
 #   www:
 #     sidecar:
 #       name: webhook

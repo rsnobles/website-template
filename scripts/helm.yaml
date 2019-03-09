@@ -6,7 +6,7 @@ global:
   registry: ${taito_image_registry}
   imagePullPolicy: ''
 
-website-template:
+server-template:
   # Ingress
   ingress:
     class: nginx

@@ -66,8 +66,8 @@ find . -type f -exec sed -i \
 echo "Generating unique random ports (avoid conflicts with other projects)..."
 
 ingress_port=$(shuf -i 8000-9999 -n 1)
-sed -i -- "s/9999/${ingress_port}/g" docker-compose.yaml taito-config.sh \
-  ./www/package.json &> /dev/null
+sed -i -- "s/9999/${ingress_port}/g" DEVELOPMENT.md docker-compose.yaml \
+  taito-config.sh ./www/develop.sh ./www/package.json &> /dev/null
 
 echo "Replacing template variables with the given settings..."
 
@@ -107,6 +107,6 @@ echo "Removing template settings from cloudbuild.yaml..."
 sed -i -- "s|\${_TEMPLATE_DEFAULT_TAITO_IMAGE}|${template_default_taito_image}|g" cloudbuild.yaml
 sed -i -- '/_TEMPLATE_DEFAULT_/d' cloudbuild.yaml
 sed -i -- '/template_default_taito_image/d' cloudbuild.yaml
-sed -i -- "s|_IMAGE_REGISTRY: eu.gcr.io/\$PROJECT_ID|_IMAGE_REGISTRY: ${template_default_registry}/${template_default_provider_zone}|" cloudbuild.yaml
+sed -i -- "s|_IMAGE_REGISTRY: eu.gcr.io/\$PROJECT_ID|_IMAGE_REGISTRY: ${template_default_registry}/${template_default_zone}|" cloudbuild.yaml
 
 rm -f temp
