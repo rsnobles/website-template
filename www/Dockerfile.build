@@ -6,8 +6,6 @@ ARG BUILD_VERSION
 ENV TARGET_ENV ${TARGET_ENV}
 ENV BUILD_VERSION ${BUILD_VERSION}
 ENV NODE_ENV development
-ENV API_ROOT ''
-ENV API_URL /api
 ENV APP_SENTRY_PUBLIC_DSN #sentryPublicDSN
 
 WORKDIR /service
@@ -16,12 +14,13 @@ COPY ${SERVICE_DIR}/*.sh \
      /service/
 RUN . ./install.sh
 RUN npm ci --loglevel warn
-COPY ${SERVICE_DIR} /service
-RUN npm run unit
 
+# Install, build and test site
+COPY ${SERVICE_DIR} /service
 RUN mkdir -p /build && \
     npm run install-site && \
-    npm run build
+    npm run build && \
+    npm run unit
 
 # Production runtime
 FROM nginx:1.15-alpine
@@ -38,6 +37,8 @@ RUN sed -i '/application\/json/a\    application/wasm wasm;' \
     /etc/nginx/mime.types
 COPY ./nginx.conf /etc/nginx
 COPY --from=builder /build .
+
+# Start nginx
 USER nginx
 EXPOSE 8080
 # TODO dump-init or tiny as init system? Kubernetes uses --init?

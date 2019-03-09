@@ -28,18 +28,25 @@ Run `taito open vc conventions` in the project directory to see organization spe
 
 Configure static site generator of your choice with the following instructions. Currently instructions are provided only for Gatsby, Hugo and Jekyll, but with some extra work the website-template may easily be used with any static site generator.
 
+Remove static site generators that you do not use from `www/install.sh`.
+
+    EDIT www/install.sh
+
 Start containers, and start a shell inside the www Docker container:
 
     taito install
     taito start
     taito shell:www
 
-*FOR JEKYLL ONLY:* Create a new site:
+*FOR GATSBY ONLY:* Create a new Gatsby site based on one of the [starters](https://www.gatsbyjs.org/starters?v=2):
 
-    bash
-    jekyll new site
+    npx gatsby new site STARTER-SOURCE-URL-OF-MY-CHOICE
+    rm -rf site/.git
     exit
-    exit
+
+*FOR GATSBY ONLY:* Enable `/service/site/node_modules` mount in `docker-compose.yaml`:
+
+    EDIT docker-compose.yaml
 
 *FOR HUGO ONLY:* Create a new Hugo site (See [Hugo quickstart](https://gohugo.io/getting-started/quick-start/) for more details):
 
@@ -50,29 +57,18 @@ Start containers, and start a shell inside the www Docker container:
     hugo new posts/my-first-post.md
     exit
 
-*FOR GATSBY ONLY:* Create a new Gatsby site based on one of the [starters](https://www.gatsbyjs.org/starters?v=2):
+*FOR JEKYLL ONLY:* Create a new site:
 
-    npx gatsby new site STARTER-SOURCE-URL-OF-MY-CHOICE
-    rm -rf site/.git
+    bash
+    jekyll new site
     exit
-
-*FOR GATSBY ONLY:* Expose Gatsby development port outside the Docker container by adding options `--host 0.0.0.0 --port 8080` to the develop script:
-
-    EDIT www/site/package.json
-
-*FOR GATSBY ONLY:* Enable `/service/site/node_modules` mount in `docker-compose.yaml`:
-
-    EDIT docker-compose.yaml
+    exit
 
 Restart containers and open the site on browser:
 
     taito stop
     taito start
     taito open www
-
-Remove static site generators that you do not use from `www/install.sh`.
-
-    EDIT www/install.sh
 
 [ ] All done
 

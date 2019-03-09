@@ -9,7 +9,7 @@ elif [ -f ./site/package.json ]; then
   # Gatsby development
   cd /service/site && \
   npm install && \
-  npm run develop --host 0.0.0.0 --port 8080
+  npm run develop -- --host 0.0.0.0 --port 8080
 elif [ -f ./site/Gemfile ]; then
   # Jekyll development
   cd /service/site && \
