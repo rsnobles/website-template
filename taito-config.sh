@@ -122,6 +122,12 @@ case $taito_env in
     taito_app_url=https://$taito_domain
     kubectl_replicas=2
     monitoring_enabled=true
+
+    # NOTE: build is enabled for production environment because GitHub web GUI
+    # does not support merging pull requests with fast-forward. You can disable
+    # ci_exec_build for production if you do not use GitHub web GUI to edit
+    # your site.
+    ci_exec_build=true
     ;;
   stag)
     taito_zone=${template_default_zone_prod:?}

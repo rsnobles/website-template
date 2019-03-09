@@ -34,10 +34,10 @@ You can edit the website directly on GitHub.
 
 ### Create a new blog post
 
-1) Open the <a href="www/site/content/blog" target="_blank">blog folder</a> on a new tab.
+1) Open the [blog folder](www/site/content/blog) on a new tab by keeping <kbd>CTRL</kbd> key pressed while clicking the link (<kbd>CMD</kbd> on Mac).
 2) Press the **Create new file** button on top of the page.
 3) Enter blog name followed with /index.md, for example: `happy-days/index.md`.
-4) Enter blog content in <a href="https://help.github.com/en/articles/basic-writing-and-formatting-syntax" target="_blank">Markdown syntax</a>. See the example below. Use the preview tab to preview your changes.
+4) Enter blog content in [Markdown syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax). See the example below. Use the preview tab to preview your changes.
     ```
     ---
     title: Happy Days
@@ -49,28 +49,29 @@ You can edit the website directly on GitHub.
     ![I'm happy](./happy.jpg)
     ```
 5) Commit your changes by pressing the **Commit new file** button on bottom of the page.
-6) If required, upload pictures for you blog post by pressing the `Upload files` button on top of the page.
+6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page.
 
 ### Update a blog post
 
-1) Open the <a href="www/site/content/blog" target="_blank">blog folder</a> on a new tab.
+1) Open the [blog folder](www/site/content/blog) on a new tab by keeping <kbd>CTRL</kbd> key pressed while clicking the link (<kbd>CMD</kbd> on Mac).
 2) Browse to a file that you would like edit.
 3) Enter edit mode by pressing the **Pen** icon.
-4) Enter blog content in <a href="https://help.github.com/en/articles/basic-writing-and-formatting-syntax" target="_blank">Markdown syntax</a>. Use the preview tab to preview your changes.
-5) Commit your changes by pressing the **Commit new file** button on bottom of the page.
+4) Enter blog content in [Markdown syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax). Use the preview tab to preview your changes.
+5) Commit your changes by pressing the **Commit changes** button on bottom of the page.
+6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page.
 
 ### Preview and release the changes
 
-1) Open the <a href="https://my-project-dev.mydomain.com" target="_blank">development site</a> on a new tab.
-2) Check that everything looks ok.
+1) Open the [development site](https://my-project-dev.mydomain.com) on a new incognito window (on Chrome: click the link with right mouse button and select *Open Link in Incognito Window).
+2) Check that your changes look ok on the development site.
 3) Create a new pull request on GitHub:
 
    * Press the `New pull request button`.
    * Select: `base: master` < `compare:dev` on top of the page.
    * Enter some title for the pull request and press the `Create pull request` button.
 
-4) TODO: Merge the pull request using fast-forward.
-5) The <a href="https://my-project.mydomain.com" target="_blank">site</a> will be updated automatically after a few minutes.
+4) Merge the pull request by pressing the **Merge pull request** button.
+5) The [site](https://my-project.mydomain.com) will be updated automatically after a few minutes.
 
 ## Links
 
