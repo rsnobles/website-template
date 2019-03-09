@@ -9,7 +9,7 @@ Table of contents:
 * [Static site generator](#static-site-generator)
 * [Hosting options](#hosting-options)
 * [Remote environments](#remote-environments)
-* [Real-time preview on a remote environment](#real-time-preview-on-a-remote-environment)
+* [Remote real-time preview](#remote-real-time-preview)
 
 ## Prerequisites
 
@@ -100,7 +100,7 @@ If basic auth (htpasswd) is used only for hiding non-production environments, yo
 
 [ ] All done
 
-## Real-time preview on a remote environment
+## Remote real-time preview
 
 You can edit the site on GitHub web GUI and preview changes on a remote environment. This is how you enable preview for dev environment:
 
