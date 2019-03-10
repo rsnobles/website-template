@@ -22,7 +22,7 @@ Table of contents:
 
 Run `taito open vc conventions` in the project directory to see organization specific settings that you should configure for your git repository.
 
-[ ] All done
+* [ ] All done
 
 ## Static site generator
 
@@ -70,7 +70,7 @@ Restart containers and open the site on browser:
     taito start
     taito open www
 
-[ ] All done
+* [ ] All done
 
 ## Hosting options
 
@@ -80,7 +80,7 @@ By default the template deploys the site to Kubernetes running on Google Cloud. 
 2. Run `taito project apply`.
 3. Commit and push changes.
 
-[ ] All done
+* [ ] All done
 
 ## Remote environments
 
@@ -94,7 +94,7 @@ If basic auth (htpasswd) is used only for hiding non-production environments, yo
 
 > Operations on production and staging environments usually require admin rights. Please contact DevOps personnel if necessary.
 
-[ ] All done
+* [ ] All done
 
 ## Remote real-time preview
 
@@ -107,4 +107,4 @@ You can edit the site on GitHub web GUI and preview changes on a remote environm
 
 You can enable the build webhook also for staging, if you like.
 
-[ ] All done
+* [ ] All done
