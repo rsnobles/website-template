@@ -48,7 +48,7 @@ Start containers, and start a shell inside the www Docker container:
 
     EDIT docker-compose.yaml
 
-*FOR HUGO ONLY:* Create a new Hugo site (See [Hugo themes](https://themes.gohugo.io/) and [Hugo quickstart](https://gohugo.io/getting-started/quick-start/) for more details):
+*FOR HUGO ONLY:* Create a new Hugo site (See [Hugo themes](https://themes.gohugo.io/) and [Hugo quick start](https://gohugo.io/getting-started/quick-start/) for more details):
 
     hugo new site site
     cd site
@@ -73,7 +73,7 @@ Start containers, and start a shell inside the www Docker container:
 Restart containers and open the site on browser:
 
     taito stop
-    taito start
+    taito start --clean
     taito open www
 
 * [ ] All done
