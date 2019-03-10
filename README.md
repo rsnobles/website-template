@@ -17,8 +17,8 @@ Short description of the website.
 
 Table of contents:
 
-* [Editing the website](#links)
 * [Links](#links)
+* [Editing the website](#links)
 * [Contacts](#contacts)
 * [Responsibilities](#responsibilities)
 * [Intellectual property rights](#intellectual-property-rights)
@@ -26,9 +26,21 @@ Table of contents:
 * [Miscellaneous notes](#miscellaneous-notes)
 * [Conventions](#conventions)
 
+## Links
+
+Basic auth credentials for non-production environments: `USER` / `PASS`.
+
+[//]: # (GENERATED LINKS START)
+
+LINKS WILL BE GENERATED HERE
+
+[//]: # (GENERATED LINKS END)
+
+> You can update this section by configuring links in `taito-config.sh` and running `taito project docs`.
+
 ## Editing the website
 
-You can edit the website directly on GitHub. Basic auth credentials for non-production environments: `USER` / `PASS`.
+You can edit the website directly on GitHub.
 
 > NOTE: These are example instructions provided by the website-template. Modify these so that they apply to your site. If there are multiple people working on the website, and dev branch is being actively developed, it is recommended to configure the project so that new content is created to stag branch instead of dev.
 
@@ -72,18 +84,6 @@ You can edit the website directly on GitHub. Basic auth credentials for non-prod
 
 4) Merge the pull request by pressing the **Merge pull request** button.
 5) The [site](https://my-project.mydomain.com) will be updated automatically after a few minutes.
-
-## Links
-
-See [Editing the website](#editing-the-website) for basic auth credentials.
-
-[//]: # (GENERATED LINKS START)
-
-LINKS WILL BE GENERATED HERE
-
-[//]: # (GENERATED LINKS END)
-
-> You can update this section by configuring links in `taito-config.sh` and running `taito project docs`.
 
 ## Contacts
 

@@ -174,9 +174,10 @@ kubectl_user=$kubectl_cluster
 
 # Link plugin
 link_urls="
-  * www[:ENV]=$taito_app_url Application (:ENV)
-  * webhook[:ENV]=$taito_webhook_url Build webhook (:ENV)
+  * www[:ENV]=$taito_app_url Website (:ENV)
   * git=https://$taito_vc_repository_url GitHub repository
+  * posts=https://$taito_vc_repository_url/tree/dev/www/site/content/blog Content: posts
+  * assets=https://$taito_vc_repository_url/tree/dev/www/site/content/assets Content: assets
   * project=https://$taito_vc_repository_url/projects Project management
   * builds=https://console.cloud.google.com/cloud-build/builds?project=$taito_zone&query=source.repo_source.repo_name%3D%22github_${template_default_github_organization:?}_$taito_vc_repository%22 Build logs
   * logs:ENV=https://console.cloud.google.com/logs/viewer?project=$taito_zone&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F$kubectl_name%2Fnamespace_id%2F$taito_namespace Logs (:ENV)
@@ -193,6 +194,10 @@ taito_secrets="
 
 # Additional build webhook secrets for non-prod environments
 if [[ "$taito_target_env" != "prod" ]]; then
+  link_urls="
+    ${link_urls}
+    * webhook[:ENV]=$taito_webhook_url Build webhook (:ENV)
+  "
   taito_secrets="
     ${taito_secrets}
     $taito_project-$taito_env-webhook.urlprefix:random
