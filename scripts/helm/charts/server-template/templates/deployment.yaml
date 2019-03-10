@@ -102,9 +102,11 @@ spec:
             {{- end }}
           volumeMounts:
           {{- if .sidecar }}
+          {{- if .sidecar.enabled }}
           {{- if .sidecar.sharedVolume }}
             - name: shared
               mountPath: {{ .sidecar.sharedVolume.mountPath }}
+          {{- end }}
           {{- end }}
           {{- end }}
           {{- if and (.serviceAccount) (eq $provider "gcloud") }}
@@ -114,6 +116,7 @@ spec:
           {{- end }}
 
         {{- if .sidecar }}
+        {{- if .sidecar.enabled }}
         - name: {{ template "name" $root }}-{{ .sidecar.name }}
           {{- if .sidecar.image }}
           image: {{ .sidecar.image }}
@@ -170,6 +173,7 @@ spec:
               readOnly: true
           {{- end }}
         {{- end }}
+        {{- end }}
 
         {{- if and (.db) (ne $env "local") (eq $provider "gcloud") }}
         - name: cloudsql-proxy
@@ -192,9 +196,11 @@ spec:
         {{- end }}
       volumes:
         {{- if .sidecar }}
+        {{- if .sidecar.enabled }}
         {{- if .sidecar.sharedVolume }}
         - name: shared
           emptyDir:
+        {{- end }}
         {{- end }}
         {{- end }}
         {{- if and (.db) (ne $env "local") (eq $provider "gcloud") }}
