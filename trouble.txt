@@ -1,1 +1,7 @@
 website-template TROUBLESHOOTING
+
+  Links point to wrong environment on a Hugo site
+    Enable relative urls by using the following settings in
+    `www/site/config.toml`:
+      baseURL = ""
+      relativeURLs = true

@@ -48,14 +48,20 @@ Start containers, and start a shell inside the www Docker container:
 
     EDIT docker-compose.yaml
 
-*FOR HUGO ONLY:* Create a new Hugo site (See [Hugo quickstart](https://gohugo.io/getting-started/quick-start/) for more details):
+*FOR HUGO ONLY:* Create a new Hugo site (See [Hugo themes](https://themes.gohugo.io/) and [Hugo quickstart](https://gohugo.io/getting-started/quick-start/) for more details):
 
     hugo new site site
     cd site
     git clone https://github.com/budparr/gohugo-theme-ananke.git themes/ananke
+    rm -rf themes/ananke/.git
     echo 'theme = "ananke"' >> config.toml
     hugo new posts/my-first-post.md
     exit
+
+*FOR HUGO ONLY:* If you have some trouble with links, you might also need to enable relative urls by using the following settings in `www/site/config.toml`:
+
+    baseURL = ""
+    relativeURLs = true
 
 *FOR JEKYLL ONLY:* Create a new site:
 
