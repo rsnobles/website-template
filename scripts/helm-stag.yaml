@@ -1,5 +1,6 @@
 # NOTE: Enable build webhook for stag environment by uncommenting these lines
-# server-template:
-#   www:
-#     sidecar:
-#       enabled: true
+# full-stack:
+#   services:
+#     www:
+#       sidecar:
+#         enabled: true

@@ -6,8 +6,12 @@ global:
   registry: ${taito_image_registry}
   imagePullPolicy: ''
 
-server-template:
-  # Ingress
+full-stack:
+  # TODO: --enable-pod-security-policy:
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/pod-security-policies
+  podSecurityPolicy:
+    enabled: false
+
   ingress:
     class: nginx
     tls: true
@@ -18,53 +22,54 @@ server-template:
     domains:
       - name: ${taito_domain}
 
-  # Stack
-  services:
-    www: true
-
-  # Defaults
   serviceDefaults:
-    image: # 3rd party container image
+    # Basics
+    image: # For 3rd party container image
+    command:
     path:
     port: 8080
+    tier:
     livenessPath: /healthz
+    # Security
+    runAsUser:
+    fsGroup:
+    # Resources
+    cpuRequest: 2m
+    cpuLimit: 100m
+    memoryRequest: 50Mi
+    memoryLimit: 256Mi
+    # Scaling
     replicas: ${kubectl_replicas}
     autoscale: false
     minReplicas: 2
     maxReplicas: 5
-    targetCPUUtilizationPercentage: 50
+    # TODO metrics:
+    # https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+    # TODO vertical autoscaling:
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/vertical-pod-autoscaling
+    # Env
     env:
       # Environment variables
       COMMON_ENV: ${taito_env}
     secrets:
       # Secrets
-    command:
-      # Command
 
-  # Services
+  services:
 
-  www:
-    path: /
-    tier: frontend
-    sidecar:
-      enabled: false
-      name: webhook
-      path: /webhook
-      port: 9000
-      sharedVolume:
-        mountPath: /service
-        sidecarMountPath: /build
-      livenessDisabled: true
-      secrets:
-        WEBHOOK_URL_PREFIX: ${taito_project}-${taito_env}-webhook.urlprefix
-        WEBHOOK_GIT_TOKEN: ${taito_project}-${taito_env}-webhook.gittoken
-      env:
-        GIT_REPOSITORY_URL: ${taito_vc_repository_url}.git
-
-  # TODO configure resources
-  # resources: {}
-    #  cpu: 100m
-    #  memory: 128Mi
-    #requests:
-    #  cpu: 100m
-    #  memory: 128Mi
+    www:
+      path: /
+      tier: frontend
+      sidecar:
+        enabled: false
+        name: webhook
+        path: /webhook
+        port: 9000
+        sharedVolume:
+          mountPath: /service
+          sidecarMountPath: /build
+        livenessDisabled: true # TODO
+        secrets:
+          WEBHOOK_URL_PREFIX: ${taito_project}-${taito_env}-webhook.urlprefix
+          WEBHOOK_GIT_TOKEN: ${taito_project}-${taito_env}-webhook.gittoken
+        env:
+          GIT_REPOSITORY_URL: ${taito_vc_repository_url}.git
