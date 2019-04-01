@@ -114,3 +114,11 @@ You can edit the site on GitHub web GUI and preview changes on a remote environm
 You can enable the build webhook also for staging, if you like.
 
 * [ ] All done
+
+## Uptime monitoring for production
+
+Run `taito open uptime` and configure uptime checks and alerts for all critical endpoints of your application. Use the existing policies as an example. Don't forget to test the alerts work ok (for example, enable basic authentication temporarily for production).
+
+TODO: Use terraform for uptime monitoring rules
+
+* [ ] Production done
