@@ -28,6 +28,7 @@ substitutions:
   _TEMPLATE_DEFAULT_PROVIDER_REGION_PROD:
   _TEMPLATE_DEFAULT_PROVIDER_ZONE:
   _TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD:
+  _TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD:
   _TEMPLATE_DEFAULT_REGISTRY:
   _TEMPLATE_DEFAULT_KUBERNETES:
   _TEMPLATE_DEFAULT_POSTGRES:
@@ -65,6 +66,7 @@ steps:
     export template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     export template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     export template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    export template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     export template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     export template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     export template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -119,6 +121,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -147,6 +150,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -173,6 +177,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -199,6 +204,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -227,6 +233,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -253,6 +260,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -279,6 +287,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -305,6 +314,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -332,6 +342,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -359,6 +370,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -385,6 +397,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -410,6 +423,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
@@ -437,6 +451,7 @@ steps:
     - template_default_provider_region_prod=${_TEMPLATE_DEFAULT_PROVIDER_REGION_PROD}
     - template_default_provider_zone=${_TEMPLATE_DEFAULT_PROVIDER_ZONE}
     - template_default_provider_zone_prod=${_TEMPLATE_DEFAULT_PROVIDER_ZONE_PROD}
+    - template_default_monitoring_uptime_channels_prod=${_TEMPLATE_DEFAULT_MONITORING_UPTIME_CHANNELS_PROD}
     - template_default_registry=${_TEMPLATE_DEFAULT_REGISTRY}
     - template_default_kubernetes=${_TEMPLATE_DEFAULT_KUBERNETES}
     - template_default_postgres=${_TEMPLATE_DEFAULT_POSTGRES}
