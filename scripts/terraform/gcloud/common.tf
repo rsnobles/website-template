@@ -3,3 +3,5 @@ provider "google" {
   region = "${var.gcloud_region}"
   zone = "${var.gcloud_zone}"
 }
+
+data "google_project" "project" {}
