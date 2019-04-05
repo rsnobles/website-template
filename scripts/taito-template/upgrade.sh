@@ -2,7 +2,7 @@
 
 : "${template_project_path:?}"
 
-echo
+${taito_setv:?}
 ./scripts/taito-template/init.sh
 
 # Copy files from template to project
@@ -13,7 +13,7 @@ yes | cp cloudbuild.yaml "${template_project_path}"
 mkdir -p "${template_project_path}/scripts/helm"
 yes | cp -r "scripts/helm/requirements.yaml" \
   "${template_project_path}/scripts/helm/requirements.yaml" 2> /dev/null
-yes | cp "www/*" \
+yes | cp www/* \
   "${template_project_path}/www/" 2> /dev/null
 
 echo
