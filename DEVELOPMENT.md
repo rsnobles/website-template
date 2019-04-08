@@ -22,9 +22,9 @@ Table of contents:
 
 ## Quick start
 
-Install linters and some libraries on host for code autocompletion purposes (add `--clean` to make a clean reinstall):
+Create a local environment by installing some libraries and generating secrets (add --clean to recreate a clean environment):
 
-    taito install
+    taito env apply
 
 Start containers (add `--clean` to make a clean rebuild, and to discard all data and db tables):
 
@@ -80,11 +80,13 @@ Cleaning:
 
 The commands mentioned above work also for server environments (`f-NAME`, `dev`, `test`, `stag`, `canary`, `prod`). Some examples for dev environment:
 
-    taito auth:dev                        # Authenticate to dev
+    taito auth:dev                          # Authenticate to dev
+    taito env apply:stag                    # Create the dev environment
+    taito push                              # Push changes to current branch (dev)
+    taito open builds:dev                   # Show build status and build logs
     taito open www:dev                      # Open site in browser
     taito info:dev                          # Show info
     taito status:dev                        # Show status of dev environment
-    taito open builds                       # Show build status and logs
     taito test:dev                          # Run integration and e2e tests
     taito cypress:www:dev                   # Open cypress for www
     taito shell:www:dev                     # Start a shell on www container
@@ -147,6 +149,8 @@ You can use this template also without Taito CLI.
     npm run ...              # Use npm to run npm scripts ('npm run' shows all the scripts)
     docker-compose ...       # Use docker-compose to operate your application
     docker ...               # Use docker to operate your containers
+
+TODO: Instructions not up-to-date
 
 **Testing:**
 
