@@ -69,8 +69,8 @@ find . -type f -exec sed -i \
 echo "Generating unique random ports (avoid conflicts with other projects)..."
 
 ingress_port=$(shuf -i 8000-9999 -n 1)
-sed -i "s/9999/${ingress_port}/g" DEVELOPMENT.md docker-compose.yaml \
-  taito-config.sh ./www/develop.sh ./www/package.json &> /dev/null
+sed -i "s/9999/${ingress_port}/g" DEVELOPMENT.md TAITOLESS.md \
+  docker-compose.yaml taito-config.sh ./www/develop.sh ./www/package.json &> /dev/null
 
 echo "Replacing template variables with the given settings..."
 

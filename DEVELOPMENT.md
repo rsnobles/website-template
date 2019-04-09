@@ -1,6 +1,6 @@
 # Development
 
-This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/DEVELOPMENT.md) instead. Project specific conventions are located in [README.md](README.md#conventions). See the [Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/README.md) for more thorough development instructions. Note that Taito CLI is optional (see [usage without Taito CLI](#usage-without-taito-cli)).
+This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/DEVELOPMENT.md) instead. Project specific conventions are located in [README.md](README.md#conventions). See the [Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/README.md) for more thorough development instructions. Note that Taito CLI is optional (see [TAITOLESS.md](TAITOLESS.md)).
 
 Table of contents:
 
@@ -10,14 +10,13 @@ Table of contents:
 * [Code structure](#code-structure)
 * [Version control](#version-control)
 * [Deployment](#deployment)
-* [Usage without Taito CLI](#usage-without-taito-cli)
 * [Upgrading](#upgrading)
 
 ## Prerequisites
 
 * [Node.js](https://nodejs.org/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
-* Optional: [Taito CLI](https://github.com/TaitoUnited/taito-cli#readme)
+* [Taito CLI](https://github.com/TaitoUnited/taito-cli#readme) (or see [TAITOLESS.md](TAITOLESS.md))
 * Optional: eslint and prettier plugins for your code editor
 
 ## Quick start
@@ -134,43 +133,6 @@ Simple projects require only two environments: **dev** and **prod**. You can lis
 You can use the taito commands to manage branches, builds, and deployments. Run `taito env -h`, `taito feat -h`, `taito hotfix -h`, and `taito deployment -h` for instructions. Run `taito open builds` to see the build logs. See [version control](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/03-version-control.md) chapter of the [Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/README.md) for some additional information.
 
 > Automatic deployment might be turned off for critical environments (`ci_exec_deploy` setting in `taito-config.sh`). In such case the deployment must be run manually with the `taito -a deployment deploy:prod VERSION` command using a personal admin account after the CI/CD process has ended successfully.
-
-## Usage without Taito CLI
-
-You can use this template also without Taito CLI.
-
-**Local development:**
-
-    npm install              # Install a minimal set of libraries on host
-    npm run install-dev      # Install more libraries on host (for editor autocompletion/linting)
-    docker-compose up        # Start the application
-    -> http://localhost:9999 # Open the site on browser (the port is defined in docker-compose.yaml)
-
-    npm run ...              # Use npm to run npm scripts ('npm run' shows all the scripts)
-    docker-compose ...       # Use docker-compose to operate your application
-    docker ...               # Use docker to operate your containers
-
-TODO: Instructions not up-to-date
-
-**Testing:**
-
-Testing personnel may run Cypress against any remote environment without Taito CLI or docker. See `www/test/README.md` for more instructions.
-
-**Environments and CI/CD:**
-
-Taito CLI supports various infrastructures and technologies out-of-the-box, and you can also extend it by writing custom plugins. If you for some reason want to setup the application environments or run CI/CD steps without Taito CLI, you can write the scripts yourself by using the environment variable values defined in `taito-config.sh`.
-
-Creating an environment:
-
-* Set Kubernetes secret values with `kubectl`. The secrets are defined by `taito_secrets` in `taito-config.sh`, and they are referenced in `scripts/helm*.yaml` files.
-
-Deploying the application:
-
-* Build all container images with [Docker](https://www.docker.com/) and push them to a Docker image registry.
-* Deploy application to Kubernetes with [Helm](https://helm.sh/). Helm templates are located in `scripts/helm/` and environment specific values are located in `scripts/helm*.yaml`. Note that Helm does not support environment variables in value yaml files (this feature is implemented in the Taito CLI Helm plugin). Therefore you need to create a separate `scripts/heml-ENV.yaml` file for each environment and use hardcoded values in each.
-* Optional: Run automatic tests
-* Optional: Revert deployment if some of the tests fail.
-* Optional: Make a production release with semantic-release (see `package.json`)
 
 ## Upgrading
 
