@@ -17,11 +17,11 @@ Table of contents:
 * [Node.js](https://nodejs.org/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * [Taito CLI](https://github.com/TaitoUnited/taito-cli#readme) (or see [TAITOLESS.md](TAITOLESS.md))
-* Optional: eslint and prettier plugins for your code editor
+* Optional: eslint/tslint and prettier plugins for your code editor
 
 ## Quick start
 
-Create a local environment by installing some libraries and generating secrets (add --clean to recreate a clean environment):
+Create local environment by installing some libraries and generating secrets (add `--clean` to recreate clean environment):
 
     taito env apply
 
@@ -53,9 +53,11 @@ Start shell on a container:
 
     taito shell:www
 
-Stop containers:
+Restart and stop:
 
-    taito stop
+    taito restart:www                       # restart the www container
+    taito restart                           # restart all containers
+    taito stop                              # stop all containers
 
 List all project related links and open one of them in browser:
 
