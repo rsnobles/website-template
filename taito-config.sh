@@ -13,10 +13,10 @@ taito_plugins="
   terraform:-local
   gcloud-secrets:-local default-secrets generate-secrets
   docker docker-compose:local kubectl:-local helm:-local
-  npm git-global links-global
-  semantic-release sentry
   gcloud:-local gcloud-storage:-local
   gcloud-builder:-local gcloud-monitoring:-local
+  npm git-global links-global
+  semantic-release sentry
 "
 
 # Project labeling
