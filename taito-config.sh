@@ -23,6 +23,7 @@ taito_plugins="
 taito_organization=${template_default_organization:?}
 taito_organization_abbr=${template_default_organization_abbr:?}
 taito_project=website-template
+taito_random_name=website-template
 taito_company=companyname
 taito_family=
 taito_application=template
@@ -127,7 +128,7 @@ case $taito_env in
     kubectl_replicas=2
 
     # Monitoring
-    taito_monitoring_names=" www "
+    taito_monitoring_targets=" www "
     taito_monitoring_paths=" / "
     taito_monitoring_timeouts=" 5s "
     # You can list all monitoring channels with `taito env info:prod`
