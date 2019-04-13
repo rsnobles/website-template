@@ -13,7 +13,7 @@ taito_plugins="
   terraform:-local
   gcloud-secrets:-local default-secrets generate-secrets
   docker docker-compose:local kubectl:-local helm:-local
-  gcloud:-local gcloud-storage:-local
+  gcloud:-local
   gcloud-builder:-local gcloud-monitoring:-local
   npm git-global links-global
   semantic-release sentry
