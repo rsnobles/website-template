@@ -52,7 +52,7 @@ taito_static_url=
 
 # Repositories
 taito_vc_repository=$taito_project
-taito_vc_repository_url=github.com/${template_default_github_organization:?}/$taito_vc_repository
+taito_vc_repository_url=${template_default_git_url:?}/$taito_vc_repository
 taito_image_registry=${template_default_registry:?}/$taito_zone/$taito_vc_repository
 
 # Stack
@@ -60,6 +60,15 @@ taito_targets="webhook www"
 taito_databases=""
 taito_storages=""
 taito_networks="default"
+
+# Storage definitions for Terraform
+taito_storage_classes="${template_default_storage_class:-}"
+taito_storage_locations="${template_default_storage_location:-}"
+taito_storage_days=${template_default_storage_days:-}
+
+# Storage backup definitions for Terraform
+taito_backup_locations="${template_default_backup_location:-}"
+taito_backup_days="${template_default_backup_days:-}"
 
 # Messaging
 taito_messaging_app=slack
@@ -127,6 +136,15 @@ case $taito_env in
     taito_app_url=https://$taito_domain
     kubectl_replicas=2
 
+    # Storage definitions for Terraform
+    taito_storage_classes="${template_default_storage_class_prod:-}"
+    taito_storage_locations="${template_default_storage_location_prod:-}"
+    taito_storage_days=${template_default_storage_days_prod:-}
+
+    # Storage backup definitions for Terraform
+    taito_backup_locations="${template_default_backup_location_prod:-}"
+    taito_backup_days="${template_default_backup_days_prod:-}"
+
     # Monitoring
     taito_monitoring_targets=" www "
     taito_monitoring_paths=" / "
@@ -191,7 +209,7 @@ link_urls="
   * posts=https://$taito_vc_repository_url/tree/dev/www/site/content/blog Content: posts
   * assets=https://$taito_vc_repository_url/tree/dev/www/site/content/assets Content: assets
   * project=https://$taito_vc_repository_url/projects Project management
-  * builds=https://console.cloud.google.com/cloud-build/builds?project=$taito_zone&query=source.repo_source.repo_name%3D%22github_${template_default_github_organization:?}_$taito_vc_repository%22 Build logs
+  * builds=https://console.cloud.google.com/cloud-build/builds?project=$taito_zone&query=source.repo_source.repo_name%3D%22github_${template_default_git_organization:?}_$taito_vc_repository%22 Build logs
   * logs:ENV=https://console.cloud.google.com/logs/viewer?project=$taito_zone&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F$kubectl_name%2Fnamespace_id%2F$taito_namespace Logs (:ENV)
   * errors:ENV=https://sentry.io/${template_default_sentry_organization:?}/$taito_project/?query=is%3Aunresolved+environment%3A$taito_target_env Sentry errors (:ENV)
   * uptime=https://app.google.stackdriver.com/uptime?project=$taito_zone Uptime monitoring (Stackdriver)

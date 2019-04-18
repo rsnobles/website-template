@@ -8,7 +8,8 @@
 : "${template_default_taito_image:?}"
 : "${template_default_organization:?}"
 : "${template_default_organization_abbr:?}"
-: "${template_default_github_organization:?}"
+: "${template_default_git_organization:?}"
+: "${template_default_git_url:?}"
 : "${template_default_sentry_organization:?}"
 : "${template_default_domain:?}"
 : "${template_default_domain_prod:?}"
@@ -39,6 +40,18 @@ rm LICENSE
 # Remove the example site
 rm -rf www/site
 sed -i '/    - "\/service\/site\/node_modules"/d' docker-compose.yaml
+
+rm -f scripts/terraform/.gitignore
+
+#######################
+# Replace some strings
+#######################
+
+if [[ ! ${taito_random_name} ]] || [[ ${taito_random_name} == "website-template" ]]; then
+  taito_random_name="$(taito -q util-random-words: 3)"
+fi
+echo "Setting random name: ${taito_random_name}"
+sed -i "s/^taito_random_name=.*$/taito_random_name=${taito_random_name}/" taito-config.sh
 
 # Replace repository url in package.json
 sed -i "s|TaitoUnited/website-template.git|${taito_organization}/${taito_vc_repository}.git|g" package.json
@@ -86,7 +99,8 @@ echo "Replacing template variables with the user specific settings..."
 # Replace template variables in taito-config.sh with user specific settings
 sed -i "s/\${template_default_organization:?}/${template_default_organization}/g" taito-config.sh
 sed -i "s/\${template_default_organization_abbr:?}/${template_default_organization_abbr}/g" taito-config.sh
-sed -i "s/\${template_default_github_organization:?}/${template_default_github_organization}/g" taito-config.sh
+sed -i "s/\${template_default_git_organization:?}/${template_default_git_organization}/g" taito-config.sh
+sed -i "s/\${template_default_git_url:?}/${template_default_git_url//\//\\/}/g" taito-config.sh
 sed -i "s/\${template_default_sentry_organization:?}/${template_default_sentry_organization}/g" taito-config.sh
 sed -i "s/\${template_default_domain:?}/${template_default_domain}/g" taito-config.sh
 sed -i "s/\${template_default_domain_prod:?}/${template_default_domain_prod}/g" taito-config.sh
@@ -123,12 +137,6 @@ sed -i "s/\${template_default_backup_location:-}/${template_default_backup_locat
 sed -i "s/\${template_default_backup_location_prod:-}/${template_default_backup_location_prod:-}/g" taito-config.sh
 sed -i "s/\${template_default_backup_days:-}/${template_default_backup_days:-}/g" taito-config.sh
 sed -i "s/\${template_default_backup_days_prod:-}/${template_default_backup_days_prod:-}/g" taito-config.sh
-
-echo "Setting random name..."
-if [[ ! ${taito_random_name} ]]; then
-  taito_random_name=$(taito -q util random words: 3)
-fi
-sed -i "s/^taito_random_name=.*$/taito_random_name=${taito_random_name}/g" taito-config.sh
 
 echo "Removing template settings from cloudbuild.yaml..."
 

@@ -2,15 +2,6 @@
 
 This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/CONFIGURATION.md) instead. Note that Taito CLI is optional (see [TAITOLESS.md](TAITOLESS.md)).
 
-Table of contents:
-
-* [Prerequisites](#prerequisites)
-* [Version control settings](#version-control-settings)
-* [Static site generator](#static-site-generator)
-* [Hosting options](#hosting-options)
-* [Remote environments](#remote-environments)
-* [Remote real-time preview](#remote-real-time-preview)
-
 ## Prerequisites
 
 * [Node.js](https://nodejs.org/)
@@ -20,7 +11,7 @@ Table of contents:
 
 ## Version control settings
 
-Run `taito open vc conventions` in the project directory to see organization specific settings that you should configure for your git repository.
+Run `taito open conventions` in the project directory to see organization specific settings that you should configure for your git repository.
 
 * [ ] All done
 
@@ -88,17 +79,34 @@ By default the template deploys the site to Kubernetes running on Google Cloud. 
 
 * [ ] All done
 
-## Remote environments
+## Your first remote environment (dev)
 
-Define remote environments with the `taito_environments` setting in `taito-config.sh`. Make sure that your authentication is in effect for an environment with `taito auth:ENV`, and then create an environment by running `taito env apply:ENV`. Examples for environment names: `f-orders`, `dev`, `test`, `stag`, `canary`, `prod`. Create a `dev` environment first, and the other environments later if required.
+Make sure your authentication is in effect:
 
-If basic auth (htpasswd) is used only for hiding non-production environments, you can use the same credentials for all environments. In such case you should also write them down to the [links](README.md#links) section on README.md so that all project personnel can easily access the credentials.
+    taito auth:dev
 
-> If you have some trouble creating an environment, you can destroy it by running `taito env destroy:ENV` and then try again with `taito env apply:ENV`.
+Create the environment:
 
-> See [6. Remote environments](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/05-remote-environments.md) chapter of Taito CLI tutorial for more thorough instructions.
+    taito env apply:dev
 
-> Operations on production and staging environments usually require admin rights. Please contact DevOps personnel if necessary.
+Write down the basic auth credentials to [README.md#links](README.md#links):
+
+    EDIT README.md         # Edit the links section
+
+Write down the basic auth credentials to `taito-config.sh`:
+
+    EDIT taito-config.sh   # Edit this: ci_test_base_url=https://user:painipaini@...
+
+Push some changes to dev branch:
+
+    taito push             # Or just git push
+
+See it build and deploy:
+
+    taito open builds:dev
+    taito open client:dev
+
+> If you have some trouble creating an environment, you can destroy it by running `taito env destroy:dev` and then try again with `taito env apply:dev`.
 
 * [ ] All done
 
@@ -114,3 +122,27 @@ You can edit the site on GitHub web GUI and preview changes on a remote environm
 You can enable the build webhook also for staging, if you like.
 
 * [ ] All done
+
+---
+
+## Remote environments
+
+You create the other environments just like the dev environment (see the previous chapter). However, you don't need to write down the basic auth credentials anymore, since you can reuse the same credentials as in dev environment.
+
+Examples for environment names: `f-orders`, `dev`, `test`, `stag`, `canary`, `prod`. You configure project environments with `taito_environments` setting in `taito-config.sh`.
+
+See [6. Remote environments](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/05-remote-environments.md) chapter of Taito CLI tutorial for more thorough instructions.
+
+Operations on production and staging environments usually require admin rights. Please contact DevOps personnel if necessary.
+
+## Kubernetes
+
+If you need to, you can configure Kubernetes settings by modifying `heml*.yaml` files located under the `scripts`-directory. The default settings, however, are ok for most sites.
+
+## Secrets
+
+You can add a new secret like this:
+
+1. Add a secret definition to the `taito_secrets` setting in `taito-config.sh`.
+2. Map the secret definition to a secret in `docker-compose.yaml` for Docker Compose and in `scripts/helm.yaml` for Kubernetes.
+3. Run `taito env rotate:ENV SECRET` to generate a secret value for an environment. Run the command for each environment separately. Note that the rotate command restarts all pods in the same namespace.
