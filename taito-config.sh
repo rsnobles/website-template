@@ -53,7 +53,7 @@ taito_static_url=
 # Repositories
 taito_vc_repository=$taito_project
 taito_vc_repository_url=${template_default_git_url:?}/$taito_vc_repository
-taito_image_registry=${template_default_registry:?}/$taito_zone/$taito_vc_repository
+taito_image_registry=${template_default_registry:?}/$taito_vc_repository
 
 # Stack
 taito_targets="webhook www"
