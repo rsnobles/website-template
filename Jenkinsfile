@@ -8,7 +8,7 @@ export $BRANCH_NAME="NOTE: get from jenkins environment"
 
 # Some preparations
 taito install:$BRANCH_NAME
-taito artifact-prepare:$BRANCH_NAME $COMMIT_SHA
+taito build-prepare:$BRANCH_NAME $COMMIT_SHA
 taito scan:$BRANCH_NAME
 
 # Build and push container images: admin, bot, client, server, worker
@@ -24,5 +24,5 @@ taito test:$BRANCH_NAME
 taito deployment-verify:$BRANCH_NAME
 
 # Publish release notes and version tag
-taito artifact-release:$BRANCH_NAME
+taito build-release:$BRANCH_NAME
 */
