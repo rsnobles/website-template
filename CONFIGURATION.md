@@ -71,9 +71,7 @@ Restart containers and open the site on browser:
 
 * [ ] All done
 
-## Hosting options
-
-By default the template deploys the site to Kubernetes running on Google Cloud. TODO: support for GitHub Pages, Netlify, and S3-compatible object storage.
+## Basic settings
 
 1. Modify `taito-config.sh` if you need to change some settings. The default settings are ok for most projects.
 2. Run `taito project apply`.
