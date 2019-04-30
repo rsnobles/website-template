@@ -14,6 +14,7 @@ full-stack:
 
   ingress:
     class: nginx
+    oldRewritePolicy: false
     tls: true
     maxBodySize: 1m
     basicAuth:
