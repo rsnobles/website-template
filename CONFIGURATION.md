@@ -11,7 +11,7 @@ This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited
 
 ## Version control settings
 
-Run `taito open conventions` in the project directory to see organization specific settings that you should configure for your git repository.
+Run `taito open conventions` in the project directory to see organization specific settings that you should configure for your git repository. At least you should set `dev` as the default branch to avoid people using master branch for development by accident.
 
 * [ ] All done
 

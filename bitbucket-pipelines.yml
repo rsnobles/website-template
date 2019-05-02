@@ -1,0 +1,68 @@
+image:
+  name: $template_default_taito_image
+  username: $template_default_taito_image_username
+  password: $template_default_taito_image_password
+  email: $template_default_taito_image_email
+options:
+  docker: true
+  max-time: 60
+definitions:
+  services:
+    docker:
+      memory: 3072
+
+pipelines:
+  branches:
+    '{dev,test,stag,canary,master}':
+    # Prepare build
+    - step:
+        script:
+          - export taito_mode=ci
+          - taito build-prepare:$BITBUCKET_BRANCH
+    # Prepare artifacts in parallel
+    - parallel:
+      - step: # www prepare
+          script:
+            - export taito_mode=ci
+            - taito artifact-prepare:www:$BITBUCKET_BRANCH $BITBUCKET_COMMIT true
+          artifacts:
+            - www.docker
+            - www-tester.docker
+      - step: # webhook prepare
+          script:
+            - export taito_mode=ci
+            - taito artifact-prepare:webhook:$BITBUCKET_BRANCH $BITBUCKET_COMMIT true
+          artifacts:
+            - webhook.docker
+            - webhook-tester.docker
+    # Deploy the changes to target environment
+    - step:
+        script:
+          - export taito_mode=ci
+          - taito deployment-deploy:$BITBUCKET_BRANCH $BITBUCKET_COMMIT
+    # Test and verify deployment
+    - step:
+        script:
+          - export taito_mode=ci
+          - "taito -v artifact-load: tester"
+          - taito deployment-wait:$BITBUCKET_BRANCH
+          - taito test:$BITBUCKET_BRANCH
+          - taito deployment-verify:$BITBUCKET_BRANCH
+        # # TODO: revert deployment on fail
+        # after-script:
+        #   - [ $BITBUCKET_EXIT_CODE != 0 ] && taito deployment-revert:$BITBUCKET_BRANCH $BITBUCKET_COMMIT || :
+    # Release artifacts (push previously built container images with a new tag)
+    - parallel:
+      - step: # www release
+          script:
+            - export taito_mode=ci
+            - taito artifact-release:www:$BITBUCKET_BRANCH $BITBUCKET_COMMIT
+      - step: # webhook release
+          script:
+            - export taito_mode=ci
+            - taito artifact-release:webhook:$BITBUCKET_BRANCH $BITBUCKET_COMMIT
+    # Release build
+    - step:
+        script:
+          - export taito_mode=ci
+          - taito build-release:$BITBUCKET_BRANCH

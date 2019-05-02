@@ -43,6 +43,26 @@ sed -i '/    - "\/service\/site\/node_modules"/d' docker-compose.yaml
 
 rm -f scripts/terraform/.gitignore
 
+######################
+# Choose CI/CD
+######################
+
+ci=${template_default_ci_provider:-}
+while [[ " aws azure bitbucket github gitlab gcloud jenkins shell travis " != *" $ci "* ]]; do
+  echo "Select CI/CD: aws, azure, bitbucket, github, gitlab, gcloud, jenkins, shell, or travis"
+  read -r ci
+done
+
+if [[ ${template_default_ci_deploy_with_spinnaker:-} ]]; then
+  ci_deploy_with_spinnaker=$template_default_ci_deploy_with_spinnaker
+else
+  echo "Use Spinnaker for deployment (y/N)?"
+  read -r confirm
+  if [[ ${confirm} =~ ^[Yy]$ ]]; then
+    ci_deploy_with_spinnaker=true
+  fi
+fi
+
 #######################
 # Replace some strings
 #######################
@@ -145,4 +165,133 @@ sed -i '/_TEMPLATE_DEFAULT_/d' cloudbuild.yaml
 sed -i '/template_default_taito_image/d' cloudbuild.yaml
 sed -i "s|_IMAGE_REGISTRY: eu.gcr.io/\$PROJECT_ID|_IMAGE_REGISTRY: ${template_default_container_registry}/${template_default_zone}|" cloudbuild.yaml
 
-rm -f temp
+######################
+# Initialize CI/CD
+######################
+
+echo "Initializing CI/CD: $ci"
+ci_script=
+
+# aws
+if [[ $ci == "aws" ]]; then
+  ci_script=aws-pipelines.yml
+  sed -i "s/ gcloud-ci:-local/aws-ci:-local/" taito-config.sh
+  echo "NOTE: AWS CI/CD not yet implemented. Implement it in '${ci_script}'."
+  read -r
+else
+  rm -f aws-pipelines.yml
+fi
+
+# azure
+if [[ $ci == "azure" ]]; then
+  ci_script=azure-pipelines.yml
+  sed -i "s/ gcloud-ci:-local/azure-ci:-local/" taito-config.sh
+  echo "NOTE: Azure CI/CD not yet implemented. Implement it in '${ci_script}'."
+  read -r
+else
+  rm -f azure-pipelines.yml
+fi
+
+# bitbucket
+if [[ $ci == "bitbucket" ]]; then
+  ci_script=bitbucket-pipelines.yml
+  sed -i "s/ gcloud-ci:-local/ bitbucket-ci:-local/" taito-config.sh
+
+  # Links
+  sed -i "s|^  \\* builds.*|  * builds=https://bitbucket.org/${template_default_git_organization:?}/${taito_vc_repository}/addon/pipelines/home Build logs|" taito-config.sh
+  sed -i "s|^  \\* project=.*|  * project=https://bitbucket.org/${template_default_git_organization:?}/${taito_vc_repository}/addon/trello/trello-board Project management|" taito-config.sh
+  # TODO: project documentation
+else
+  rm -f bitbucket-pipelines.yml
+fi
+
+# github
+if [[ $ci == "github" ]]; then
+  ci_script=.github/main.workflow
+  sed -i "s/ gcloud-ci:-local/github-ci:-local/" taito-config.sh
+  echo "NOTE: GitHub CI/CD not yet implemented. Implement it in '${ci_script}'."
+  read -r
+else
+  rm -rf .github
+fi
+
+# gitlab
+if [[ $ci == "gitlab" ]]; then
+  ci_script=.gitlab-ci.yml
+  sed -i "s/ gcloud-ci:-local/gitlab-ci:-local/" taito-config.sh
+  echo "NOTE: GitLab CI/CD not yet implemented. Implement it in '${ci_script}'."
+  read -r
+else
+  rm -rf .gitlab-ci.yml
+fi
+
+# gcloud
+if [[ $ci == "gcloud" ]]; then
+  ci_script=cloudbuild.yaml
+  sed -i "s|\${_TEMPLATE_DEFAULT_TAITO_IMAGE}|${template_default_taito_image}|g" cloudbuild.yaml
+  sed -i '/_TEMPLATE_DEFAULT_/d' cloudbuild.yaml
+  sei -i '/taito project create/d' cloudbuild.yaml
+  sed -i '/template_default_taito_image/d' cloudbuild.yaml
+  sed -i "s|_IMAGE_REGISTRY: eu.gcr.io/\$PROJECT_ID|_IMAGE_REGISTRY: ${template_default_container_registry}|" cloudbuild.yaml
+else
+  rm -f cloudbuild.yaml
+fi
+
+# jenkins
+if [[ $ci == "jenkins" ]]; then
+  ci_script=Jenkinsfile
+  sed -i "s/ gcloud-ci:-local/jenkins-ci:-local/" taito-config.sh
+  echo "NOTE: Jenkins CI/CD not yet implemented. Implement it in '${ci_script}'."
+  read -r
+else
+  rm -f Jenkinsfile
+fi
+
+# shell
+if [[ $ci == "shell" ]]; then
+  ci_script=build.sh
+  sed -i "s/ gcloud-ci:-local//" taito-config.sh
+else
+  rm -f build.sh
+fi
+
+# spinnaker
+if [[ $ci_deploy_with_spinnaker == "true" ]]; then
+  echo "NOTE: Spinnaker CI/CD not yet implemented."
+  read -r
+fi
+
+# travis
+if [[ $ci == "travis" ]]; then
+  ci_script=.travis.yml
+  sed -i "s/ gcloud-ci:-local/travis-ci:-local/" taito-config.sh
+  echo "NOTE: Travis CI/CD not yet implemented. Implement it in '${ci_script}'."
+  read -r
+else
+  rm -f .travis.yml
+fi
+
+# common
+sed -i "s/\$template_default_taito_image_username/${template_default_taito_image_username:-}/g" "${ci_script}"
+sed -i "s/\$template_default_taito_image_password/${template_default_taito_image_password:-}/g" "${ci_script}"
+sed -i "s/\$template_default_taito_image_email/${template_default_taito_image_email:-}/g" "${ci_script}"
+sed -i "s|\$template_default_taito_image|${template_default_taito_image}|g" "${ci_script}"
+
+##############################
+# Initialize semantic-release
+##############################
+
+if [[ "${template_default_git_provider}" != "github.com" ]]; then
+  echo "Disabling semantic-release for git provider '${template_default_git_provider}'"
+  echo "TODO: implement semantic-release support for '${template_default_git_provider}'"
+  sed -i "s/release-pre:prod\": \"semantic-release/_release-pre:prod\": \"echo DISABLED semantic-release/g" package.json
+  sed -i "s/release-post:prod\": \"semantic-release/_release-post:prod\": \"echo DISABLED semantic-release/g" package.json
+  sed -i '/github-buildbot/d' taito-config.sh
+fi
+
+######################
+# Clean up
+######################
+
+echo "Cleaning up"
+rm -f temp || :
