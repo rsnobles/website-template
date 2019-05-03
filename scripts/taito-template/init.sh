@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_company:?}"
 : "${taito_vc_repository:?}"
 : "${taito_vc_repository_alt:?}"
