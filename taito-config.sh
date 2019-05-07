@@ -56,7 +56,6 @@ taito_image_registry=${template_default_container_registry:?}/$taito_vc_reposito
 
 # Stack
 taito_targets="webhook www"
-taito_databases=""
 taito_storages=""
 taito_networks="default"
 
