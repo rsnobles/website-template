@@ -9,11 +9,9 @@
 # Taito CLI
 taito_version=1
 taito_plugins="
-  gcloud:-local
   terraform:-local
-  gcloud-secrets:-local default-secrets generate-secrets
+  default-secrets generate-secrets
   docker docker-compose:local kubectl:-local helm:-local
-  gcloud-monitoring:-local
   gcloud-ci:-local
   npm git-global links-global
   semantic-release sentry
@@ -88,7 +86,7 @@ taito_default_password=secret1234
 # After that the same container image will be deployed to other environments:
 # dev -> test -> stag -> canary -> prod
 ci_exec_build=false        # build container image if it does not exist already
-ci_exec_deploy=true        # deploy automatically
+ci_exec_deploy=${template_default_ci_exec_deploy:-true}        # deploy automatically
 ci_exec_test=false         # execute test suites after deploy
 ci_exec_test_wait=60       # how many seconds to wait for deployment/restart
 ci_exec_test_init=false    # run 'init --clean' before each test suite
@@ -106,9 +104,6 @@ jira_project_id=
 # Template plugin
 template_name=WEBSITE-TEMPLATE
 template_source_git=git@github.com:TaitoUnited
-
-# Google Cloud plugin
-gcloud_service_account_enabled=false
 
 # Kubernetes plugin
 kubernetes_name=${template_default_kubernetes:?}
@@ -153,6 +148,9 @@ case $taito_env in
     taito_monitoring_timeouts=" 5s "
     # You can list all monitoring channels with `taito env info:prod`
     taito_monitoring_uptime_channels="${template_default_monitoring_uptime_channels_prod:-}"
+
+    # CI/CD
+    ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
     ;;
   stag)
     taito_zone=${template_default_zone_prod:?}
@@ -165,6 +163,9 @@ case $taito_env in
     taito_default_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?}
     taito_app_url=https://$taito_domain
     kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:?}${kubernetes_name}"
+
+    # CI/CD
+    ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
     ;;
   test)
     ci_test_base_url=https://TODO:TODO@$taito_domain
@@ -204,13 +205,12 @@ link_urls="
   * assets=https://$taito_vc_repository_url/tree/dev/www/site/content/assets Content: assets
   * project=https://$taito_vc_repository_url/projects Project management
   * builds=https://console.cloud.google.com/cloud-build/builds?project=$taito_zone&query=source.repo_source.repo_name%3D%22github_${template_default_git_organization:?}_$taito_vc_repository%22 Build logs
-  * logs:ENV=https://console.cloud.google.com/logs/viewer?project=$taito_zone&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F$kubernetes_name%2Fnamespace_id%2F$taito_namespace Logs (:ENV)
   * errors:ENV=https://sentry.io/${template_default_sentry_organization:?}/$taito_project/?query=is%3Aunresolved+environment%3A$taito_target_env Sentry errors (:ENV)
-  * uptime=https://app.google.stackdriver.com/uptime?project=$taito_zone Uptime monitoring (Stackdriver)
   * styleguide=https://TODO UI/UX style guide and designs
 "
 
-# Secrets
+# ------ Secrets ------
+
 taito_secrets="
   github-buildbot.token:read/devops
   $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
@@ -228,6 +228,38 @@ if [[ "$taito_target_env" != "prod" ]]; then
     $taito_project-$taito_env-webhook.gittoken:manual
   "
 fi
+
+# ------ Provider specific settings ------
+
+case $taito_provider in
+  aws)
+    taito_plugins="
+      aws:-local
+      ${taito_plugins}
+    "
+
+    link_urls="
+      ${link_urls}
+      * logs:ENV=https://${template_default_provider_region}.console.aws.amazon.com/cloudwatch/home?region=${template_default_provider_region}#logs: Logs (:ENV)
+    "
+    ;;
+  gcloud)
+    taito_plugins="
+      gcloud:-local
+      gcloud-secrets:-local
+      ${taito_plugins}
+      gcloud-monitoring:-local
+    "
+
+    link_urls="
+      ${link_urls}
+      * logs:ENV=https://console.cloud.google.com/logs/viewer?project=$taito_zone&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F$kubernetes_name%2Fnamespace_id%2F$taito_namespace Logs (:ENV)
+      * uptime=https://app.google.stackdriver.com/uptime?project=$taito_zone&f.search=$taito_project Uptime monitoring (Stackdriver)
+    "
+
+    gcloud_service_account_enabled=true
+    ;;
+esac
 
 # ------ Test suite settings ------
 # NOTE: Variable is passed to the test without the test_TARGET_ prefix
