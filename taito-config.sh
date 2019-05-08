@@ -13,7 +13,7 @@ taito_plugins="
   default-secrets generate-secrets
   docker docker-compose:local kubectl:-local helm:-local
   npm git-global links-global
-  semantic-release sentry
+  sentry semantic-release:prod
 "
 
 # Project labeling
@@ -218,7 +218,6 @@ link_urls="
 # ------ Secrets ------
 
 taito_secrets="
-  github-buildbot.token:read/devops
   $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
 "
 
@@ -289,6 +288,14 @@ case $taito_ci_provider in
       * builds[:ENV]=https://console.cloud.google.com/cloud-build/builds?project=$taito_zone&query=source.repo_source.repo_name%3D%22github_${template_default_vc_organization:?}_$taito_vc_repository%22 Build logs
       * artifacts=https://TODO-DOCS-AND-TEST-REPORTS Generated documentation and test reports
     "
+    # Google Cloud build does not support storing build secrets on user account
+    # or organization level. Therefore we use Kubernetes devops namespace.
+    if [[ $taito_plugins == *"semantic-release:$taito_env"* ]]; then
+      taito_remote_secrets="
+        $taito_remote_secrets
+        github-buildbot.token:read/devops
+      "
+    fi
     ;;
 esac
 
