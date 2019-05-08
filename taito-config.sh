@@ -12,7 +12,6 @@ taito_plugins="
   terraform:-local
   default-secrets generate-secrets
   docker docker-compose:local kubectl:-local helm:-local
-  gcloud-ci:-local
   npm git-global links-global
   semantic-release sentry
 "
@@ -49,9 +48,11 @@ taito_default_domain=$taito_project-$taito_target_env.${template_default_domain:
 taito_app_url=https://$taito_domain
 taito_static_url=
 
-# Repositories
+# CI/CD and repositories
+taito_ci_provider=${template_default_ci_provider:?}
+taito_vc_provider=${template_default_vc_provider:?}
 taito_vc_repository=$taito_project
-taito_vc_repository_url=${template_default_git_url:?}/$taito_vc_repository
+taito_vc_repository_url=${template_default_vc_url:?}/$taito_vc_repository
 taito_image_registry=${template_default_container_registry:?}/$taito_vc_repository
 
 # Stack
@@ -120,6 +121,7 @@ sentry_organization=${template_default_sentry_organization:?}
 case $taito_env in
   prod)
     taito_zone=${template_default_zone_prod:?}
+    taito_provider=${template_default_provider_prod:?}
     taito_provider_org_id=${template_default_provider_org_id_prod:?}
     taito_provider_region=${template_default_provider_region_prod:?}
     taito_provider_zone=${template_default_provider_zone_prod:?}
@@ -148,11 +150,15 @@ case $taito_env in
     # You can list all monitoring channels with `taito env info:prod`
     taito_monitoring_uptime_channels="${template_default_monitoring_uptime_channels_prod:-}"
 
-    # CI/CD
-    ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
+    # CI/CD and repositories
+    taito_ci_provider=${template_default_ci_provider_prod:?}
+    taito_vc_provider=${template_default_vc_provider_prod:?}
+    taito_vc_repository_url=${template_default_vc_url_prod:?}/$taito_vc_repository
+    taito_image_registry=${template_default_container_registry_prod:?}/$taito_vc_repository    ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
     ;;
   stag)
     taito_zone=${template_default_zone_prod:?}
+    taito_provider=${template_default_provider_prod:?}
     taito_provider_org_id=${template_default_provider_org_id_prod:?}
     taito_provider_region=${template_default_provider_region_prod:?}
     taito_provider_zone=${template_default_provider_zone_prod:?}
@@ -163,7 +169,11 @@ case $taito_env in
     taito_app_url=https://$taito_domain
     kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:?}${kubernetes_name}"
 
-    # CI/CD
+    # CI/CD and repositories
+    taito_ci_provider=${template_default_ci_provider_prod:?}
+    taito_vc_provider=${template_default_vc_provider_prod:?}
+    taito_vc_repository_url=${template_default_vc_url_prod:?}/$taito_vc_repository
+    taito_image_registry=${template_default_container_registry_prod:?}/$taito_vc_repository
     ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
     ;;
   test)
@@ -202,9 +212,6 @@ link_urls="
   * git=https://$taito_vc_repository_url GitHub repository
   * posts=https://$taito_vc_repository_url/tree/dev/www/site/content/blog Content: posts
   * assets=https://$taito_vc_repository_url/tree/dev/www/site/content/assets Content: assets
-  * project=https://$taito_vc_repository_url/projects Project management
-  * builds=https://console.cloud.google.com/cloud-build/builds?project=$taito_zone&query=source.repo_source.repo_name%3D%22github_${template_default_git_organization:?}_$taito_vc_repository%22 Build logs
-  * errors:ENV=https://sentry.io/${template_default_sentry_organization:?}/$taito_project/?query=is%3Aunresolved+environment%3A$taito_target_env Sentry errors (:ENV)
   * styleguide=https://TODO UI/UX style guide and designs
 "
 
@@ -259,6 +266,64 @@ case $taito_provider in
     gcloud_service_account_enabled=true
     ;;
 esac
+
+case $taito_ci_provider in
+  bitbucket)
+    taito_plugins="
+      ${taito_plugins}
+      bitbucket-ci:-local
+    "
+    link_urls="
+      ${link_urls}
+      * builds=https://$taito_vc_repository_url/addon/pipelines/home Build logs
+      * artifacts=https://TODO-DOCS-AND-TEST-REPORTS Generated documentation and test reports
+    "
+    ;;
+  gcloud)
+    taito_plugins="
+      ${taito_plugins}
+      gcloud-ci:-local
+    "
+    link_urls="
+      ${link_urls}
+      * builds[:ENV]=https://console.cloud.google.com/cloud-build/builds?project=$taito_zone&query=source.repo_source.repo_name%3D%22github_${template_default_vc_organization:?}_$taito_vc_repository%22 Build logs
+      * artifacts=https://TODO-DOCS-AND-TEST-REPORTS Generated documentation and test reports
+    "
+    ;;
+esac
+
+case $taito_vc_provider in
+  bitbucket)
+    taito_plugins="
+      ${taito_plugins}
+      bitbucket-ci:-local
+    "
+    link_urls="
+      ${link_urls}
+      * docs=https://$taito_vc_repository_url/wiki/Home Project documentation
+      * project=https://$taito_vc_repository_url/addon/trello/trello-board Project management
+    "
+    ;;
+  github)
+    taito_plugins="
+      ${taito_plugins}
+      gcloud-ci:-local
+    "
+    link_urls="
+      ${link_urls}
+      * docs=https://$taito_vc_repository_url/wiki Project documentation
+      * project=https://$taito_vc_repository_url/projects Project management
+    "
+    ;;
+esac
+
+if [[ $taito_plugins == *"sentry"* ]]; then
+  link_urls="
+    ${link_urls}
+    * errors:ENV=https://sentry.io/${template_default_sentry_organization:?}/$taito_project/?query=is%3Aunresolved+environment%3A$taito_target_env Sentry errors (:ENV)
+  "
+fi
+
 
 # ------ Test suite settings ------
 # NOTE: Variable is passed to the test without the test_TARGET_ prefix

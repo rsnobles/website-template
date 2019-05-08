@@ -30,9 +30,9 @@ services:
   #     - "9000:9000"
   #   environment:
   #     COMMON_ENV: dev
-  #     GIT_REPOSITORY_URL: github.com/TaitoUnited/website-template.git
+  #     VC_REPOSITORY_URL: github.com/TaitoUnited/website-template.git
   #     WEBHOOK_URL_PREFIX: SECRET
-  #     WEBHOOK_GIT_TOKEN: SECRET
+  #     WEBHOOK_VC_TOKEN: SECRET
 
 networks:
   default:
