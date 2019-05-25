@@ -5,6 +5,7 @@ global:
   logLevel: info    # trace, debug, info, warn, error, fatal
   registry: ${taito_image_registry}
   imagePullPolicy: ''
+  debug: false
 
 full-stack:
   # TODO: --enable-pod-security-policy:
