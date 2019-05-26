@@ -244,12 +244,12 @@ case $taito_provider in
       * logs:ENV=https://${taito_provider_region}.console.aws.amazon.com/cloudwatch/home?region=${taito_provider_region}#logs: Logs (:ENV)
     "
     ;;
-  gcloud)
+  gcp)
     taito_plugins="
-      gcloud:-local
-      gcloud-secrets:-local
+      gcp:-local
+      gcp-secrets:-local
       ${taito_plugins}
-      gcloud-monitoring:-local
+      gcp-monitoring:-local
     "
 
     link_urls="
@@ -258,7 +258,7 @@ case $taito_provider in
       * uptime=https://app.google.stackdriver.com/uptime?project=$taito_zone&f.search=$taito_project Uptime monitoring (Stackdriver)
     "
 
-    gcloud_service_account_enabled=true
+    gcp_service_account_enabled=true
     ;;
 esac
 
@@ -274,10 +274,10 @@ case $taito_ci_provider in
       * artifacts=https://TODO-DOCS-AND-TEST-REPORTS Generated documentation and test reports
     "
     ;;
-  gcloud)
+  gcp)
     taito_plugins="
       ${taito_plugins}
-      gcloud-ci:-local
+      gcp-ci:-local
     "
     link_urls="
       ${link_urls}
