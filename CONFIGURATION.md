@@ -1,7 +1,5 @@
 # Configuration
 
-> TIP: To save some time, start application in a cleaned and initialized local environment by running: `cd website-template` and `taito kaboom`. Once the command starts to install libraries, leave it on the background, and continue with configuration. If you have problems, see [prerequisites](#prerequisites).
-
 This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/CONFIGURATION.md) instead. Note that Taito CLI is optional (see [TAITOLESS.md](TAITOLESS.md)).
 
 ## Prerequisites
@@ -20,7 +18,7 @@ This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited
 
 * [ ] All done
 
-## Static site generator
+## Static site generator and local development environment
 
 Configure static site generator of your choice with the following instructions. Currently instructions are provided only for Gatsby, Hugo and Jekyll, but with some extra work the website-template may easily be used with any static site generator.
 
