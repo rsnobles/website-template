@@ -11,7 +11,7 @@ workflow "Build, deploy, test, publish" {
 
 action "build-prepare" {
   uses = "docker://$template_default_taito_image"
-  runs = ["bash", "-c", "taito build-prepare:${GITHUB_REF#refs/heads/}"]
+  runs = ["bash", "-c", "taito build prepare:${GITHUB_REF#refs/heads/}"]
   env = {
     taito_mode = "ci"
   }
@@ -24,7 +24,7 @@ action "artifact-prepare:www" {
   uses = "docker://$template_default_taito_image"
   runs = [
     "bash", "-c",
-    "taito artifact-prepare:www:${GITHUB_REF#refs/heads/} $GITHUB_SHA"
+    "taito artifact prepare:www:${GITHUB_REF#refs/heads/} $GITHUB_SHA"
   ]
   env = {
     taito_mode = "ci"
@@ -35,7 +35,7 @@ action "artifact-prepare:webhook" {
   uses = "docker://$template_default_taito_image"
   runs = [
     "bash", "-c",
-    "taito artifact-prepare:webhook:${GITHUB_REF#refs/heads/} $GITHUB_SHA"
+    "taito artifact prepare:webhook:${GITHUB_REF#refs/heads/} $GITHUB_SHA"
   ]
   env = {
     taito_mode = "ci"
@@ -46,7 +46,7 @@ action "artifact-prepare:webhook" {
 
 action "deployment-deploy" {
   uses = "docker://$template_default_taito_image"
-  runs = ["bash", "-c", "taito deployment-deploy:${GITHUB_REF#refs/heads/} $GITHUB_SHA"]
+  runs = ["bash", "-c", "taito deployment deploy:${GITHUB_REF#refs/heads/} $GITHUB_SHA"]
   env = {
     taito_mode = "ci"
   }
@@ -56,7 +56,7 @@ action "deployment-deploy" {
 
 action "deployment-wait" {
   uses = "docker://$template_default_taito_image"
-  runs = ["bash", "-c", "taito deployment-wait:${GITHUB_REF#refs/heads/}"]
+  runs = ["bash", "-c", "taito deployment wait:${GITHUB_REF#refs/heads/}"]
   env = {
     taito_mode = "ci"
   }
@@ -70,7 +70,7 @@ action "test" {
 }
 action "deployment-verify" {
   uses = "docker://$template_default_taito_image"
-  runs = ["bash", "-c", "taito deployment-verify:${GITHUB_REF#refs/heads/}"]
+  runs = ["bash", "-c", "taito deployment verify:${GITHUB_REF#refs/heads/}"]
   env = {
     taito_mode = "ci"
   }
@@ -83,7 +83,7 @@ action "artifact-release:www" {
   uses = "docker://$template_default_taito_image"
   runs = [
     "bash", "-c",
-    "taito artifact-release:www:${GITHUB_REF#refs/heads/} $GITHUB_SHA"
+    "taito artifact release:www:${GITHUB_REF#refs/heads/} $GITHUB_SHA"
   ]
   env = {
     taito_mode = "ci"
@@ -94,7 +94,7 @@ action "artifact-release:webhook" {
   uses = "docker://$template_default_taito_image"
   runs = [
     "bash", "-c",
-    "taito artifact-release:webhook:${GITHUB_REF#refs/heads/} $GITHUB_SHA"
+    "taito artifact release:webhook:${GITHUB_REF#refs/heads/} $GITHUB_SHA"
   ]
   env = {
     taito_mode = "ci"
@@ -107,7 +107,7 @@ action "build-release" {
   uses = "docker://$template_default_taito_image"
   runs = [
     "bash", "-c",
-    "taito build-release:${GITHUB_REF#refs/heads/}"
+    "taito build release:${GITHUB_REF#refs/heads/}"
   ]
   env = {
     taito_mode = "ci"

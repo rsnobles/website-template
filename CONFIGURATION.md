@@ -1,17 +1,22 @@
 # Configuration
 
+> TIP: To save some time, start application in a cleaned and initialized local environment by running: `cd website-template` and `taito kaboom`. Once the command starts to install libraries, leave it on the background, and continue with configuration. If you have problems, see [prerequisites](#prerequisites).
+
 This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/CONFIGURATION.md) instead. Note that Taito CLI is optional (see [TAITOLESS.md](TAITOLESS.md)).
 
 ## Prerequisites
 
-* [Node.js](https://nodejs.org/)
+* [npm](https://github.com/npm/cli) that usually ships with [Node.js](https://nodejs.org/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * [Taito CLI](https://github.com/TaitoUnited/taito-cli#readme) (or see [TAITOLESS.md](TAITOLESS.md))
 * Optional: eslint/tslint and prettier plugins for your code editor
 
-## Version control settings
+## Basic settings
 
-Run `taito open conventions` in the project directory to see organization specific settings that you should configure for your git repository. At least you should set `dev` as the default branch to avoid people using master branch for development by accident.
+1. Run `taito open conventions` in the project directory to see organization specific settings that you should configure for your git repository. At least you should set `dev` as the default branch to avoid people using master branch for development by accident.
+2. Modify `taito-config.sh` if you need to change some settings. The default settings are ok for most projects.
+3. Run `taito project apply`
+4. Commit and push changes
 
 * [ ] All done
 
@@ -71,14 +76,6 @@ Restart containers and open the site on browser:
 
 * [ ] All done
 
-## Basic settings
-
-1. Modify `taito-config.sh` if you need to change some settings. The default settings are ok for most projects.
-2. Run `taito project apply`.
-3. Commit and push changes.
-
-* [ ] All done
-
 ## Your first remote environment (dev)
 
 Make sure your authentication is in effect:
@@ -95,9 +92,9 @@ Write down the basic auth credentials to [README.md#links](README.md#links):
 
 Write down the basic auth credentials to `taito-config.sh`:
 
-    EDIT taito-config.sh   # Edit this: ci_test_base_url=https://user:painipaini@...
+    EDIT taito-config.sh   # Edit this: ci_test_base_url=https://username:secretpassword@...
 
-Push some changes to dev branch:
+Push some changes to dev branch with a [Conventional Commits](http://conventionalcommits.org/) commit message `chore: configuration`:
 
     taito stage            # Or just 'git add .'
     taito commit           # Or just 'git commit'
@@ -106,11 +103,14 @@ Push some changes to dev branch:
 See it build and deploy:
 
     taito open builds:dev
+    taito status:dev
     taito open client:dev
 
 > If you have some trouble creating an environment, you can destroy it by running `taito env destroy:dev` and then try again with `taito env apply:dev`.
 
 * [ ] All done
+
+---
 
 ## Remote real-time preview
 
@@ -122,10 +122,6 @@ You can edit the site on GitHub web GUI and preview changes on a remote environm
 4. Configure a git webhook for your git repository. It should call url https://USER:PASSWORD@DEV-DOMAIN/webhook/URLPREFIX/build when changes are pushed to the git repository. For more information see the [GitHub Webhooks Guide](https://developer.github.com/webhooks/).
 
 You can enable the build webhook also for staging, if you like.
-
-* [ ] All done
-
----
 
 ## Remote environments
 

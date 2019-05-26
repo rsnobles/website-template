@@ -1,10 +1,11 @@
 #!/bin/bash
 # shellcheck disable=SC2034
+set -a
 : "${taito_target_env:?}"
 
 # Configuration instructions:
-# - https://github.com/TaitoUnited/taito-cli/blob/master/docs/manual/05-configuration.md
-# - https://github.com/TaitoUnited/taito-cli/blob/master/docs/plugins.md
+# - https://taito.dev/docs/05-configuration
+# - https://taito.dev/plugins
 
 # Taito CLI
 taito_version=1
@@ -31,7 +32,7 @@ taito_project_icon=$taito_project-dev.${template_default_domain:?}/favicon.ico
 
 # Environments
 taito_environments="dev prod"
-taito_env=${taito_env/canary/prod} # canary -> prod
+taito_env=${taito_target_env/canary/prod} # canary -> prod
 
 # Provider and namespaces
 taito_provider=${template_default_provider:?}
@@ -48,17 +49,46 @@ taito_default_domain=$taito_project-$taito_target_env.${template_default_domain:
 taito_app_url=https://$taito_domain
 taito_static_url=
 
-# CI/CD and repositories
-taito_ci_provider=${template_default_ci_provider:?}
+# Hosts
+taito_host="${template_default_host:-}"
+taito_host_dir="/projects/$taito_namespace"
+
+# Version control
 taito_vc_provider=${template_default_vc_provider:?}
 taito_vc_repository=$taito_project
 taito_vc_repository_url=${template_default_vc_url:?}/$taito_vc_repository
-taito_image_registry=${template_default_container_registry:?}/$taito_vc_repository
+
+# CI/CD
+taito_ci_provider=${template_default_ci_provider:?}
+
+# Container registry
+taito_container_registry_provider=${template_default_container_registry_provider:-}
+taito_container_registry=${template_default_container_registry:-}/$taito_vc_repository
+
+# Messaging
+taito_messaging_app=slack
+taito_messaging_webhook=
+taito_messaging_channel=companyname
+taito_messaging_builds_channel=builds
+taito_messaging_critical_channel=critical
+taito_messaging_monitoring_channel=monitoring
+
+# Uptime monitoring
+taito_uptime_provider=${template_default_uptime_provider:-}
+taito_uptime_provider_org_id=${template_default_uptime_provider_org_id:-}
+taito_uptime_targets=" www "
+taito_uptime_paths=" / "
+taito_uptime_timeouts=" 5s "
+# You can list all monitoring channels with `taito env info:ENV`
+taito_uptime_uptime_channels="${template_default_monitoring_uptime_channels:-}"
 
 # Stack
 taito_targets="webhook www"
 taito_storages=""
 taito_networks="default"
+
+# Stack types ('container' by default)
+# -
 
 # Storage definitions for Terraform
 taito_storage_classes="${template_default_storage_class:-}"
@@ -69,18 +99,12 @@ taito_storage_days=${template_default_storage_days:-}
 taito_backup_locations="${template_default_backup_location:-}"
 taito_backup_days="${template_default_backup_days:-}"
 
-# Messaging
-taito_messaging_app=slack
-taito_messaging_webhook=
-taito_messaging_channel=companyname
-taito_messaging_builds_channel=builds
-taito_messaging_critical_channel=critical
-taito_messaging_monitoring_channel=monitoring
-
 # Misc
+taito_basic_auth_enabled=true
 taito_default_password=secret1234
 
-# CI/CD settings
+# ------ CI/CD default settings ------
+
 # NOTE: Most of these should be enabled for dev and feat branches only.
 # That is, container image is built and tested on dev environment first.
 # After that the same container image will be deployed to other environments:
@@ -96,11 +120,6 @@ ci_test_base_url="http://NOT-CONFIGURED-FOR-$taito_env"
 
 # ------ Plugin and provider specific settings ------
 
-# Hour reporting and issue management plugins
-toggl_project_id=
-toggl_tasks="" # For example "task:12345 another-task:67890"
-jira_project_id=
-
 # Template plugin
 template_name=WEBSITE-TEMPLATE
 template_source_git=git@github.com:TaitoUnited
@@ -109,9 +128,10 @@ template_source_git=git@github.com:TaitoUnited
 kubernetes_name=${template_default_kubernetes:?}
 kubernetes_cluster="${template_default_kubernetes_cluster_prefix:?}${kubernetes_name}"
 kubernetes_replicas=1
+kubernetes_db_proxy_enabled=true
 
 # Helm plugin
-# helm_deploy_options="--recreate-pods" # Force restart
+# helm_deploy_options="--atomic --cleanup-on-fail --force"
 
 # Sentry plugin
 sentry_organization=${template_default_sentry_organization:?}
@@ -120,6 +140,11 @@ sentry_organization=${template_default_sentry_organization:?}
 
 case $taito_env in
   prod)
+    # Settings
+    taito_basic_auth_enabled=true
+    kubernetes_replicas=2
+
+    # Provider and namespaces
     taito_zone=${template_default_zone_prod:?}
     taito_provider=${template_default_provider_prod:?}
     taito_provider_org_id=${template_default_provider_org_id_prod:?}
@@ -127,34 +152,39 @@ case $taito_env in
     taito_provider_zone=${template_default_provider_zone_prod:?}
     taito_resource_namespace=$taito_organization_abbr-$taito_company-prod
 
-    # NOTE: Set production domain here once you have configured DNS
+    # Domain and resources
     taito_domain=
+    taito_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?} # TEMPLATE-REMOVE
     taito_default_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?}
     taito_app_url=https://$taito_domain
-    kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:?}${kubernetes_name}"
-    kubernetes_replicas=2
+    taito_host="${template_default_host_prod:-}"
+    kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:-}${kubernetes_name}"
+    db_database_real_host="${template_default_postgres_host_prod:-}"
 
-    # Storage definitions for Terraform
+    # Storage
     taito_storage_classes="${template_default_storage_class_prod:-}"
     taito_storage_locations="${template_default_storage_location_prod:-}"
     taito_storage_days=${template_default_storage_days_prod:-}
-
-    # Storage backup definitions for Terraform
     taito_backup_locations="${template_default_backup_location_prod:-}"
     taito_backup_days="${template_default_backup_days_prod:-}"
 
     # Monitoring
-    taito_monitoring_targets=" www "
-    taito_monitoring_paths=" / "
-    taito_monitoring_timeouts=" 5s "
-    # You can list all monitoring channels with `taito env info:prod`
-    taito_monitoring_uptime_channels="${template_default_monitoring_uptime_channels_prod:-}"
+    taito_uptime_provider=${template_default_uptime_provider_prod:-}
+    taito_uptime_provider_org_id=${template_default_uptime_provider_org_id_prod:-}
+    taito_uptime_channels="${template_default_monitoring_uptime_channels_prod:-}"
 
     # CI/CD and repositories
+    taito_container_registry_provider=${template_default_container_registry_provider_prod:-}
+    taito_container_registry=${template_default_container_registry_prod:-}/$taito_vc_repository
     taito_ci_provider=${template_default_ci_provider_prod:?}
-    taito_image_registry=${template_default_container_registry_prod:?}/$taito_vc_repository    ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
+    ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
     ;;
   stag)
+    # Settings
+    taito_basic_auth_enabled=true
+    kubernetes_replicas=2
+
+    # Provider and namespaces
     taito_zone=${template_default_zone_prod:?}
     taito_provider=${template_default_provider_prod:?}
     taito_provider_org_id=${template_default_provider_org_id_prod:?}
@@ -162,14 +192,23 @@ case $taito_env in
     taito_provider_zone=${template_default_provider_zone_prod:?}
     taito_resource_namespace=$taito_organization_abbr-$taito_company-prod
 
+    # Domain and resources
     taito_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?}
     taito_default_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?}
     taito_app_url=https://$taito_domain
-    kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:?}${kubernetes_name}"
+    taito_host="${template_default_host_prod:-}"
+    kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:-}${kubernetes_name}"
+    db_database_real_host="${template_default_postgres_host_prod:-}"
+
+    # Monitoring
+    taito_uptime_provider=${template_default_uptime_provider_prod:-}
+    taito_uptime_provider_org_id=${template_default_uptime_provider_org_id_prod:-}
+    taito_uptime_channels="${template_default_monitoring_uptime_channels_prod:-}"
 
     # CI/CD and repositories
+    taito_container_registry_provider=${template_default_container_registry_provider_prod:-}
+    taito_container_registry=${template_default_container_registry_prod:-}/$taito_vc_repository
     taito_ci_provider=${template_default_ci_provider_prod:?}
-    taito_image_registry=${template_default_container_registry_prod:?}/$taito_vc_repository
     ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
     ;;
   test)
@@ -182,7 +221,7 @@ case $taito_env in
     ci_exec_test=false        # execute test suites
     ci_exec_test_init=false   # run 'init --clean' before each test suite
     ci_exec_revert=false      # revert deploy if previous steps failed
-    ci_test_base_url=https://user:painipaini@$taito_domain
+    ci_test_base_url=https://username:secretpassword@$taito_domain
     ;;
   local)
     ci_exec_test_init=false   # run 'init --clean' before each test suite
@@ -191,10 +230,11 @@ case $taito_env in
     ;;
 esac
 
-# ------ Derived values after overrides ------
+# ------ Derived values after environment specific settings ------
 
 # Provider and namespaces
 taito_resource_namespace_id=$taito_resource_namespace
+taito_uptime_namespace_id=$taito_zone
 
 # URLs
 taito_webhook_url=$taito_app_url/webhook/SECRET/build
@@ -230,7 +270,15 @@ if [[ "$taito_target_env" != "prod" ]]; then
   "
 fi
 
+# ------ Taito config override (optional) ------
+
+if [[ $TAITO_CONFIG_OVERRIDE ]] && [[ -f $TAITO_CONFIG_OVERRIDE ]]; then
+  # shellcheck disable=SC1090
+  . "$TAITO_CONFIG_OVERRIDE"
+fi
+
 # ------ Provider specific settings ------
+# NOTE: You can remove settings of all such providers that you don't need.
 
 case $taito_provider in
   aws)
@@ -255,10 +303,44 @@ case $taito_provider in
     link_urls="
       ${link_urls}
       * logs:ENV=https://console.cloud.google.com/logs/viewer?project=$taito_zone&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F$kubernetes_name%2Fnamespace_id%2F$taito_namespace Logs (:ENV)
-      * uptime=https://app.google.stackdriver.com/uptime?project=$taito_zone&f.search=$taito_project Uptime monitoring (Stackdriver)
     "
 
+    kubernetes_db_proxy_enabled=false # use google cloud sql proxy instead
     gcp_service_account_enabled=true
+    ;;
+  linux)
+    # Enable ssh and run plugins
+    taito_plugins="
+      ssh:-local
+      run:-local
+      ${taito_plugins}
+    "
+    run_scripts_location="scripts/linux-provider"
+    # Set some configuration parameters for scripts/linux-provider scripts
+    LINUX_SUDO=sudo # NOTE: Put empty value if sudo is not required or allowed
+    LINUX_CLIENT_MAX_BODY_SIZE=1m
+    # Use Docker Compose instead of Kubernetes and Helm
+    taito_plugins="${taito_plugins/docker-compose:local/docker-compose}"
+    taito_plugins="${taito_plugins/kubectl:-local/}"
+    taito_plugins="${taito_plugins/helm:-local/}"
+    # Use SSH plugin as database proxy
+    export ssh_db_proxy="\
+      -L 0.0.0.0:\${database_port}:\${database_host}:\${database_real_port} \${taito_ssh_user}@\${database_real_host}"
+    export ssh_forward_for_db="${ssh_db_proxy}"
+    ;;
+esac
+
+case $taito_uptime_provider in
+  gcp)
+    taito_plugins="${taito_plugins/gcp:-local/}"
+    taito_plugins="
+      gcp:-local
+      ${taito_plugins}
+    "
+    link_urls="
+      ${link_urls}
+      * uptime=https://app.google.stackdriver.com/uptime?project=$taito_zone&f.search=$taito_project Uptime monitoring (Stackdriver)
+    "
     ;;
 esac
 
@@ -293,17 +375,23 @@ case $taito_ci_provider in
       "
     fi
     ;;
+  local)
+    link_urls="
+      ${link_urls}
+      * builds=./local-ci.sh Local CI/CD
+    "
+    ;;
 esac
 
 case $taito_vc_provider in
-  bitbucket.org)
+  bitbucket)
     link_urls="
       ${link_urls}
       * docs=https://$taito_vc_repository_url/wiki/Home Project documentation
       * project=https://$taito_vc_repository_url/addon/trello/trello-board Project management
     "
     ;;
-  github.com)
+  github)
     link_urls="
       ${link_urls}
       * docs=https://$taito_vc_repository_url/wiki Project documentation
@@ -312,13 +400,41 @@ case $taito_vc_provider in
     ;;
 esac
 
+case $taito_container_registry_provider in
+  aws)
+    # Enable AWS auth
+    taito_plugins="${taito_plugins/aws:-local/}"
+    taito_plugins="
+      aws:-local
+      ${taito_plugins}
+    "
+    ;;
+  docker)
+    # Enable Docker Hub auth
+    taito_plugins="
+      docker-registry:-local
+      ${taito_plugins}
+    "
+    ;;
+  gcp)
+    # Enable gcp auth
+    taito_plugins="${taito_plugins/gcp:-local/}"
+    taito_plugins="
+      gcp:-local
+      ${taito_plugins}
+    "
+    ;;
+  local)
+    ;;
+esac
+
 if [[ $taito_plugins == *"sentry"* ]]; then
+  sentry_organization=${template_default_sentry_organization:-}
   link_urls="
     ${link_urls}
-    * errors:ENV=https://sentry.io/${template_default_sentry_organization:?}/$taito_project/?query=is%3Aunresolved+environment%3A$taito_target_env Sentry errors (:ENV)
+    * errors:ENV=https://sentry.io/${template_default_sentry_organization:-}/$taito_project/?query=is%3Aunresolved+environment%3A$taito_target_env Sentry errors (:ENV)
   "
 fi
-
 
 # ------ Test suite settings ------
 # NOTE: Variable is passed to the test without the test_TARGET_ prefix
@@ -337,3 +453,5 @@ CYPRESS_baseUrlHack=$CYPRESS_baseUrl
 CYPRESS_baseUrl=https://www.google.com
 test_www_CYPRESS_baseUrlHack=$test_client_CYPRESS_baseUrl
 test_www_CYPRESS_baseUrl=https://www.google.com
+
+set +a

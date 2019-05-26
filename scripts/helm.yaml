@@ -4,7 +4,7 @@ global:
   publicPort: 443
   logFormat: stackdriver
   logLevel: info    # trace, debug, info, warn, error, fatal
-  registry: ${taito_image_registry}
+  registry: ${taito_container_registry}
   imagePullPolicy: ''
   debug: false
 
@@ -14,8 +14,10 @@ full-stack:
     oldRewritePolicy: false
     tls: true
     maxBodySize: 1m
+    limitRate:
+    limitRateAfter:
     basicAuth:
-      enabled: true
+      enabled: ${taito_basic_auth_enabled}
       htpasswdSecret: ${taito_project}-${taito_env}-basic-auth
     domains:
       - name: ${taito_domain}
@@ -24,13 +26,21 @@ full-stack:
     # Basics
     image: # For 3rd party container image
     command:
-    path:
     port: 8080
     tier:
     livenessPath: /healthz
+    livenessInitialDelay: 3
+    # Paths (example)
+    paths:
+      # - path:
+      #   maxBodySize:
+      #   limitRate:
+      #   limitRateAfter:
+      #   rewriteTarget:
+      #   rewriteTargetDisabled:
     # Security
     runAsUser:
-    fsGroup:
+    runAsGroup:
     # Resources
     cpuRequest: 2m
     cpuLimit: 100m
@@ -55,7 +65,8 @@ full-stack:
   services:
 
     www:
-      path: /
+      paths:
+        - path:
       tier: frontend
       sidecar:
         enabled: false
