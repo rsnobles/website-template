@@ -3,7 +3,7 @@
 : "${taito_vc_repository:?}"
 : "${taito_vc_repository_alt:?}"
 
-${taito_setv:?}
+${taito_setv:-}
 
 # Remove the example site
 rm -rf www/site
