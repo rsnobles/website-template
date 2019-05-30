@@ -131,6 +131,10 @@ See [6. Remote environments](https://github.com/TaitoUnited/taito-cli/blob/maste
 
 Operations on production and staging environments usually require admin rights. Please contact DevOps personnel if necessary.
 
+## Custom provider
+
+If you cannot use Docker containers on your remote environments, you can customize the deployment with a custom provider. Instead of deploying the site as docker container image, you can, for example, deploy the site as static files on a web server, or as a WAR package on a Java application server. You can enable the custom provider with the `taito_provider` setting in `taito-config.sh` and implement [custom deployment scripts](https://github.com/TaitoUnited/SERVER-TEMPLATE/blob/master/scripts/custom-provider) yourself.
+
 ## Kubernetes
 
 If you need to, you can configure Kubernetes settings by modifying `heml*.yaml` files located under the `scripts`-directory. The default settings, however, are ok for most sites.
