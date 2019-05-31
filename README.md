@@ -21,8 +21,6 @@ Table of contents:
 * [Editing the website](#links)
 * [Contacts](#contacts)
 * [Responsibilities](#responsibilities)
-* [Intellectual property rights](#intellectual-property-rights)
-* [Recurring issues and solutions](#recurring-issues-and-solutions)
 * [Miscellaneous notes](#miscellaneous-notes)
 * [Conventions](#conventions)
 
@@ -95,14 +93,6 @@ You can edit the website directly on GitHub.
 ## Responsibilities
 
 Hosting, billing and control of 3rd party services, SSL/TLS certificates, etc.
-
-## Intellectual property rights
-
-> IPR ownership. Also update the LICENSE file. TODO license examples
-
-## Recurring issues and solutions
-
-See trouble.txt or run `taito --trouble`.
 
 ## Miscellaneous notes
 
