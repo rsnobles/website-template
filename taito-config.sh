@@ -14,7 +14,7 @@ taito_plugins="
   default-secrets generate-secrets
   docker docker-compose:local kubectl:-local helm:-local
   npm git-global links-global
-  sentry semantic-release:prod
+  semantic-release:prod
 "
 
 # Project labeling
@@ -132,9 +132,6 @@ kubernetes_db_proxy_enabled=true
 
 # Helm plugin
 # helm_deploy_options="--atomic --cleanup-on-fail --force"
-
-# Sentry plugin
-sentry_organization=${template_default_sentry_organization:-}
 
 # ------ Overrides for different environments ------
 
