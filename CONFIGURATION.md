@@ -114,7 +114,7 @@ See it build and deploy:
 You can edit the site on GitHub web GUI and preview changes on a remote environment. This is how you enable preview for dev environment:
 
 1. Enable build webhook by editing `scripts/helm-dev.yaml`.
-2. Enable builds for all branches by changing `ci_exec_build=false` to `ci_exec_build=true` in `taito-config.sh`. This is required because GitHub web GUI does not support merging with fast-forward.
+2. Optional: If you want to be able to merge changes between environments using GitHub web GUI, enable builds for all branches by changing `ci_exec_build=false` to `ci_exec_build=true` in `taito-config.sh`. This is required because GitHub web GUI does not support merging with fast-forward.
 3. Make sure that urlprefix and personal git token have been set for webhook by running `taito secrets:dev`. If they are unset, set them with `taito env rotate:dev webhook`
 4. Configure a git webhook for your git repository. It should call url https://USER:PASSWORD@DEV-DOMAIN/webhook/URLPREFIX/build when changes are pushed to the git repository. For more information see the [GitHub Webhooks Guide](https://developer.github.com/webhooks/).
 
