@@ -75,7 +75,8 @@ full-stack:
       sidecar:
         enabled: false
         name: webhook
-        path: /webhook
+        paths:
+          - path: /webhook
         port: 9000
         sharedVolume:
           mountPath: /service
