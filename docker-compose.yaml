@@ -17,7 +17,7 @@ services:
     volumes:
       - "./www:${DC_PATH}/service:delegated"
       - "${DC_PATH}/service/node_modules"
-      - "${DC_PATH}/service/site/node_modules"
+      - "${DC_PATH}/service/site/node_modules" # FOR GATSBY ONLY
       # FOR GATSBY ONLY:
       # - "${DC_PATH}/service/site/node_modules"
     environment:

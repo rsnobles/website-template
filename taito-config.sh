@@ -253,9 +253,10 @@ link_urls="
 
 # ------ Secrets ------
 
-taito_secrets="
+taito_remote_secrets="
   $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
 "
+taito_secrets=""
 
 # Additional build webhook secrets for non-prod environments
 if [[ "$taito_target_env" != "prod" ]]; then
@@ -263,8 +264,8 @@ if [[ "$taito_target_env" != "prod" ]]; then
     ${link_urls}
     * webhook[:ENV]=$taito_webhook_url Build webhook (:ENV)
   "
-  taito_secrets="
-    ${taito_secrets}
+  taito_remote_secrets="
+    ${taito_remote_secrets}
     $taito_project-$taito_env-webhook.urlprefix:random
     $taito_project-$taito_env-webhook.gittoken:manual
   "

@@ -28,8 +28,7 @@ Remove static site generators that you do not use from `www/install.sh`.
 
 Start containers, and start a shell inside the www Docker container:
 
-    taito install
-    taito start
+    taito kaboom
     taito shell:www
 
 *FOR GATSBY ONLY:* Create a new Gatsby site based on one of the [starters](https://www.gatsbyjs.org/starters?v=2) (NOTE: Select 'npm' as package manager and ignore the 'git commit' error):
@@ -143,6 +142,6 @@ If you need to, you can configure Kubernetes settings by modifying `heml*.yaml` 
 
 You can add a new secret like this:
 
-1. Add a secret definition to the `taito_secrets` setting in `taito-config.sh`.
+1. Add a secret definition to the `taito_secrets` or the `taito_remote_secrets` setting in `taito-config.sh`.
 2. Map the secret definition to a secret in `docker-compose.yaml` for Docker Compose and in `scripts/helm.yaml` for Kubernetes.
 3. Run `taito env rotate:ENV SECRET` to generate a secret value for an environment. Run the command for each environment separately. Note that the rotate command restarts all pods in the same namespace.

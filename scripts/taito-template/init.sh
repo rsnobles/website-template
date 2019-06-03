@@ -7,7 +7,8 @@ ${taito_setv:-}
 
 # Remove the example site
 rm -rf www/site
-sed -i '/    - "\/service\/site\/node_modules"/d' docker-compose.yaml
+sed -i '/\/site\/node_modules" # FOR GATSBY ONLY/d' docker-compose.yaml
+sed -i '/\/site\/node_modules" # FOR GATSBY ONLY/d' docker-compose-remote.yaml
 
 # Replace some strings
 echo "Replacing project and company names in files. Please wait..."
