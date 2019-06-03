@@ -10,7 +10,7 @@ set -a
 # Taito CLI
 taito_version=1
 taito_plugins="
-  terraform:-local
+  terraform:prod
   default-secrets generate-secrets
   docker docker-compose:local kubectl:-local helm:-local
   npm git-global links-global
