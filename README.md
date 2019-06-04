@@ -44,7 +44,7 @@ You can edit the website directly on GitHub.
 
 ### Create a new blog post
 
-1) Open the [blog folder](www/site/content/blog) on a new tab by keeping <kbd>CTRL</kbd> key pressed when you click the link (<kbd>CMD</kbd> on Mac).
+1) Open the [blog folder](www/site/content/blog) on a new tab.
 2) Press the **Create new file** button on top of the page.
 3) Enter blog name followed with /index.md, for example: `happy-days/index.md`.
 4) Enter blog content in [Markdown syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax). See the example below. Use the preview tab to preview your changes.
@@ -63,7 +63,7 @@ You can edit the website directly on GitHub.
 
 ### Update a blog post
 
-1) Open the [blog folder](www/site/content/blog) on a new tab by keeping <kbd>CTRL</kbd> key pressed when you click the link (<kbd>CMD</kbd> on Mac).
+1) Open the [blog folder](www/site/content/blog) on a new tab.
 2) Browse to a file that you would like edit.
 3) Enter edit mode by pressing the **Pen** icon.
 4) Enter blog content in [Markdown syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax). Use the preview tab to preview your changes.
@@ -72,7 +72,7 @@ You can edit the website directly on GitHub.
 
 ### Preview and release changes
 
-1) Open the [development site](https://my-project-dev.mydomain.com) on a new incognito window (on Chrome: click the link with right mouse button and select *Open Link in Incognito Window).
+1) Open the [development site](https://my-project-dev.mydomain.com) on a new tab. If you don't see your changes, open it in incognito mode (on Chrome: click the link with right mouse button and select *Open Link in Incognito Window*).
 2) Check that your changes look ok on the development site.
 3) Create a new pull request on GitHub:
 
