@@ -22,7 +22,7 @@ This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited
 
 Configure static site generator of your choice with the following instructions. Currently instructions are provided only for Gatsby, Hugo, Jekyll and plain static files, but with some extra work the website-template may easily be used with any static site generator.
 
-Remove static site generators that you do not use from `www/install.sh`.
+Remove static site generators that you do not use from `www/install.sh` but do not delete the whole file:
 
     EDIT www/install.sh
 
@@ -31,7 +31,7 @@ Start containers, and start a shell inside the www Docker container:
     taito kaboom
     taito shell:www
 
-*FOR PLAIN STATIC FILES ONLY:* Exit the shell and add static files to www/assets with your code editor.
+*FOR PLAIN STATIC FILES ONLY:* Exit the shell and add static files to www/public with your code editor.
 
 *FOR GATSBY ONLY:* Create a new Gatsby site based on one of the [starters](https://www.gatsbyjs.org/starters?v=2) (NOTE: Select 'npm' as package manager and ignore the 'git commit' error):
 
@@ -124,11 +124,11 @@ You can enable the build webhook also for staging, if you like.
 
 ## Remote environments
 
-You create the other environments just like you did the dev environment. However, you don't need to write down the basic auth credentials anymore, since you can reuse the same credentials as in dev environment.
+You can create the other environments just like you did the dev environment. However, you don't need to write down the basic auth credentials anymore, since you can reuse the same credentials as in dev environment.
 
-Examples for environment names: `f-orders`, `dev`, `test`, `stag`, `canary`, `prod`. You configure project environments with `taito_environments` setting in `taito-config.sh`.
+Project environments are configured in `taito-config.sh` with the `taito_environments` setting. Examples for environment names: `f-orders`, `dev`, `test`, `stag`, `canary`, `prod`.
 
-See [6. Remote environments](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/05-remote-environments.md) chapter of Taito CLI tutorial for more thorough instructions.
+See [remote environments](https://taitounited.github.io/taito-cli/tutorial/05-remote-environments) chapter of Taito CLI tutorial for more thorough instructions.
 
 Operations on production and staging environments usually require admin rights. Please contact DevOps personnel if necessary.
 
