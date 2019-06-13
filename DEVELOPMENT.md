@@ -22,6 +22,8 @@ Table of contents:
 
 ## Quick start
 
+> TIP: Start application in a cleaned and initialized local environment with a single command: `taito kaboom`. This is essentially the same thing as running `taito env apply --clean`, `taito start --clean`, and `taito init`.
+
 Create local environment by installing some libraries and generating secrets (add `--clean` to recreate clean environment):
 
     taito env apply
