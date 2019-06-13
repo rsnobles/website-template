@@ -7,6 +7,10 @@
 
 taito_environments="dev prod"
 
+# NOTE: Uncomment this line to disable basic auth from ALL environments.
+# Use taito-domain-config.sh to disable basic auth from PROD env only.
+# taito_basic_auth_enabled=false
+
 # ------ Links ------
 
 link_urls="
@@ -25,7 +29,6 @@ if [[ "$taito_target_env" != "prod" ]]; then
 fi
 
 # ------ Secrets ------
-
 # Configuration instructions:
 # https://taitounited.github.io/taito-cli/tutorial/06-env-variables-and-secrets/
 
