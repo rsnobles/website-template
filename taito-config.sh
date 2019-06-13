@@ -3,9 +3,15 @@
 set -a
 : "${taito_target_env:?}"
 
-# Configuration instructions:
-# - https://taito.dev/docs/05-configuration
-# - https://taito.dev/plugins
+##########################################################################
+# Root taito-config.sh file
+##########################################################################
+
+# ------------------------------------------------------------------------
+# NOTE: This file is updated during 'taito project upgrade'. There should
+# rarely be need to modify it manually. Modify taito-domain-config.sh,
+# taito-environments-config.sh or taito-test-config.sh instead.
+# ------------------------------------------------------------------------
 
 # Taito CLI
 taito_version=1
@@ -31,7 +37,6 @@ taito_suffix=
 taito_project_icon=$taito_project-dev.${template_default_domain:?}/favicon.ico
 
 # Environments
-taito_environments="dev prod"
 taito_env=${taito_target_env/canary/prod} # canary -> prod
 
 # Provider and namespaces
@@ -138,7 +143,6 @@ kubernetes_db_proxy_enabled=true
 case $taito_env in
   prod)
     # Settings
-    taito_basic_auth_enabled=true
     kubernetes_replicas=2
 
     # Provider and namespaces
@@ -150,7 +154,6 @@ case $taito_env in
     taito_resource_namespace=$taito_organization_abbr-$taito_company-prod
 
     # Domain and resources
-    taito_domain=
     taito_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?} # TEMPLATE-REMOVE
     taito_default_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?}
     taito_app_url=https://$taito_domain
@@ -175,6 +178,9 @@ case $taito_env in
     taito_container_registry=${template_default_container_registry_prod:-}/$taito_vc_repository
     taito_ci_provider=${template_default_ci_provider_prod:?}
     ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
+
+    # shellcheck disable=SC1091
+    . taito-domain-config.sh
     ;;
   stag)
     # Settings
@@ -239,34 +245,10 @@ if [[ "$taito_target_env" == "local" ]]; then
   taito_webhook_url=http://localhost:9000/SECRET/build
 fi
 
-# Link plugin
-link_urls="
-  * www[:ENV]=$taito_app_url Website (:ENV)
-  * git=https://$taito_vc_repository_url GitHub repository
-  * posts=https://$taito_vc_repository_url/tree/dev/www/site/content/blog Content: posts
-  * assets=https://$taito_vc_repository_url/tree/dev/www/site/content/assets Content: assets
-  * styleguide=https://TODO UI/UX style guide and designs
-"
+# ------ Environments config ------
 
-# ------ Secrets ------
-
-taito_remote_secrets="
-  $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
-"
-taito_secrets=""
-
-# Additional build webhook secrets for non-prod environments
-if [[ "$taito_target_env" != "prod" ]]; then
-  link_urls="
-    ${link_urls}
-    * webhook[:ENV]=$taito_webhook_url Build webhook (:ENV)
-  "
-  taito_remote_secrets="
-    ${taito_remote_secrets}
-    $taito_project-$taito_env-webhook.urlprefix:random
-    $taito_project-$taito_env-webhook.gittoken:manual
-  "
-fi
+# shellcheck disable=SC1091
+. taito-environments-config.sh
 
 # ------ Taito config override (optional) ------
 

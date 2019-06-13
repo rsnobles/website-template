@@ -1,7 +1,10 @@
 #!/bin/bash
 # shellcheck disable=SC2034
 
-# NOTE: Variable is passed to the test without the test_TARGET_ prefix
+##########################################################################
+# Integration and end-to-end test parameters
+# NOTE: Variables are passed to the tests without the test_TARGET_ prefix.
+##########################################################################
 
 # URLs
 test_www_CYPRESS_baseUrl=$ci_test_base_url
