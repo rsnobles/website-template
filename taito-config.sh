@@ -133,7 +133,6 @@ template_source_git=git@github.com:TaitoUnited
 kubernetes_name=${template_default_kubernetes:-}
 kubernetes_cluster="${template_default_kubernetes_cluster_prefix:-}${kubernetes_name}"
 kubernetes_replicas=1
-kubernetes_db_proxy_enabled=true
 
 # Helm plugin
 # helm_deploy_options="--atomic --cleanup-on-fail --force"
@@ -159,7 +158,6 @@ case $taito_env in
     taito_app_url=https://$taito_domain
     taito_host="${template_default_host_prod:-}"
     kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:-}${kubernetes_name}"
-    db_database_real_host="${template_default_postgres_host_prod:-}"
 
     # Storage
     taito_storage_classes="${template_default_storage_class_prod:-}"
@@ -201,7 +199,6 @@ case $taito_env in
     taito_app_url=https://$taito_domain
     taito_host="${template_default_host_prod:-}"
     kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:-}${kubernetes_name}"
-    db_database_real_host="${template_default_postgres_host_prod:-}"
 
     # Monitoring
     taito_uptime_provider= # only for prod by default
