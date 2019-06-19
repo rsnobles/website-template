@@ -15,6 +15,7 @@ full-stack:
     tls: true
     domains:
       - name: ${taito_domain}
+        altName: ${taito_altdomain}
 
   serviceDefaults:
     # Basics
