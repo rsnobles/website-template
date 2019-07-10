@@ -29,14 +29,10 @@ Install additional libraries on host for autocompletion/linting on editor (optio
 Set up environment variables required by `docker-compose.yaml`:
 
     # On unix-like shell
-    . taitoless.sh
+    . taito-config.sh
 
     # On Windows shell
     taitoless.bat
-
-Setup secrets required by `docker-compose.yaml`:
-
-> See the secret file paths at the end of `docker-compose.yaml` and set the secret file contents accordingly.
 
 Start containers defined in `docker-compose.yaml`:
 
@@ -62,10 +58,8 @@ Instructions defined in [CONFIGURATION.md](CONFIGURATION.md) apply. You just nee
 
 * Run taito-config.sh to set the environment variables for the environment in question (dev, test, stag, canary, or prod):
     ```
-    set -a
-    taito_target_env=dev
+    export taito_target_env=dev
     . taito-config.sh
-    set +a
     ```
 * IF MONITORING IS REQUIRED:: Run terraform scripts that are located at `scripts/terraform/`. Use `scripts/terraform/common/backend.tf` as backend, if you want to store terraform state on git. Note that the terraform scripts assume that a cloud provider project defined by `taito_resource_namespace` and `taito_resource_namespace_id` already exists and Terraform is allowed to create resources for that project.
 * IF BASIC AUTH IS REQUIRED: Set Kubernetes secret values with `kubectl`. The secrets are defined by `taito_secrets` in `taito-config.sh`, and they are referenced in `scripts/helm*.yaml` files.
