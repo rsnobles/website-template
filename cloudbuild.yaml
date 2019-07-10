@@ -97,7 +97,7 @@ steps:
     export taito_env="$${taito_target_env}"
     source ./taito-config.sh
 
-    # TODO: should be implemented in taito-cli plugin
+    # TODO: should be implemented in Taito CLI plugin
     echo "- Get cluster credentials"
     if ! gcloud container clusters get-credentials "$${kubernetes_name}" \
       --zone "$${taito_provider_zone}"; then

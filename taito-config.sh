@@ -9,8 +9,8 @@ set -a
 
 # ------------------------------------------------------------------------
 # NOTE: This file is updated during 'taito project upgrade'. There should
-# rarely be need to modify it manually. Modify taito-domain-config.sh,
-# taito-environments-config.sh or taito-test-config.sh instead.
+# rarely be need to modify it manually. Modify taito-env-*-config.sh,
+# or taito-testing-config.sh instead.
 # ------------------------------------------------------------------------
 
 # Taito CLI
@@ -81,19 +81,8 @@ taito_messaging_monitoring_channel=monitoring
 # Uptime monitoring
 taito_uptime_provider= # only for prod by default
 taito_uptime_provider_org_id=${template_default_uptime_provider_org_id:-}
-taito_uptime_targets=" www "
-taito_uptime_paths=" / "
-taito_uptime_timeouts=" 5s "
 # You can list all monitoring channels with `taito env info:ENV`
 taito_uptime_channels="${template_default_uptime_channels:-}"
-
-# Stack
-taito_targets="webhook www"
-taito_storages=""
-taito_networks="default"
-
-# Stack types ('container' by default)
-# -
 
 # Storage definitions for Terraform
 taito_storage_classes="${template_default_storage_class:-}"
@@ -117,11 +106,9 @@ taito_default_password=secret1234
 ci_exec_build=false        # build container image if it does not exist already
 ci_exec_deploy=${template_default_ci_exec_deploy:-true}        # deploy automatically
 ci_exec_test=false         # execute test suites after deploy
-ci_exec_test_wait=60       # how many seconds to wait for deployment/restart
 ci_exec_test_init=false    # run 'init --clean' before each test suite
 ci_exec_revert=false       # revert deployment automatically on fail
 ci_static_assets_location= # location to publish all static files (CDN)
-ci_test_base_url="http://NOT-CONFIGURED-FOR-$taito_env"
 
 # ------ Plugin and provider specific settings ------
 
@@ -133,9 +120,6 @@ template_source_git=git@github.com:TaitoUnited
 kubernetes_name=${template_default_kubernetes:-}
 kubernetes_cluster="${template_default_kubernetes_cluster_prefix:-}${kubernetes_name}"
 kubernetes_replicas=1
-
-# Helm plugin
-# helm_deploy_options="--atomic --cleanup-on-fail --force"
 
 # ------ Overrides for different environments ------
 
@@ -176,7 +160,7 @@ case $taito_env in
     ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
 
     # shellcheck disable=SC1091
-    . taito-domain-config.sh
+    if [[ -f taito-env-prod-config.sh ]]; then . taito-env-prod-config.sh; fi
     ;;
   stag)
     # Settings
@@ -208,23 +192,34 @@ case $taito_env in
     taito_container_registry=${template_default_container_registry_prod:-}/$taito_vc_repository
     taito_ci_provider=${template_default_ci_provider_prod:?}
     ci_exec_deploy=${template_default_ci_exec_deploy_prod:-true}
+
+    # shellcheck disable=SC1091
+    if [[ -f taito-env-stag-config.sh ]]; then . taito-env-stag-config.sh; fi
     ;;
   test)
-    ci_test_base_url=https://TODO:TODO@$taito_domain
-    ;;
-  dev|feat)
-    ci_exec_build=true        # allow build of a new container
-    ci_exec_deploy=true       # deploy automatically
-    # NOTE: enable tests once you have implemented some integration or e2e tests
-    ci_exec_test=false        # execute test suites
-    ci_exec_test_init=false   # run 'init --clean' before each test suite
-    ci_exec_revert=false      # revert deploy if previous steps failed
-    ci_test_base_url=https://username:secretpassword@$taito_domain
+    # shellcheck disable=SC1091
+    if [[ -f taito-env-test-config.sh ]]; then . taito-env-test-config.sh; fi
     ;;
   local)
-    ci_exec_test_init=false   # run 'init --clean' before each test suite
-    ci_test_base_url=http://website-template-ingress:80
     taito_app_url=http://localhost:9999
+    taito_storage_url=http://localhost:9999/minio
+
+    # shellcheck disable=SC1091
+    if [[ -f taito-env-local-config.sh ]]; then . taito-env-local-config.sh; fi
+    ;;
+  *)
+    # dev and feature branches
+    if [[ $taito_env == "dev" ]] || [[ $taito_env == "f-"* ]]; then
+      ci_exec_build=true        # allow build of a new container
+      # shellcheck disable=SC1091
+      if [[ -f taito-env-dev-config.sh ]]; then . taito-env-dev-config.sh; fi
+    fi
+    # hotfix branches
+    if [[ $taito_env == "h-"* ]]; then
+      ci_exec_build=true        # allow build of a new container
+      # shellcheck disable=SC1091
+      if [[ -f taito-env-hotfix-config.sh ]]; then . taito-env-hotfix-config.sh; fi
+    fi
     ;;
 esac
 
@@ -240,10 +235,10 @@ if [[ "$taito_target_env" == "local" ]]; then
   taito_webhook_url=http://localhost:9000/SECRET/build
 fi
 
-# ------ Environments config ------
+# ------ All environments config ------
 
 # shellcheck disable=SC1091
-. taito-environments-config.sh
+. taito-env-all-config.sh
 
 # ------ Taito config override (optional) ------
 
@@ -257,9 +252,16 @@ fi
 # shellcheck disable=SC1091
 . taito-provider-config.sh
 
+# ------ Derived values ------
+
+link_urls="
+  ${link_urls}
+  * storage:ENV=$taito_storage_url Storage bucket (:ENV)
+"
+
 # ------ Test suite settings ------
 
 # shellcheck disable=SC1091
-. taito-test-config.sh
+. taito-testing-config.sh
 
 set +a

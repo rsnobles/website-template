@@ -12,7 +12,7 @@ This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited
 ## Basic settings
 
 1. Run `taito open conventions` in the project directory to see organization specific settings that you should configure for your git repository. At least you should set `dev` as the default branch to avoid people using master branch for development by accident.
-2. Modify `taito-config.sh` if you need to change some settings. The default settings are ok for most projects.
+2. Modify `taito-env-all-config.sh` if you need to change some settings. The default settings are ok for most projects.
 3. Run `taito project apply`
 4. Commit and push changes
 
@@ -89,17 +89,17 @@ Create the environment (NOTE: You can enter anything as github token, if you don
 
 Write down the basic auth credentials to [README.md#links](README.md#links):
 
-    EDIT README.md         # Edit the links section
+    EDIT README.md                # Edit the links section
 
-Write down the basic auth credentials to `taito-config.sh`:
+Write down the basic auth credentials to `taito-testing-config.sh`:
 
-    EDIT taito-config.sh   # Edit this: ci_test_base_url=https://username:secretpassword@...
+    EDIT taito-testing-config.sh  # Edit this: ci_test_base_url=https://username:secretpassword@...
 
 Push some changes to dev branch with a [Conventional Commits](http://conventionalcommits.org/) commit message `chore: configuration`:
 
-    taito stage            # Or just 'git add .'
-    taito commit           # Or just 'git commit'
-    taito push             # Or just 'git push'
+    taito stage                   # Or just 'git add .'
+    taito commit                  # Or just 'git commit'
+    taito push                    # Or just 'git push'
 
 See it build and deploy:
 
@@ -118,7 +118,7 @@ See it build and deploy:
 You can edit the site on GitHub web GUI and preview changes on a remote environment. This is how you enable preview for dev environment:
 
 1. Enable build webhook by editing `scripts/helm-dev.yaml`.
-2. Optional: If you want to be able to merge changes between environments using GitHub web GUI, enable builds for all branches by changing `ci_exec_build=false` to `ci_exec_build=true` in `taito-config.sh`. This is required because GitHub web GUI does not support merging with fast-forward.
+2. Optional: If you want to be able to merge changes between environments using GitHub web GUI, enable builds for all branches by setting `ci_exec_build=true` in `taito-env-all-config.sh`. This is required because GitHub web GUI does not support merging with fast-forward.
 3. Make sure that urlprefix and personal git token have been set for webhook by running `taito secrets:dev`. If they are unset, set them with `taito env rotate:dev webhook`
 4. Configure a git webhook for your git repository. It should call url https://USER:PASSWORD@DEV-DOMAIN/webhook/URLPREFIX/build when changes are pushed to the git repository. For more information see the [GitHub Webhooks Guide](https://developer.github.com/webhooks/).
 
@@ -136,7 +136,7 @@ Operations on production and staging environments usually require admin rights. 
 
 ## Custom provider
 
-If you cannot use Docker containers on your remote environments, you can customize the deployment with a custom provider. Instead of deploying the site as docker container image, you can, for example, deploy the site as static files on a web server, or as a WAR package on a Java application server. You can enable the custom provider with the `taito_provider` setting in `taito-config.sh` and implement [custom deployment scripts](https://github.com/TaitoUnited/SERVER-TEMPLATE/blob/master/scripts/custom-provider) yourself.
+If you cannot use Docker containers on your remote environments, you can customize the deployment with a custom provider. Instead of deploying the site as docker container image, you can, for example, deploy the site as static files on a web server, or as a WAR package on a Java application server. You can enable the custom provider with the `taito_provider` setting in `taito-config.sh` and implement [custom deployment scripts](https://github.com/TaitoUnited/FULL-STACK-TEMPLATE/blob/master/scripts/custom-provider) yourself.
 
 ## Kubernetes
 
@@ -146,6 +146,6 @@ If you need to, you can configure Kubernetes settings by modifying `heml*.yaml` 
 
 You can add a new secret like this:
 
-1. Add a secret definition to the `taito_secrets` or the `taito_remote_secrets` setting in `taito-config.sh`.
+1. Add a secret definition to the `taito_secrets` or the `taito_remote_secrets` setting in `taito-env-all-config.sh`.
 2. Map the secret definition to a secret in `docker-compose.yaml` for Docker Compose and in `scripts/helm.yaml` for Kubernetes.
 3. Run `taito env rotate:ENV SECRET` to generate a secret value for an environment. Run the command for each environment separately. Note that the rotate command restarts all pods in the same namespace.

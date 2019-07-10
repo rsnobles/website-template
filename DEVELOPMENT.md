@@ -113,7 +113,7 @@ Docker volume mounts can be slow on non-Linux systems. The template uses *delega
 To get maximum performace on non-Linux system, you may also choose to run some services locally, if you have all the necessary dependencies installed on your host system. For example, to run the client locally, you can add the following lines to your `taito-user-config.sh`, Taito CLI will modify docker-compose.yaml and docker-nginx.conf accordingly on `taito start`:
 
    ```
-   docker_compose_local_services="server-template-client:8080"
+   docker_compose_local_services="full-stack-template-client:8080"
    ```
 
 Note that in addition to running `taito start`, you also need to start the local client manually with the necessary environment variables set, for example:
@@ -157,7 +157,7 @@ Simple projects require only two environments: **dev** and **prod**. You can lis
 
 You can use the taito commands to manage branches, builds, and deployments. Run `taito env -h`, `taito feat -h`, `taito hotfix -h`, and `taito deployment -h` for instructions. Run `taito open builds` to see the build logs. See [version control](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/03-version-control.md) chapter of the [Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/README.md) for some additional information.
 
-> Automatic deployment might be turned off for critical environments (`ci_exec_deploy` setting in `taito-config.sh`). In such case the deployment must be run manually with the `taito -a deployment deploy:prod VERSION` command using a personal admin account after the CI/CD process has ended successfully.
+> Automatic deployment might be turned off for critical environments (`ci_exec_deploy` setting in `taito-*-config.sh`). In such case the deployment must be run manually with the `taito -a deployment deploy:prod VERSION` command using a personal admin account after the CI/CD process has ended successfully.
 
 ## Upgrading
 

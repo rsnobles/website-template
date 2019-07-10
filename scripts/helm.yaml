@@ -2,7 +2,8 @@ global:
   domain: ${taito_domain}
   url: https://${taito_domain}
   publicPort: 443
-  logFormat: stackdriver
+  logProvider: ${taito_logging_provider}
+  logFormat: ${taito_logging_format}
   logLevel: info    # trace, debug, info, warn, error, fatal
   registry: ${taito_container_registry}
   imagePullPolicy: ''
@@ -25,60 +26,39 @@ full-stack:
     tier:
     livenessPath: /healthz
     livenessInitialDelay: 3
-    # Paths
-    paths:
-      # - path:
-      #   basicAuthEnabled:
-      #   basicAuthHtpasswdSecret:
-      #   clientMaxBodySize:
-      #   limitRate:
-      #   limitRateAfter:
-      #   rewriteTarget:
-      #   rewriteTargetDisabled:
     # Path defaults
     basicAuthEnabled: ${taito_basic_auth_enabled}
     basicAuthHtpasswdSecret: ${taito_project}-${taito_env}-basic-auth
     clientMaxBodySize: 1m
-    limitRate:
-    limitRateAfter:
-    rewriteTarget:
-    rewriteTargetDisabled:
-    # Security
-    runAsUser:
-    runAsGroup:
-    # Resources
-    cpuRequest: 2m
-    cpuLimit: 100m
-    memoryRequest: 50Mi
-    memoryLimit: 256Mi
-    # Scaling
-    replicas: ${kubernetes_replicas}
-    autoscale: false
-    minReplicas: 2
-    maxReplicas: 5
-    # TODO metrics:
-    # https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
-    # TODO vertical autoscaling:
-    # https://cloud.google.com/kubernetes-engine/docs/how-to/vertical-pod-autoscaling
     # Env
     env:
       # Environment variables
       COMMON_ENV: ${taito_env}
-    secrets:
-      # Secrets
 
   services:
-
     www:
       paths:
         - path:
       tier: frontend
+      cpuRequest: 5m
+      cpuLimit: 100m
+      memoryRequest: 10Mi
+      memoryLimit: 256Mi
+      # Scaling
+      replicas: ${kubernetes_replicas}
+      autoscale: false
+      minReplicas: ${kubernetes_replicas}
+      maxReplicas: 5
       sidecar:
         enabled: false
         name: webhook
         paths:
           - path: /webhook
         port: 9000
+        cpuRequest: 5m
+        cpuLimit: 500m
+        memoryRequest: 128Mi
+        memoryLimit: 768Mi
         sharedVolume:
           mountPath: /service
           sidecarMountPath: /build

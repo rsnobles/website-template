@@ -8,7 +8,7 @@ Implement a website with a static site generator of your choice (e.g. Gatsby, Hu
 
 You can create a new project from this template by running `taito project create: website-template`. Later you can upgrade your project to the latest version of the template by running `taito project upgrade`. To ensure flawless upgrade, do not modify files that have a **do-not-modify** note in them as they are designed to be reusable and easily configurable for various needs. In such case, improve the original files of the template instead, and then upgrade.
 
-NOTE: This template is a subset of [server-template](https://github.com/TaitoUnited/server-template/). Use the server-template instead, if you need more than just a static website.
+NOTE: This template is a subset of [full-stack-template](https://github.com/TaitoUnited/full-stack-template/). Use the full-stack-template instead, if you need more than just a static website.
 
 [//]: # (TEMPLATE NOTE END)
 # Project title
@@ -34,7 +34,7 @@ LINKS WILL BE GENERATED HERE
 
 [//]: # (GENERATED LINKS END)
 
-> You can update this section by configuring links in `taito-config.sh` and running `taito project docs`.
+> You can update this section by configuring links in `taito-env-all-config.sh` and running `taito project docs`.
 
 ## Editing the website
 
