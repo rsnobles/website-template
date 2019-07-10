@@ -26,7 +26,7 @@ Table of contents:
 
 ## Links
 
-Basic auth credentials for non-production environments: `USER` / `PASS`.
+Basic auth credentials for non-production environments: `USERNAME` / `PASSWORD`
 
 [//]: # (GENERATED LINKS START)
 

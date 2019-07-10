@@ -1,12 +1,12 @@
 # Configuration
 
-This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/CONFIGURATION.md) instead. Note that Taito CLI is optional (see [TAITOLESS.md](TAITOLESS.md)).
+This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/CONFIGURATION.md) instead.
 
 ## Prerequisites
 
 * [npm](https://github.com/npm/cli) that usually ships with [Node.js](https://nodejs.org/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
-* [Taito CLI](https://github.com/TaitoUnited/taito-cli#readme) (or see [TAITOLESS.md](TAITOLESS.md))
+* [Taito CLI](https://taitounited.github.io/taito-cli/) (or see [TAITOLESS.md](TAITOLESS.md))
 * Optional: Some editor plugins depending on technology (e.g. [ESLint](https://eslint.org/docs/user-guide/integrations#editors) and [Prettier](https://prettier.io/docs/en/editors.html) for JavaScript/TypeScript)
 
 ## Basic settings
@@ -26,12 +26,13 @@ Remove static site generators that you do not use from `www/install.sh` but do n
 
     EDIT www/install.sh
 
-Start containers, and start a shell inside the www Docker container:
+Start containers (see `taito trouble` if containers fail to start):
 
     taito kaboom
-    taito shell:www
 
-If containers fail to start, run `taito trouble` to see troubleshooting.
+Once you see text `No site yet at www/site. Just keep the container running.`, start a shell inside the www Docker container:
+
+    taito shell:www
 
 *FOR PLAIN STATIC FILES ONLY:* Exit the shell and add static files to www/public with your code editor.
 
@@ -95,17 +96,17 @@ Write down the basic auth credentials to `taito-testing-config.sh`:
 
     EDIT taito-testing-config.sh  # Edit this: ci_test_base_url=https://username:secretpassword@...
 
-Push some changes to dev branch with a [Conventional Commits](http://conventionalcommits.org/) commit message `chore: configuration`:
+Push some changes to dev branch with a [Conventional Commits](http://conventionalcommits.org/) commit message (e.g. `chore: configuration`):
 
-    taito stage                   # Or just 'git add .'
-    taito commit                  # Or just 'git commit'
-    taito push                    # Or just 'git push'
+    taito stage                   # Or just: git add .
+    taito commit                  # Or just: git commit -m 'chore: configuration'
+    taito push                    # Or just: git push
 
 See it build and deploy:
 
     taito open builds:dev
     taito status:dev
-    taito open client:dev
+    taito open www:dev
 
 > If you have some trouble creating an environment, you can destroy it by running `taito env destroy:dev` and then try again with `taito env apply:dev`.
 
