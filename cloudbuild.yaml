@@ -55,7 +55,7 @@ steps:
     - commit_sha=$COMMIT_SHA
     - build_id=$BUILD_ID
     - full_repo_name=$_REPO_NAME
-    - image_path=$_IMAGE_REGISTRY/$_REPO_NAME/server:$COMMIT_SHA
+    - image_path=$_IMAGE_REGISTRY/$_REPO_NAME/www:$COMMIT_SHA
   args:
   - '-c'
   - |
