@@ -155,7 +155,6 @@ case $taito_env in
     taito_resource_namespace=$taito_organization_abbr-$taito_company-prod
 
     # Domain and resources
-    taito_app_url=https://$taito_domain
     taito_host="${template_default_host_prod:-}"
     kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:-}${kubernetes_name}"
 
@@ -195,7 +194,6 @@ case $taito_env in
     # Domain and resources
     taito_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?}
     taito_default_domain=$taito_project-$taito_target_env.${template_default_domain_prod:?}
-    taito_app_url=https://$taito_domain
     taito_host="${template_default_host_prod:-}"
     kubernetes_cluster="${template_default_kubernetes_cluster_prefix_prod:-}${kubernetes_name}"
 
@@ -247,9 +245,11 @@ taito_resource_namespace_id=$taito_resource_namespace
 taito_uptime_namespace_id=$taito_zone
 
 # URLs
-taito_webhook_url=$taito_app_url/webhook/SECRET/build
 if [[ "$taito_target_env" == "local" ]]; then
   taito_webhook_url=http://localhost:9000/SECRET/build
+else
+  taito_app_url=https://$taito_domain
+  taito_webhook_url=$taito_app_url/webhook/SECRET/build
 fi
 
 # ------ All environments config ------
@@ -273,7 +273,6 @@ fi
 
 link_urls="
   ${link_urls}
-  * storage:ENV=$taito_storage_url Storage bucket (:ENV)
 "
 
 # ------ Test suite settings ------
