@@ -38,7 +38,7 @@ LINKS WILL BE GENERATED HERE
 
 ## Editing the website
 
-You can edit the website directly on GitHub.
+You can edit the website also directly on GitHub web GUI. Instructions are below.
 
 > NOTE: These are example instructions provided by the website-template. Modify these so that they apply to your site. If there are multiple people working on the website, and dev branch is being actively developed, it is recommended to configure the project so that new content is created to stag branch instead of dev.
 
@@ -80,8 +80,10 @@ You can edit the website directly on GitHub.
    * Select: `base: master` < `compare:dev` on top of the page.
    * Enter some title for the pull request and press the `Create pull request` button.
 
-4) Merge the pull request by pressing the **Merge pull request** button.
+4) Merge the pull request by pressing the **Merge pull request** button. TIP: If you want to avoid an additional merge commit, use either Taito CLI (`taito env merge:dev prod`) or Git to make a fast-forward merge.
 5) The [site](https://my-project.mydomain.com) will be updated automatically after a few minutes.
+
+> NOTE: If you want to use the **Merge pull request** feature on GitHub web GUI, set `ci_exec_build=true` on `taito-env-all-config.sh` to enable builds for all environments.
 
 ## Contacts
 
