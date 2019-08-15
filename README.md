@@ -34,7 +34,7 @@ LINKS WILL BE GENERATED HERE
 
 [//]: # (GENERATED LINKS END)
 
-> You can update this section by configuring links in `taito-env-all-config.sh` and running `taito project docs`.
+> You can update this section by configuring links in `taito-project-config.sh` and running `taito project docs`.
 
 ## Editing the website
 
@@ -80,10 +80,10 @@ You can edit the website also directly on GitHub web GUI. Instructions are below
    * Select: `base: master` < `compare:dev` on top of the page.
    * Enter some title for the pull request and press the `Create pull request` button.
 
-4) Merge the pull request by pressing the **Merge pull request** button. TIP: If you want to avoid an additional merge commit, use either Taito CLI (`taito env merge:dev prod`) or Git to make a fast-forward merge.
+4) Merge the pull request by pressing the **Merge pull request** button. TIP: If you want to keep environment branch commits in sync, use either Taito CLI (`taito env merge:dev prod`) or Git to make a fast-forward merge.
 5) The [site](https://my-project.mydomain.com) will be updated automatically after a few minutes.
 
-> NOTE: If you want to use the **Merge pull request** feature on GitHub web GUI, set `ci_exec_build=true` on `taito-env-all-config.sh` to enable builds for all environments.
+> NOTE: If you want to use the **Merge pull request** feature on GitHub web GUI, set `ci_exec_build=true` on `taito-project-config.sh` to enable container image build for all environments.
 
 ## Contacts
 
