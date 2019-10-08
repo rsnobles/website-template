@@ -3,7 +3,7 @@
 #       avoid unnecessary cypress download
 FROM taitounited/cypress:3.4.1
 ARG SERVICE_DIR=.
-RUN apt-get -y update && apt-get -y install rsync # rsync for windows devs
+RUN apt-get -y update && apt-get -y install git rsync # rsync for windows devs
 ENV NODE_ENV development
 
 RUN mkdir /service && chown node:node /service
