@@ -392,7 +392,7 @@ steps:
 - id: artifact-release-webhook
   waitFor: ['deployment-verify']
   name: '${_TEMPLATE_DEFAULT_TAITO_IMAGE}'
-  args: ['artifact-release:webhook:$BRANCH_NAME', '$COMMIT_SHA', 'false', './www', './www', 'Dockerfile.webhook']
+  args: ['artifact-release:webhook:$BRANCH_NAME', '$COMMIT_SHA']
   env:
     - taito_mode=ci
     # NOTE: These are removed by 'taito project create'
