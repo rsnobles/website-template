@@ -58,8 +58,8 @@ You can edit the website also directly on GitHub web GUI. Instructions are below
 
     ![I'm happy](./happy.jpg)
     ```
-5) Commit your changes by pressing the **Commit new file** button on bottom of the page.
-6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page.
+5) Commit your changes by pressing the **Commit new file** button on bottom of the page. On your commit messages, use `feat:` prefix for new articles and images (see [version control](DEVELOPMENT.md#version-control) for more information).
+6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page, and use the `feat:` prefix on your commit message.
 
 ### Update a blog post
 
@@ -67,8 +67,8 @@ You can edit the website also directly on GitHub web GUI. Instructions are below
 2) Browse to a file that you would like edit.
 3) Enter edit mode by pressing the **Pen** icon.
 4) Enter blog content in [Markdown syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax). Use the preview tab to preview your changes.
-5) Commit your changes by pressing the **Commit changes** button on bottom of the page.
-6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page.
+5) Commit your changes by pressing the **Commit changes** button on bottom of the page. On your commit messages, use `fix:` prefix for fixes (see [version control](DEVELOPMENT.md#version-control) for more information).
+6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page, and use the `fix:` prefix on your commit message.
 
 ### Preview and release changes
 
