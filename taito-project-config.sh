@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # shellcheck disable=SC2034
 # shellcheck disable=SC2154
 
@@ -6,31 +6,28 @@
 # Project specific settings
 ##########################################################################
 
-# Environments: In the correct order (e.g. dev test stag canary prod)
-taito_environments="dev prod"
+# Environments: In the correct order (e.g. dev test uat stag canary prod)
+taito_environments="${template_default_environments}"
 
 # Basic auth: Uncomment the line below to disable basic auth from ALL
 # environments. Use taito-env-prod-config.sh to disable basic auth from prod
 # environment only.
 # taito_basic_auth_enabled=false
 
-# Service account: Uncomment the line below to always create GCP service account
-# gcp_service_account_enabled=true
-
-# Build: Uncomment the line below to build container image for all environments
-# ci_exec_build=true
+# Service account: Uncomment the line below to always create Cloud provider
+# service account
+# provider_service_account_enabled=true
 
 # ------ Stack ------
 
 # Stack
 taito_targets="webhook www"
-taito_storages=""
 taito_networks="default"
 
 # Stack uptime monitoring
 taito_uptime_targets="www"
 taito_uptime_paths="/"
-taito_uptime_timeouts="5s"
+taito_uptime_timeouts="5"
 
 # ------ Links ------
 # Add custom links here. You can regenerate README.md links with
@@ -42,8 +39,6 @@ link_urls="
   * posts=https://$taito_vc_repository_url/tree/dev/www/site/content/blog Content: posts
   * assets=https://$taito_vc_repository_url/tree/dev/www/site/content/assets Content: assets
 "
-# Example links:
-# * styleguide=https://styleguide UI/UX style guide and designs
 
 if [[ "$taito_target_env" != "prod" ]]; then
   link_urls="
