@@ -36,25 +36,25 @@ sed -i "s/\[ \] All done/[x] All done/g" CONFIGURATION.md
 echo "Copy all root files from template"
 (yes | cp * "${template_project_path}" 2> /dev/null || :)
 
-# TODO: remove
-echo "Copy dockerfiles from template"
-find . -name "Dockerfile*" -exec cp --parents \{\} "${template_project_path}" \;
-
-# TODO: remove
-rm -rf ${template_project_path}/scripts/helm/*
+# # TODO: remove
+# echo "Copy dockerfiles from template"
+# find . -name "Dockerfile*" -exec cp --parents \{\} "${template_project_path}" \;
+#
+# # TODO: remove
+# rm -rf ${template_project_path}/scripts/helm/*
 
 echo "Copy helm scripts from template"
 mkdir -p "${template_project_path}/scripts/helm"
 yes | cp -f scripts/helm/* "${template_project_path}/scripts/helm"
 
-# TODO: remove
-rm -rf "${template_project_path}/scripts/terraform/gcloud"
-# TODO: remove
-rm -rf "${template_project_path}/scripts/terraform/.terraform"
-# TODO: remove
-sed -i "s/oldRewritePolicy: false/oldRewritePolicy: true/g" scripts/helm.yaml
-# TODO: remove
-(yes | cp -f scripts/*.yaml "${template_project_path}/scripts")
+# # TODO: remove
+# rm -rf "${template_project_path}/scripts/terraform/gcloud"
+# # TODO: remove
+# rm -rf "${template_project_path}/scripts/terraform/.terraform"
+# # TODO: remove
+# sed -i "s/oldRewritePolicy: false/oldRewritePolicy: true/g" scripts/helm.yaml
+# # TODO: remove
+# (yes | cp -f scripts/*.yaml "${template_project_path}/scripts")
 
 echo "Copy terraform scripts from template"
 cp -rf scripts/terraform "${template_project_path}/scripts"
