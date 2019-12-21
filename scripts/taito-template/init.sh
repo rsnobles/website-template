@@ -3,7 +3,9 @@
 : "${taito_vc_repository:?}"
 : "${taito_vc_repository_alt:?}"
 
-${taito_setv:-}
+if [[ ${taito_verbose:-} == "true" ]]; then
+  set -x
+fi
 
 # Remove the example site
 rm -rf www/site
