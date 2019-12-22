@@ -61,7 +61,7 @@ steps:
 - id: artifact-prepare-webhook
   waitFor: ['build-prepare']
   name: '${_TEMPLATE_DEFAULT_TAITO_IMAGE}'
-  args: ['artifact-prepare:webhook:$BRANCH_NAME', '$COMMIT_SHA', './www', './www', 'Dockerfile.webhook']
+  args: ['artifact-prepare:webhook:$BRANCH_NAME', '$COMMIT_SHA', 'false', './www', './www', 'Dockerfile.webhook']
   env:
     - taito_mode=ci
     - taito_ci_phases=${_TAITO_CI_PHASES}

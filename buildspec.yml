@@ -17,7 +17,7 @@ phases:
     commands:
       # Prepare artifacts for deployment (TODO: can be executed parallel)
       - taito artifact prepare:www:$ENV $IMAGE_TAG
-      - taito artifact prepare:webhook:$ENV $IMAGE_TAG ./www ./www Dockerfile.webhook
+      - taito artifact prepare:webhook:$ENV $IMAGE_TAG false ./www ./www Dockerfile.webhook
       # Deploy changes to target environment
       - taito deployment deploy:$ENV $IMAGE_TAG
       # Test and verify deployment

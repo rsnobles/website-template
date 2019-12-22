@@ -98,7 +98,7 @@ steps:
     sed -i 's/version:.*/version: 0.9.0/' scripts/helm/requirements.yaml
     taito build prepare:$BRANCH_NAME $COMMIT_SHA
     taito artifact prepare:www:$BRANCH_NAME $COMMIT_SHA
-    taito artifact prepare:webhook:$BRANCH_NAME $COMMIT_SHA ./www ./www Dockerfile.webhook
+    taito artifact prepare:webhook:$BRANCH_NAME $COMMIT_SHA false ./www ./www Dockerfile.webhook
     taito deployment deploy:$BRANCH_NAME $COMMIT_SHA
     taito deployment wait:$BRANCH_NAME
     taito test:$BRANCH_NAME

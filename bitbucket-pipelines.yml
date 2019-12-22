@@ -34,7 +34,7 @@ pipelines:
       - step: # webhook prepare
           script:
             - export taito_mode=ci
-            - taito artifact prepare:webhook:$BITBUCKET_BRANCH $BITBUCKET_COMMIT ./www ./www Dockerfile.webhook
+            - taito artifact prepare:webhook:$BITBUCKET_BRANCH $BITBUCKET_COMMIT false ./www ./www Dockerfile.webhook
           artifacts:
             - webhook.docker
             - webhook-tester.docker

@@ -45,7 +45,7 @@ jobs:
   # prepare artifacts
   - bash: |
       taito artifact prepare:www:$(Build.SourceBranchName) $(Build.SourceVersion)
-      taito artifact prepare:webhook:$(Build.SourceBranchName) $(Build.SourceVersion) ./www ./www Dockerfile.webhook
+      taito artifact prepare:webhook:$(Build.SourceBranchName) $(Build.SourceVersion) false ./www ./www Dockerfile.webhook
     displayName: prepare artifacts
 
   # deploy
