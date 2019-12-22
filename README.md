@@ -40,7 +40,7 @@ LINKS WILL BE GENERATED HERE
 
 You can edit the website also directly on GitHub web GUI. Instructions are below.
 
-> NOTE: These are example instructions provided by the website-template. Modify these so that they apply to your site. If there are multiple people working on the website, and dev branch is being actively developed, it is recommended to configure the project so that new content is created to stag branch instead of dev.
+> NOTE: These are example instructions provided by the WEBSITE-TEMPLATE. Modify these so that they apply to your site. If there are multiple people working on the website, and dev branch is being actively developed, it is recommended to configure the project so that new content is created to stag branch instead of dev.
 
 ### Create a new blog post
 
