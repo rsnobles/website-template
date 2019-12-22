@@ -102,6 +102,8 @@ Push some changes to dev branch with a [Conventional Commits](http://conventiona
     taito commit                  # Or just: git commit -m 'chore: configuration'
     taito push                    # Or just: git push
 
+> On Gatsby your first git push will likely fail because you haven't written any tests. Either write tests or replace `exit 1` with `exit 0` on `www/site/package.json`
+
 See it build and deploy:
 
     taito open builds:dev
