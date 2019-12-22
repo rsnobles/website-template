@@ -12,24 +12,28 @@ global:
 full-stack:
   ingress:
     class: nginx
+    namespace: nginx-ingress
     oldRewritePolicy: false
     tls: true
     domains:
       - name: ${taito_domain}
         altName: ${taito_altdomain}
 
+  # NOTE: See helm/values.yaml for a list of all service attributes
+  # and helm/examples.yaml for some examples.
   serviceDefaults:
-    # Basics
-    image: # For 3rd party container image
-    command:
-    port: 8080
-    tier:
-    livenessPath: /healthz
-    livenessInitialDelay: 3
     # Path defaults
     basicAuthEnabled: ${taito_basic_auth_enabled}
     basicAuthHtpasswdSecret: ${taito_project}-${taito_env}-basic-auth
-    clientMaxBodySize: 1m
+    # Vertical scaling
+    verticalScaleUpdateMode: Off
+    # Horizontal scaling
+    replicas: ${kubernetes_replicas}
+    autoscale: false
+    autoscaleCpuPercentage: 70
+    autoscaleMemoryPercentage: 70
+    minReplicas: ${kubernetes_replicas}
+    maxReplicas: 5
     # Env
     env:
       # Environment variables
@@ -39,7 +43,6 @@ full-stack:
     www:
       paths:
         - path:
-      tier: frontend
       cpuRequest: 5m
       cpuLimit: 100m
       memoryRequest: 10Mi
