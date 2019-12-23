@@ -1,6 +1,6 @@
 # Without Taito CLI
 
-This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/TAITOLESS.md) instead. Project specific conventions are located in [README.md](README.md#conventions).
+This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/scripts/taito/TAITOLESS.md) instead. Project specific conventions are located in [README.md](../../README.md#conventions).
 
 Table of contents:
 
@@ -62,7 +62,7 @@ Instructions defined in [CONFIGURATION.md](CONFIGURATION.md) apply. You just nee
     . taito-config.sh
     ```
 * IF MONITORING IS REQUIRED:: Run terraform scripts that are located at `scripts/terraform/`. Use `scripts/terraform/common/backend.tf` as backend, if you want to store terraform state on git. Note that the terraform scripts assume that a cloud provider project defined by `taito_resource_namespace` and `taito_resource_namespace_id` already exists and Terraform is allowed to create resources for that project.
-* IF BASIC AUTH IS REQUIRED: Set Kubernetes secret values with `kubectl`. The secrets are defined by `taito_secrets` in `taito-config.sh`, and they are referenced in `scripts/helm*.yaml` files.
+* IF BASIC AUTH IS REQUIRED: Set Kubernetes secret values with `kubectl`. The secrets are defined by `taito_secrets` in `scripts/taito/project.sh`, and they are referenced in `scripts/helm*.yaml` files.
 
 ### Setting up CI/CD
 

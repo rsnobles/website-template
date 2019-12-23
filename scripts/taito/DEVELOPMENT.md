@@ -1,6 +1,6 @@
 # Development
 
-This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/DEVELOPMENT.md) instead. Project specific conventions are located in [README.md](README.md#conventions). See the [Taito CLI tutorial](https://taitounited.github.io/taito-cli/tutorial) for more thorough development instructions.
+This file has been copied from [WEBSITE-TEMPLATE](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/). Keep modifications minimal and improve the [original](https://github.com/TaitoUnited/WEBSITE-TEMPLATE/blob/dev/scripts/taito/DEVELOPMENT.md) instead. Project specific conventions are located in [README.md](../../README.md#conventions). See the [Taito CLI tutorial](https://taitounited.github.io/taito-cli/tutorial) for more thorough development instructions.
 
 Table of contents:
 
@@ -98,7 +98,7 @@ The commands mentioned above work also for server environments (`f-NAME`, `dev`,
     taito open logs:dev                     # Open logs on browser
     taito secret show:dev                   # Show secrets (e.g. database user credentials)
 
-Run `taito -h` to get detailed instructions for all commands. Run `taito COMMAND -h` to show command help (e.g `taito db -h`, `taito db import -h`). For troubleshooting run `taito trouble`. See [README.md](README.md) for project specific conventions and documentation.
+Run `taito -h` to get detailed instructions for all commands. Run `taito COMMAND -h` to show command help (e.g `taito db -h`, `taito db import -h`). For troubleshooting run `taito trouble`. See [README.md](../../README.md) for project specific conventions and documentation.
 
 > If you run into authorization errors, authenticate with the `taito auth:ENV` command.
 
@@ -130,7 +130,7 @@ Once you have implemented your first integration or e2e test, enable the CI test
 
 ## Code structure
 
-Project specific conventions are defined in [README.md](README.md#conventions).
+Project specific conventions are defined in [README.md](../../README.md#conventions).
 
 ## Version control
 
@@ -157,7 +157,7 @@ Simple projects require only two environments: **dev** and **prod**. You can lis
 
 You can use the taito commands to manage branches, builds, and deployments. Run `taito env -h`, `taito feat -h`, `taito hotfix -h`, and `taito deployment -h` for instructions. Run `taito open builds` to see the build logs. See [version control](https://taitounited.github.io/taito-cli/tutorial/03-version-control) chapter of the [Taito CLI tutorial](https://taitounited.github.io/taito-cli/tutorial) for some additional information.
 
-> Automatic deployment might be turned off for critical environments (`ci_exec_deploy` setting in `taito-*-config.sh`). In such case the deployment must be run manually with the `taito -a deployment deploy:prod VERSION` command using a personal admin account after the CI/CD process has ended successfully.
+> Automatic deployment might be turned off for critical environments (`ci_exec_deploy` setting in `scripts/taito/*.sh`). In such case the deployment must be run manually with the `taito -a deployment deploy:prod VERSION` command using a personal admin account after the CI/CD process has ended successfully.
 
 ## Upgrading
 

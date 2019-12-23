@@ -26,8 +26,12 @@ find . -type f -exec sed -i \
 # Generate ports
 echo "Generating unique random ports (avoid conflicts with other projects)..."
 if [[ ! $ingress_port ]]; then ingress_port=$(shuf -i 8000-9999 -n 1); fi
-sed -i "s/9999/${ingress_port}/g" DEVELOPMENT.md TAITOLESS.md \
-  docker-compose.yaml taito-config.sh &> /dev/null || :
+sed -i "s/9999/${ingress_port}/g" \
+  scripts/taito/DEVELOPMENT.md \
+  scripts/taito/TAITOLESS.md \
+  docker-compose.yaml \
+  taito-config.sh &> \
+    /dev/null || :
 
 ./scripts/taito-template/common.sh
 echo init done

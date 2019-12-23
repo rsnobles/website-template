@@ -1,4 +1,4 @@
-> This page contains a short summary of the project itself. See [DEVELOPMENT.md](DEVELOPMENT.md) for development instructions.
+> This page contains a short summary of the project itself. See [DEVELOPMENT.md](scripts/taito/DEVELOPMENT.md) and [CONFIGURATION.md](scripts/taito/CONFIGURATION.md) for development and configuration instructions.
 
 [//]: # (TEMPLATE NOTE START)
 
@@ -34,7 +34,7 @@ LINKS WILL BE GENERATED HERE
 
 [//]: # (GENERATED LINKS END)
 
-> You can update this section by configuring links in `taito-project-config.sh` and running `taito project docs`.
+> You can update this section by configuring links in `scripts/taito/project.sh` and running `taito project docs`.
 
 ## Editing the website
 
@@ -58,7 +58,7 @@ You can edit the website also directly on GitHub web GUI. Instructions are below
 
     ![I'm happy](./happy.jpg)
     ```
-5) Commit your changes by pressing the **Commit new file** button on bottom of the page. On your commit messages, use `feat:` prefix for new articles and images (see [version control](DEVELOPMENT.md#version-control) for more information).
+5) Commit your changes by pressing the **Commit new file** button on bottom of the page. On your commit messages, use `feat:` prefix for new articles and images (see [version control](scripts/taito/DEVELOPMENT.md#version-control) for more information).
 6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page, and use the `feat:` prefix on your commit message.
 
 ### Update a blog post
@@ -67,7 +67,7 @@ You can edit the website also directly on GitHub web GUI. Instructions are below
 2) Browse to a file that you would like edit.
 3) Enter edit mode by pressing the **Pen** icon.
 4) Enter blog content in [Markdown syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax). Use the preview tab to preview your changes.
-5) Commit your changes by pressing the **Commit changes** button on bottom of the page. On your commit messages, use `fix:` prefix for fixes (see [version control](DEVELOPMENT.md#version-control) for more information).
+5) Commit your changes by pressing the **Commit changes** button on bottom of the page. On your commit messages, use `fix:` prefix for fixes (see [version control](scripts/taito/DEVELOPMENT.md#version-control) for more information).
 6) If required, upload images for you blog post by pressing the **Upload files** button on top of the page. Remember to commit your images by pressing the **Commit changes** button on bottom of the page, and use the `fix:` prefix on your commit message.
 
 ### Preview and release changes
@@ -83,7 +83,7 @@ You can edit the website also directly on GitHub web GUI. Instructions are below
 4) Merge the pull request by pressing the **Merge pull request** button. TIP: If you want to keep environment branch commits in sync, use either Taito CLI (`taito env merge:dev prod`) or Git to make a fast-forward merge.
 5) The [site](https://my-project.mydomain.com) will be updated automatically after a few minutes.
 
-> NOTE: If you want to use the **Merge pull request** feature on GitHub web GUI, set `ci_exec_build=true` on `taito-project-config.sh` to enable container image build for all environments.
+> NOTE: If you want to use the **Merge pull request** feature on GitHub web GUI, set `ci_exec_build=true` on `scripts/taito/project.sh` to enable container image build for all environments.
 
 ## Contacts
 
