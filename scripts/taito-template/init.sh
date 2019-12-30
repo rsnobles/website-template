@@ -29,9 +29,9 @@ if [[ ! $ingress_port ]]; then ingress_port=$(shuf -i 8000-9999 -n 1); fi
 sed -i "s/9999/${ingress_port}/g" \
   scripts/taito/DEVELOPMENT.md \
   scripts/taito/TAITOLESS.md \
+  scripts/taito/config/main.sh \
   docker-compose.yaml \
-  taito-config.sh &> \
-    /dev/null || :
+    &> /dev/null || :
 
 ./scripts/taito-template/common.sh
 echo init done
