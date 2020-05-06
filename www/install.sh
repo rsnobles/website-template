@@ -3,6 +3,7 @@
 set -xe
 
 apt-get -y update
+apt-get -y install build-essential libpng-dev
 cd /tmp
 
 #-------------------------------------------------------------------------
@@ -20,7 +21,7 @@ echo 'Hugo installed'
 # Install Jekyll. NOTE: You may remove all this if you do not use Jekyll
 #-------------------------------------------------------------------------
 
-apt-get -y install ruby-full build-essential
+apt-get -y install ruby-full
 echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
 echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
 echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
