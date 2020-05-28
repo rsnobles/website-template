@@ -16,8 +16,6 @@
     "unit:www": "cd www && npm run unit",
     "test": "npm-run-all test:www",
     "test:www": "taito ${taito_options} util-test:www:${taito_env}",
-    "taito-host-cypress": "npm run taito-host-cypress:www",
-    "taito-host-cypress:www": "cd www && npm run cypress:open",
     "_check-deps_comment": "TODO how to pass -u argument from check-deps to check-deps:TARGET?",
     "check-deps": "npm-run-all \"check-deps:root {@}\" \"check-deps:www {@}\" -- ",
     "check-deps:root": "npm run _check-deps-script -- . ",

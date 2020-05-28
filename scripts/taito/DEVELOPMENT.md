@@ -46,12 +46,6 @@ Run tests:
     taito unit:www post                     # run the 'post' unit test of www
     taito test                              # run all end-to-end tests
 
-Open Cypress user interface:
-
-    taito cypress                           # open cypress
-
-> TIP: Testing personnel may run Cypress against any remote environment without Taito CLI or docker. See `www/test/README.md` for more instructions.
-
 Start shell on a container:
 
     taito shell:www
@@ -92,7 +86,6 @@ The commands mentioned above work also for server environments (`f-NAME`, `dev`,
     taito info:dev                          # Show info
     taito status:dev                        # Show status of dev environment
     taito test:dev                          # Run integration and e2e tests
-    taito cypress:www:dev                   # Open cypress for www
     taito shell:www:dev                     # Start a shell on www container
     taito logs:www:dev                      # Tail logs of www container
     taito open logs:dev                     # Open logs on browser

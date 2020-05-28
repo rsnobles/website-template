@@ -6,7 +6,6 @@ Table of contents:
 
 * [Prerequisites](#prerequisites)
 * [Quick start](#quick-start)
-* [Testing](#testing)
 * [Configuration](##onfiguration)
 
 ## Prerequisites
@@ -45,10 +44,6 @@ Open the application on browser:
 Use `npm`, `docker-compose` and `docker` normally to run commands and operate containers.
 
 If you would like to use some of the additional commands provided by Taito CLI also without using Taito CLI, first run the command with verbose option (`taito -v`) to see which commands Taito CLI executes under the hood, and then implement them in your `package.json` or `Makefile`.
-
-## Testing
-
-You may run Cypress against any remote environment without Taito CLI or docker. See `www/test/README.md` for more instructions.
 
 ## Configuration
 

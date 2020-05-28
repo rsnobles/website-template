@@ -18,11 +18,3 @@ elif [[ $taito_env == "dev" ]] || [[ $taito_env == "f-"* ]]; then
     ci_test_base_url=https://$(taito -q secret show:$taito_env basic-auth | head -1)@$taito_domain
   fi
 fi
-
-# URLs
-test_www_CYPRESS_baseUrl=$ci_test_base_url
-if [[ "$taito_target_env" == "local" ]]; then
-  CYPRESS_baseUrl=$taito_app_url
-else
-  CYPRESS_baseUrl=$ci_test_base_url
-fi
