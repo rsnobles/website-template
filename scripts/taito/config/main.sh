@@ -121,7 +121,7 @@ template_source_git=git@github.com:TaitoUnited
 # Kubernetes plugin
 kubernetes_name=${template_default_kubernetes}
 kubernetes_replicas=1
-kubernetes_db_proxy_enabled=false
+kubernetes_db_proxy_enabled=true
 
 # ------ OS specific docker settings ------
 
