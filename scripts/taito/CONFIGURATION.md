@@ -60,13 +60,15 @@ Once you see text `No site yet at www/site. Just keep the container running.`, e
     exit
     ```
 
-3. Enable `/service/site/node_modules` mount in `docker-compose.yaml`:
+3. OPTIONAL: Change the development start command in `develop.sh`, if the starter uses some other command than `npm run develop -- --host 0.0.0.0 --port 8080`.
+
+4. Enable `/service/site/node_modules` mount in `docker-compose.yaml`:
 
     ```
     EDIT docker-compose.yaml
     ```
 
-4. Restart containers and open the site on browser:
+5. Restart containers and open the site on browser:
 
     ```
     taito stop

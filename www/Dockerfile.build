@@ -31,6 +31,7 @@ LABEL version=${BUILD_VERSION} \
       company=companyname \
       project=website-template \
       role=www
+RUN mkdir -p /service
 WORKDIR /service
 RUN chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /service && \
