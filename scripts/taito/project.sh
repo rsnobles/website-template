@@ -21,7 +21,10 @@ taito_environments="${template_default_environments}"
 # ------ Stack ------
 
 # Stack
-taito_targets="webhook www"
+taito_containers="webhook www"
+taito_functions=""
+taito_databases="database"
+taito_buckets="bucket"
 taito_networks="default"
 
 # Stack uptime monitoring
