@@ -14,6 +14,7 @@ services:
       - default
     ports:
       - "127.0.0.1:9999:8080"
+      - "127.0.0.1:4229:9229"
     volumes:
       - "./www:${DC_PATH}/service:delegated"
       - "${DC_PATH}/service/node_modules"
@@ -35,14 +36,33 @@ services:
   #   networks:
   #     - default
   #   ports:
-  #     - "127.0.0.1:9000:9000"
+  #     - "9000:9000"
+  #   volumes:
+  #     - "./www:${DC_PATH}/service:delegated"
+  #     - "${DC_PATH}/service/node_modules"
+  #     - "${DC_PATH}/service/site/node_modules"
+  #   secrets:
+  #     - WEBHOOK_URL_PREFIX
+  #     - SLACK_WEBHOOK_URL
+  #     - VC_TOKEN
   #   environment:
   #     HOST_UNAME: ${taito_host_uname}
-  #     COMMON_PUBLIC_PORT: 9999
+  #     COMMON_PUBLIC_PORT: 9754
   #     COMMON_ENV: dev
-  #     VC_REPOSITORY_URL: github.com/TaitoUnited/website-template.git
-  #     WEBHOOK_URL_PREFIX: SECRET
-  #     WEBHOOK_VC_TOKEN: SECRET
+  #     WEBSITE_URL: http://localhost:9754
+  #     SLACK_CHANNEL: taito-website
+  #     # OPTIONAL:
+  #     VC_PULL_ENABLED: 'false'
+  #     VC_REPOSITORY_URL: ${taito_vc_repository_url}.git
+
+# NOTE: For testing build webhook locally
+# secrets:
+#   WEBHOOK_URL_PREFIX:
+#     file: ./secrets/${taito_env}/${taito_project}-${taito_env}-webhook.urlprefix
+#   SLACK_WEBHOOK_URL:
+#     file: ./secrets/${taito_env}/${taito_project}-${taito_env}-webhook.slackurl
+#   VC_TOKEN:
+#     file: ./secrets/${taito_env}/${taito_project}-${taito_env}-webhook.gittoken
 
 networks:
   default:

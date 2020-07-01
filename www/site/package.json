@@ -49,10 +49,14 @@
     "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
   },
   "scripts": {
-    "build": "gatsby build",
+    "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --prefix-paths",
+    "build:preview": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true CMS_IS_PREVIEW=true gatsby build --prefix-paths",
+    "publish": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --prefix-paths",
+    "publish:preview": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true CMS_IS_PREVIEW=true gatsby build --prefix-paths",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
+    "start:docker": "gatsby develop --host 0.0.0.0 --port 8080",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""

@@ -60,7 +60,11 @@ Once you see text `No site yet at www/site. Just keep the container running.`, e
     exit
     ```
 
-3. OPTIONAL: Change the development start command in `develop.sh`, if the starter uses some other command than `npm run develop -- --host 0.0.0.0 --port 8080`.
+3. Add development start command for docker to `www/site/package.json`:
+
+    ```
+    "start:docker": "gatsby develop --host 0.0.0.0 --port 8080",
+    ```
 
 4. Enable `/service/site/node_modules` mount in `docker-compose.yaml`:
 
@@ -169,6 +173,8 @@ See it build and deploy:
 ---
 
 ## Remote real-time preview
+
+> TODO: Update instructions: a) real-time build b) real-time CMS preview
 
 You can edit the site on GitHub web GUI and preview changes on a remote environment. This is how you enable preview for dev environment:
 
