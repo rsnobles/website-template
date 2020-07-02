@@ -23,8 +23,8 @@ taito_environments="${template_default_environments}"
 # Stack
 taito_containers="webhook www"
 taito_functions=""
-taito_databases="database"
-taito_buckets="bucket"
+taito_databases=""
+taito_buckets=""
 taito_networks="default"
 
 # Stack uptime monitoring
@@ -37,7 +37,9 @@ taito_uptime_timeouts="5"
 # 'taito project docs'.
 
 link_urls="
+  * cms[:ENV]=https://MY-CMS CMS (:ENV)
   * www[:ENV]=$taito_app_url Website (:ENV)
+  * preview[:ENV]=$taito_app_url/preview Website preview (:ENV)
   * git=https://$taito_vc_repository_url GitHub repository
   * posts=https://$taito_vc_repository_url/tree/dev/www/site/content/blog Content: posts
   * assets=https://$taito_vc_repository_url/tree/dev/www/site/content/assets Content: assets
@@ -59,11 +61,10 @@ taito_remote_secrets="
 "
 taito_secrets=""
 
-# Additional build webhook secrets for non-prod environments
-if [[ "$taito_target_env" != "prod" ]]; then
-  taito_remote_secrets="
-    ${taito_remote_secrets}
-    $taito_project-$taito_env-webhook.urlprefix:random
-    $taito_project-$taito_env-webhook.gittoken:manual
-  "
-fi
+# Additional build webhook secrets (TODO: enable only for one env?)
+taito_secrets="
+  ${taito_secrets}
+  $taito_project-$taito_env-webhook.urlprefix:random
+  $taito_project-$taito_env-webhook.gittoken:manual
+  $taito_project-$taito_env-webhook.slackurl:manual
+"

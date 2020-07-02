@@ -2,5 +2,8 @@
 # full-stack:
 #   services:
 #     www:
+#       replicas: 1
 #       sidecar:
 #         enabled: true
+#         env:
+#           VC_PULL_ENABLED: false

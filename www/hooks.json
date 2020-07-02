@@ -19,31 +19,7 @@
         "source": "string",
         "name": "publish:preview"
       }
-    ],
-    "trigger-rule": {
-      "or": [
-        {
-          "match": {
-            "type": "value",
-            "value": "draft",
-            "parameter": {
-              "source": "payload",
-              "name": "entry.status"
-            }
-          }
-        },
-        {
-          "match": {
-            "type": "value",
-            "value": "archived",
-            "parameter": {
-              "source": "payload",
-              "name": "entry.status"
-            }
-          }
-        }
-      ]
-    }
+    ]
   },
   {
     "id": "publish",
@@ -54,30 +30,6 @@
         "source": "string",
         "name": "publish"
       }
-    ],
-    "trigger-rule": {
-      "or": [
-        {
-          "match": {
-            "type": "value",
-            "value": "published",
-            "parameter": {
-              "source": "payload",
-              "name": "entry.status"
-            }
-          }
-        },
-        {
-          "match": {
-            "type": "value",
-            "value": "archived",
-            "parameter": {
-              "source": "payload",
-              "name": "entry.status"
-            }
-          }
-        }
-      ]
-    }
+    ]
   }
 ]

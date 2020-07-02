@@ -1,1 +1,9 @@
-# NOTE: Here you can override default settings for production environment.
+# NOTE: Enable build webhook for prod environment by uncommenting these lines
+# full-stack:
+#   services:
+#     www:
+#       replicas: 1
+#       sidecar:
+#         enabled: true
+#         env:
+#           VC_PULL_ENABLED: false

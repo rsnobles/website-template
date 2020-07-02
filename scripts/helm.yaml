@@ -58,16 +58,20 @@ full-stack:
         paths:
           - path: /webhook
         port: 9000
-        cpuRequest: 5m
-        cpuLimit: 500m
-        memoryRequest: 128Mi
-        memoryLimit: 768Mi
+        cpuRequest: 100m
+        cpuLimit: 1000m
+        memoryRequest: 512Mi
+        memoryLimit: 1280Mi
         sharedVolume:
           mountPath: /service
           sidecarMountPath: /build
         livenessDisabled: true # TODO
-        secretEnv:
+        secrets:
           WEBHOOK_URL_PREFIX: ${taito_project}-${taito_env}-webhook.urlprefix
-          WEBHOOK_VC_TOKEN: ${taito_project}-${taito_env}-webhook.gittoken
+          SLACK_WEBHOOK_URL: ${taito_project}-${taito_env}-webhook.slackurl
+          VC_TOKEN: ${taito_project}-${taito_env}-webhook.gittoken
         env:
+          WEBSITE_URL: https://${taito_domain}
+          SLACK_CHANNEL: taito-website
+          VC_PULL_ENABLED: false
           VC_REPOSITORY_URL: ${taito_vc_repository_url}.git

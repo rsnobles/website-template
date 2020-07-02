@@ -172,19 +172,6 @@ See it build and deploy:
 
 ---
 
-## Remote real-time preview
-
-> TODO: Update instructions: a) real-time build b) real-time CMS preview
-
-You can edit the site on GitHub web GUI and preview changes on a remote environment. This is how you enable preview for dev environment:
-
-1. Enable build webhook by editing `scripts/helm-dev.yaml`.
-2. Optional: If you want to be able to merge changes between environments using GitHub web GUI, enable builds for all branches by setting `ci_exec_build=true` in `scripts/taito/project.sh`. This is required because GitHub web GUI does not support merging with fast-forward.
-3. Make sure that urlprefix and personal git token have been set for webhook by running `taito secret show:dev`. If they are unset, set them with `taito secret rotate:dev webhook`
-4. Configure a git webhook for your git repository. It should call url https://USER:PASSWORD@DEV-DOMAIN/webhook/URLPREFIX/build when changes are pushed to the git repository. For more information see the [GitHub Webhooks Guide](https://developer.github.com/webhooks/).
-
-You can enable the build webhook also for staging, if you like.
-
 ## Remote environments
 
 You can create the other environments just like you did the dev environment. However, you don't need to write down the basic auth credentials anymore, since you can reuse the same credentials as in dev environment.
@@ -194,6 +181,32 @@ Project environments are configured in `scripts/taito/project.sh` with the `tait
 See [remote environments](https://taitounited.github.io/taito-cli/tutorial/05-remote-environments) chapter of Taito CLI tutorial for more thorough instructions.
 
 Operations on production and staging environments usually require admin rights. Please contact DevOps personnel if necessary.
+
+## Real-time preview with webhook
+
+> If build webhook is enabled, there must be only 1 www container instance running (replicas: 1). If you want to run multiple replicas in production, you should use some other environment for real-time preview. You can still publish to production by triggering your CI/CD build with a webhook event. The full CI/CD build just takes a bit longer.
+
+### CMS integration with real-time preview and publish
+
+You can edit content in CMS and preview changes on a remote environment. This is how you enable preview for ENV environment:
+
+1. Enable build webhook by editing `scripts/helm-ENV.yaml`.
+2. Configure webhooks in your CMS settings. You can find basic auth credentials and webhook urlprefix with `taito secret show:ENV`.
+
+    - Preview event: https://USER:PASSWORD@ENV-DOMAIN/webhook/URLPREFIX/preview
+    - Publish event: https://USER:PASSWORD@ENV-DOMAIN/webhook/URLPREFIX/publish
+
+3. Optional: You may optionally filter incoming webhooks by adding trigger rules in `hooks.json`. See [webhook examples](https://github.com/adnanh/webhook/blob/master/docs/Hook-Examples.md).
+4. Optional: Add `build:preview` command script to your static web site implementation.
+
+### GitHub integration with real-time preview
+
+You can edit the site on GitHub web GUI and preview changes on a remote environment. This is how you enable preview for ENV environment:
+
+1. Enable build webhook by editing `scripts/helm-ENV.yaml`. Set also `VC_PULL_ENABLED: true`.
+2. Optional: If you want to be able to merge changes between environments using GitHub web GUI, enable builds for all branches by setting `ci_exec_build=true` in `scripts/taito/project.sh`. This is required because GitHub web GUI does not support merging with fast-forward.
+3. Make sure that urlprefix and personal git token have been set for webhook by running `taito secret show:dev`. If they are unset, set them with `taito secret rotate:dev webhook`
+4. Configure a git webhook for your git repository. It should call url https://USER:PASSWORD@ENV-DOMAIN/webhook/URLPREFIX/build when changes are pushed to the git repository. For more information see the [GitHub Webhooks Guide](https://developer.github.com/webhooks/).
 
 ## Custom provider
 
