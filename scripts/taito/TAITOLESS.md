@@ -31,7 +31,7 @@ Set up environment variables required by `docker-compose.yaml`:
     . taito-config.sh
 
     # On Windows shell
-    taitoless.bat
+    taitoless.bat  # Copy from scripts/taito/examples to project root
 
 Start containers defined in `docker-compose.yaml`:
 
