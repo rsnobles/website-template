@@ -52,6 +52,8 @@ full-stack:
       autoscale: false
       minReplicas: ${kubernetes_replicas}
       maxReplicas: 5
+      env:
+        REPLACE_CDN_PROJECT_PATH: ${taito_cdn_project_path}
       sidecar:
         enabled: false
         name: webhook
