@@ -22,7 +22,7 @@ taito_environments="${template_default_environments}"
 
 # Stack
 taito_containers="webhook www"
-taito_content_sources="www"
+taito_static_contents="www"
 taito_functions=""
 taito_databases=""
 taito_buckets=""
