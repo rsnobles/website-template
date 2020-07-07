@@ -6,6 +6,11 @@
 # Project specific settings
 ##########################################################################
 
+# Taito CLI: Project specific plugins (for the selected database, etc.)
+taito_plugins="
+  ${taito_plugins}
+"
+
 # Environments: In the correct order (e.g. dev test uat stag canary prod)
 taito_environments="${template_default_environments}"
 
@@ -19,8 +24,9 @@ taito_environments="${template_default_environments}"
 # provider_service_account_enabled=true
 
 # ------ Stack ------
+# Configuration instructions:
+# TODO
 
-# Stack
 if [[ ${taito_deployment_platforms} == *"docker"* ]] ||
    [[ ${taito_deployment_platforms} == *"kubernetes"* ]]; then
   taito_containers="webhook www"
@@ -32,14 +38,33 @@ taito_databases=""
 taito_buckets=""
 taito_networks="default"
 
-# Stack uptime monitoring
+# Uptime monitoring
 taito_uptime_targets="www"
 taito_uptime_paths="/"
 taito_uptime_timeouts="5"
 
+# ------ Secrets ------
+# Configuration instructions:
+# https://taitounited.github.io/taito-cli/tutorial/06-env-variables-and-secrets/
+
+taito_local_secrets="
+"
+
+taito_remote_secrets="
+  $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
+"
+
+# TODO: Add webhook secrets only if webhook is enabled
+taito_secrets="
+  ${taito_secrets}
+  $taito_project-$taito_env-webhook.urlprefix:random
+  $taito_project-$taito_env-webhook.gittoken:manual
+  $taito_project-$taito_env-webhook.slackurl:manual
+"
+
 # ------ Links ------
 # Add custom links here. You can regenerate README.md links with
-# 'taito project docs'.
+# 'taito project docs'. Configuration instructions: TODO
 
 link_urls="
   * cms[:ENV]=https://MY-CMS CMS (:ENV)
@@ -56,20 +81,3 @@ if [[ "$taito_target_env" != "prod" ]]; then
     * webhook[:ENV]=$taito_webhook_url Build webhook (:ENV)
   "
 fi
-
-# ------ Secrets ------
-# Configuration instructions:
-# https://taitounited.github.io/taito-cli/tutorial/06-env-variables-and-secrets/
-
-taito_remote_secrets="
-  $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
-"
-taito_secrets=""
-
-# Additional build webhook secrets (TODO: enable only for one env?)
-taito_secrets="
-  ${taito_secrets}
-  $taito_project-$taito_env-webhook.urlprefix:random
-  $taito_project-$taito_env-webhook.gittoken:manual
-  $taito_project-$taito_env-webhook.slackurl:manual
-"
