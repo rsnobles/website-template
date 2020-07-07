@@ -25,7 +25,7 @@ services:
       DC_COMMAND: ${DC_COMMAND}
       HOST_UNAME: ${taito_host_uname}
       COMMON_PUBLIC_PORT: 9999
-      CDN_PROJECT_PATH:
+      CDN_PROJECT_PATH: ''
 
   # NOTE: For testing build webhook locally
   # website-template-webhook:
