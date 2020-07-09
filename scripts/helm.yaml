@@ -53,8 +53,9 @@ full-stack:
       minReplicas: ${kubernetes_replicas}
       maxReplicas: 5
       env:
-        REPLACE_BASE_HREF: /
-        REPLACE_ASSETS_PATH: ${taito_cdn_project_path}/${taito_build_image_tag}/
+        REPLACE_BASE_PATH:
+        REPLACE_ASSETS_PATH: ${taito_cdn_project_path}/${taito_build_image_tag}/www
+        REPLACE_ASSETS_DOMAIN: ${taito_cdn_domain}
       sidecar:
         enabled: false
         name: webhook
