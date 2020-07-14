@@ -19,10 +19,6 @@ taito_environments="${template_default_environments}"
 # environment only.
 # taito_basic_auth_enabled=false
 
-# Service account: Uncomment the line below to always create Cloud provider
-# service account
-# provider_service_account_enabled=true
-
 # ------ Stack ------
 # Configuration instructions:
 # TODO
@@ -37,11 +33,6 @@ taito_static_contents="www"
 taito_databases=""
 taito_buckets=""
 taito_networks="default"
-
-# Uptime monitoring
-taito_uptime_targets="www"
-taito_uptime_paths="/"
-taito_uptime_timeouts="5"
 
 # ------ Secrets ------
 # Configuration instructions:

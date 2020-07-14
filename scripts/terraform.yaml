@@ -1,0 +1,17 @@
+stack:
+  uptimeEnabled: false
+  backupEnabled: false
+
+  ingress:
+    class: gateway
+    enabled: true
+    createMainDomain: false
+    domains:
+      - name: ${taito_domain}
+        altName: ${taito_altdomain} # TODO: implement altName support
+
+  services:
+    www:
+      type: static
+      path: /
+      uptimePath: /
