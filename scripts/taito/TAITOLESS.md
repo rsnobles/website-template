@@ -28,7 +28,7 @@ Install additional libraries on host for autocompletion/linting on editor (optio
 Set up environment variables required by `docker-compose.yaml`:
 
     # On unix-like shell
-    . taito-config.sh
+    . ./taito-config.sh
 
     # On Windows shell
     taitoless.bat  # Copy from scripts/taito/examples to project root
