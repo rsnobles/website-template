@@ -31,8 +31,10 @@ else
 fi
 taito_static_contents="www"
 taito_databases=""
-taito_buckets=""
 taito_networks="default"
+
+# Buckets
+taito_buckets=""
 
 # ------ Secrets ------
 # Configuration instructions:
