@@ -1,7 +1,3 @@
-# NOTE: docker-compose taito plugin sets DC_PATH and DC_COMMAND to mitigate
-# slow volume mounts on Windows. They might also be used in some other purposes
-# in the future.
-
 version: '3.5'
 services:
   website-template-www:
@@ -16,14 +12,13 @@ services:
       - "127.0.0.1:9999:8080"
       - "127.0.0.1:4229:9229"
     volumes:
-      - "./www:${DC_PATH}/service:delegated"
-      - "${DC_PATH}/service/node_modules"
-      - "${DC_PATH}/service/site/node_modules" # FOR GATSBY ONLY
+      - "./www:/service:delegated"
+      - "/service/node_modules"
+      - "/service/site/node_modules" # FOR GATSBY ONLY
       # FOR GATSBY ONLY:
-      # - "${DC_PATH}/service/site/node_modules"
+      # - "/service/site/node_modules"
     environment:
-      DC_COMMAND: ${DC_COMMAND}
-      HOST_UNAME: ${taito_host_uname}
+      HOST_OS: ${taito_host_os}
       COMMON_PUBLIC_PORT: 9999
       BASE_PATH: ''
       ASSETS_PATH: ''
@@ -41,15 +36,15 @@ services:
   #   ports:
   #     - "9000:9000"
   #   volumes:
-  #     - "./www:${DC_PATH}/service:delegated"
-  #     - "${DC_PATH}/service/node_modules"
-  #     - "${DC_PATH}/service/site/node_modules"
+  #     - "./www:/service:delegated"
+  #     - "/service/node_modules"
+  #     - "/service/site/node_modules"
   #   secrets:
   #     - WEBHOOK_URL_PREFIX
   #     - SLACK_WEBHOOK_URL
   #     - VC_TOKEN
   #   environment:
-  #     HOST_UNAME: ${taito_host_uname}
+  #     HOST_OS: ${taito_host_os}
   #     COMMON_PUBLIC_PORT: 9754
   #     COMMON_ENV: dev
   #     WEBSITE_URL: http://localhost:9754

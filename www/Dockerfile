@@ -21,4 +21,4 @@ RUN npm run install-site
 
 # Start development
 EXPOSE 8080
-CMD eval $DC_COMMAND; . ~/.bashrc && ./develop.sh
+CMD . ~/.bashrc && ./develop.sh
