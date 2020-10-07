@@ -6,7 +6,7 @@
 
 Implement a website with a static site generator of your choice (e.g. Gatsby, Hugo or Jekyll). Deploy the website to Kubernetes, GitHub Pages (TODO), Netlify (TODO), or any S3-compatible object storage with CDN support (TODO). Setup an automated multistage publishing process for the website. Optionally use the Netlify CMS to edit your site.
 
-You can create a new project from this template by running `taito project create: website-template`. Later you can upgrade your project to the latest version of the template by running `taito project upgrade`. To ensure flawless upgrade, do not modify files that have a **do-not-modify** note in them as they are designed to be reusable and easily configurable for various needs. In such case, improve the original files of the template instead, and then upgrade.
+You can create a new project from this template by running `taito project create website-template`. Later you can upgrade your project to the latest version of the template by running `taito project upgrade`. To ensure flawless upgrade, do not modify files that have a **do-not-modify** note in them as they are designed to be reusable and easily configurable for various needs. In such case, improve the original files of the template instead, and then upgrade.
 
 NOTE: This template is a subset of [full-stack-template](https://github.com/TaitoUnited/full-stack-template/). Use the full-stack-template instead, if you need more than just a static website.
 
