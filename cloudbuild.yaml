@@ -54,7 +54,6 @@ steps:
 # Build artifacts in parallel
 
 - id: artifact-prepare-www
-  waitFor: ['build-prepare']
   name: '${_TEMPLATE_DEFAULT_TAITO_IMAGE}'
   args: ['artifact-prepare:www:$BRANCH_NAME', '$COMMIT_SHA']
   env:
@@ -62,7 +61,6 @@ steps:
     - taito_ci_phases=${_TAITO_CI_PHASES}
 
 - id: artifact-prepare-webhook
-  waitFor: ['build-prepare']
   name: '${_TEMPLATE_DEFAULT_TAITO_IMAGE}'
   args: ['artifact-prepare:webhook:$BRANCH_NAME', '$COMMIT_SHA', 'false', './www', './www', 'Dockerfile.webhook']
   env:
