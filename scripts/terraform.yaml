@@ -1,9 +1,11 @@
 # Here you can configure all your cloud resources (non-Kubernetes resources)
 # with a cloud-agnostic and developer-friendly YAML format
 
-stack:
+settings:
   uptimeEnabled: false
   backupEnabled: false
+  alerts: []
+  apiKeys: []
 
   ingress:
     class: gateway
