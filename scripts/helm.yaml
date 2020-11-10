@@ -59,6 +59,7 @@ full-stack:
         name: webhook
         paths:
           - path: /webhook
+            clientMaxBodySize: 1m
         port: 9000
         cpuRequest: 100m
         cpuLimit: 1000m
