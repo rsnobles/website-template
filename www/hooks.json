@@ -31,5 +31,51 @@
         "name": "publish"
       }
     ]
+  },
+
+  {
+    "id": "publish-for-strapi",
+    "command-working-directory": "/service",
+    "execute-command": "/service/webhook.sh",
+    "pass-arguments-to-command": [
+      {
+        "source": "string",
+        "name": "publish"
+      }
+    ],
+    "trigger-rule": {
+      "or": [
+        {
+          "match": {
+            "type": "regex",
+            "value": ".+",
+            "parameter": {
+              "source": "payload",
+              "name": "entry.published_at"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "entry.unpublish",
+            "parameter": {
+              "source": "payload",
+              "name": "event"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "entry.delete",
+            "parameter": {
+              "source": "payload",
+              "name": "event"
+            }
+          }
+        }
+      ]
+    }
   }
 ]

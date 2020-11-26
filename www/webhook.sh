@@ -2,6 +2,7 @@
 
 set -e
 hook_command="$1"
+lock_name="${2:-$hook_command}"
 
 # -------------------------------------------------------------------
 # Prepare
@@ -31,7 +32,7 @@ fi
 # https://github.com/adnanh/webhook/issues/148
 # -------------------------------------------------------------------
 
-LOCKDIR=".webhook-${hook_command//:/_}-lock"
+LOCKDIR=".webhook-${lock_name//:/_}-lock"
 
 function acquireLock() {
   for i in `seq 1 900`; do
