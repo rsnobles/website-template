@@ -4,16 +4,16 @@
 settings:
   uptimeEnabled: false
   backupEnabled: false
-  alerts: []
-  apiKeys: []
 
   ingress:
     class: gateway
-    enabled: true
+    enabled: true # ingress
     createMainDomain: false
     domains:
       - name: ${taito_domain}
-        altName: ${taito_altdomain} # TODO: implement altName support
+        # TODO: implement altDomains support
+        altDomains:
+          - name: ${taito_altdomain}
 
   services:
     www:

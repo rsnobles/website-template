@@ -55,6 +55,9 @@ taito_secrets="
   $taito_project-$taito_env-webhook.slackurl:manual
 "
 
+taito_testing_secrets="
+"
+
 # ------ Links ------
 # Add custom links here. You can regenerate README.md links with
 # 'taito project docs'. Configuration instructions: TODO
