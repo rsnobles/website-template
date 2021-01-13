@@ -2,7 +2,8 @@
 
 set -e
 hook_command="$1"
-lock_name="${2:-$hook_command}"
+entry_title="$2"
+lock_name="${3:-$hook_command}"
 
 # -------------------------------------------------------------------
 # Prepare
@@ -93,14 +94,14 @@ function notify() {
       failedMessage="Failed to build"
       ;;
     publish:preview)
-      startedMessage="Started publishing preview..."
-      finishedMessage="Successfully published preview"
+      startedMessage="Started publishing preview for '${entry_title}'..."
+      finishedMessage="Successfully published preview for '${entry_title}'"
       failedMessage="Failed to publish preview"
       site_url="${WEBSITE_URL}/preview/"
       ;;
     publish)
-      startedMessage="Started publishing..."
-      finishedMessage="Successfully published"
+      startedMessage="Started publishing '${entry_title}'..."
+      finishedMessage="Successfully published '${entry_title}'"
       failedMessage="Failed to publish"
       ;;
   esac

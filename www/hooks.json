@@ -41,6 +41,10 @@
       {
         "source": "string",
         "name": "publish"
+      },
+      {
+        "source": "payload",
+        "name": "entry.title"
       }
     ],
     "trigger-rule": {
