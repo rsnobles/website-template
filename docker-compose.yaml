@@ -12,11 +12,11 @@ services:
       - "127.0.0.1:9999:8080"
       - "127.0.0.1:4229:9229"
     volumes:
-      - "./www:/service:delegated"
-      - "/service/node_modules"
-      - "/service/site/node_modules" # FOR GATSBY ONLY
+      - "./www:/develop:delegated"
+      - "/develop/node_modules"
+      - "/develop/site/node_modules" # FOR GATSBY ONLY
       # FOR GATSBY ONLY:
-      # - "/service/site/node_modules"
+      # - "/develop/site/node_modules"
     environment:
       HOST_OS: ${taito_host_os}
       COMMON_PUBLIC_PORT: 9999
@@ -36,9 +36,9 @@ services:
   #   ports:
   #     - "9000:9000"
   #   volumes:
-  #     - "./www:/service:delegated"
-  #     - "/service/node_modules"
-  #     - "/service/site/node_modules"
+  #     - "./www:/develop:delegated"
+  #     - "/develop/node_modules"
+  #     - "/develop/site/node_modules"
   #   secrets:
   #     - WEBHOOK_URL_PREFIX
   #     - SLACK_WEBHOOK_URL

@@ -66,7 +66,7 @@ Once you see text `No site yet at www/site. Just keep the container running.`, e
     "start:docker": "gatsby develop --host 0.0.0.0 --port 8080",
     ```
 
-4. Enable `/service/site/node_modules` mount in `docker-compose.yaml`:
+4. Enable `/develop/site/node_modules` mount in `docker-compose.yaml`:
 
     ```
     EDIT docker-compose.yaml
