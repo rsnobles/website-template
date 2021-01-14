@@ -7,14 +7,20 @@ global:
   publicPort: 443
   logProvider: ${taito_logging_provider}
   logFormat: ${taito_logging_format}
-  logLevel: info    # trace, debug, info, warn, error, fatal
+  logLevel: info # trace, debug, info, warn, error, fatal
   registry: ${taito_container_registry}
-  imagePullPolicy: ''
+  imagePullPolicy: ""
   debug: false
 
 full-stack:
   networkPolicyEnabled: true
   networkPolicyProvider: ${kubernetes_network_policy_provider}
+
+  persistence:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 2Gi
+    storageClass: fast
 
   ingress:
     class: nginx
@@ -29,7 +35,7 @@ full-stack:
     basicAuthEnabled: ${taito_basic_auth_enabled}
     basicAuthHtpasswdSecret: ${taito_project}-${taito_env}-basic-auth
     modsecurityEnabled: true
-    serviceAccountRoles: [ "taito-restricted-pod" ]
+    serviceAccountRoles: ["taito-restricted-pod"]
     # Horizontal scaling
     replicas: ${kubernetes_replicas}
     minReplicas: ${kubernetes_replicas}
@@ -48,36 +54,48 @@ full-stack:
       cpuLimit: 100m
       memoryRequest: 10Mi
       memoryLimit: 256Mi
-      # Scaling
       replicas: ${kubernetes_replicas}
       autoscale: false
       minReplicas: ${kubernetes_replicas}
       maxReplicas: 5
+      persistentVolumeMounts:
+        - mountPath: /service
+          volumePath: build
+          readOnly: true
       env:
         REPLACE_BASE_PATH:
         REPLACE_ASSETS_PATH: ${taito_cdn_project_path}/${taito_build_image_tag}/www
         REPLACE_ASSETS_DOMAIN: ${taito_cdn_domain}
-      sidecar:
-        enabled: false
-        name: webhook
-        paths:
-          - path: /webhook
-            clientMaxBodySize: 1m
-        port: 9000
-        cpuRequest: 100m
-        cpuLimit: 1000m
-        memoryRequest: 512Mi
-        memoryLimit: 1280Mi
-        sharedVolume:
-          mountPath: /service
-          sidecarMountPath: /build
-        livenessDisabled: true # TODO
-        secrets:
-          WEBHOOK_URL_PREFIX: ${taito_project}-${taito_env}-webhook.urlprefix
-          SLACK_WEBHOOK_URL: ${taito_project}-${taito_env}-webhook.slackurl
-          VC_TOKEN: ${taito_project}-${taito_env}-webhook.gittoken
-        env:
-          WEBSITE_URL: https://${taito_domain}
-          SLACK_CHANNEL: taito-website
-          VC_PULL_ENABLED: false
-          VC_REPOSITORY_URL: ${taito_vc_repository_url}.git
+
+    webhook:
+      enabled: false
+      name: webhook
+      paths:
+        - path: /webhook
+          clientMaxBodySize: 1m
+      port: 9000
+      cpuRequest: 100m
+      cpuLimit: 1000m
+      memoryRequest: 512Mi
+      memoryLimit: 1280Mi
+      replicas: 1
+      livenessDisabled: true # TODO
+      # Avoid duplicate volume mount errors by using Recreate instead of RollingUpdate
+      strategyType: Recreate
+      # Give volume write permissions for root(0) group
+      fsGroup: 0
+      initCommand: "chmod g+w /build"
+      # Volume mount
+      persistentVolumeMounts:
+        - mountPath: /build
+          volumePath: build
+          readOnly: false
+      secrets:
+        WEBHOOK_URL_PREFIX: ${taito_project}-${taito_env}-webhook.urlprefix
+        SLACK_WEBHOOK_URL: ${taito_project}-${taito_env}-webhook.slackurl
+        VC_TOKEN: ${taito_project}-${taito_env}-webhook.gittoken
+      env:
+        WEBSITE_URL: https://${taito_domain}
+        SLACK_CHANNEL: taito-website
+        VC_PULL_ENABLED: false
+        VC_REPOSITORY_URL: ${taito_vc_repository_url}.git

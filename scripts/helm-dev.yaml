@@ -2,10 +2,16 @@
 
 # NOTE: Enable build webhook for dev environment by uncommenting these lines
 # full-stack:
+#   persistence:
+#     enabled: true
+#
 #   services:
 #     www:
-#       replicas: 1
-#       sidecar:
-#         enabled: true
-#         env:
-#           VC_PULL_ENABLED: false
+#       # webhook and www must be placed on the same node
+#       # because of ReadWriteOnce persistent disk access mode
+#       placementSameAs: webhook
+#       env:
+#         REPLACEMENT_DISABLED: true
+#     webhook:
+#       enabled: true
+#       placementPreferSameAs: www

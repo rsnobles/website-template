@@ -157,6 +157,7 @@ function exec_hook_command() {
   if [[ "${command}" == "deployment" ]]; then
     # Copy the original build to the empty shared volume
     mkdir -p /build
+    rm -rf /build/*
     cp -rf /build-orig/* /build
 
     if [[ "${VC_PULL_ENABLED}" == "true" ]]; then
