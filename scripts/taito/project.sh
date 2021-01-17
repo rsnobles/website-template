@@ -64,7 +64,7 @@ taito_secret_hints="
 
 # ------ Links ------
 # Add custom links here. You can regenerate README.md links with
-# 'taito project docs'. Configuration instructions: TODO
+# 'taito project generate'. Configuration instructions: TODO
 
 link_urls="
   * cms[:ENV]=https://MY-CMS CMS (:ENV)
