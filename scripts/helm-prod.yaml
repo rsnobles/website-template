@@ -10,6 +10,7 @@
 #       # webhook and www must be placed on the same node
 #       # because of ReadWriteOnce persistent disk access mode
 #       placementSameAs: webhook
+#       replicas: 1 # TODO: remove?
 #       env:
 #         REPLACEMENT_DISABLED: true
 #     webhook:
