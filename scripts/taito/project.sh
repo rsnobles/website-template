@@ -40,13 +40,7 @@ taito_buckets=""
 # Configuration instructions:
 # https://taitounited.github.io/taito-cli/tutorial/06-env-variables-and-secrets/
 
-taito_local_secrets="
-"
-
-taito_remote_secrets="
-  $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
-"
-
+# Secrets for all environments
 # TODO: Add webhook secrets only if webhook is enabled
 taito_secrets="
   ${taito_secrets}
@@ -55,9 +49,20 @@ taito_secrets="
   $taito_project-$taito_env-webhook.slackurl:manual
 "
 
-taito_testing_secrets="
+# Secrets for local environment only
+taito_local_secrets="
 "
 
+# Secrets for non-local environments
+taito_remote_secrets="
+  $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
+"
+
+# Secrets required by CI/CD
+taito_cicd_secrets="
+"
+
+# Secret hints and descriptions
 taito_secret_hints="
   * basic-auth=Basic authentication is used to hide non-production environments from public
 "
