@@ -85,10 +85,10 @@ The commands mentioned above work also for server environments (`f-NAME`, `dev`,
     taito open www:dev                      # Open site in browser
     taito info:dev                          # Show info
     taito status:dev                        # Show status of dev environment
-    taito test:dev                          # Run integration and e2e tests
-    taito shell:www:dev                     # Start a shell on www container
     taito logs:www:dev                      # Tail logs of www container
     taito open logs:dev                     # Open logs on browser
+    taito test:dev                          # Run integration and e2e tests
+    taito shell:www:dev                     # Start a shell on www container
     taito secret show:dev                   # Show secrets (e.g. database user credentials)
 
 Run `taito -h` to get detailed instructions for all commands. Run `taito COMMAND -h` to show command help (e.g `taito db -h`, `taito db import -h`). For troubleshooting run `taito trouble`. See [README.md](../../README.md) for project specific conventions and documentation.
