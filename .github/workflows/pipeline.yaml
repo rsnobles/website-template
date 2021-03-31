@@ -42,7 +42,6 @@ jobs:
       - run: taito artifact prepare:webhook:${GITHUB_REF##*/} $IMAGE_TAG
 
       # Deploy changes to target environment
-      - run: taito db deploy:${GITHUB_REF##*/}
       - run: taito deployment deploy:${GITHUB_REF##*/} $IMAGE_TAG
 
       # Test and verify deployment
