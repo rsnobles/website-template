@@ -41,12 +41,8 @@ taito_buckets=""
 # https://taitounited.github.io/taito-cli/tutorial/06-env-variables-and-secrets/
 
 # Secrets for all environments
-# TODO: Add webhook secrets only if webhook is enabled
 taito_secrets="
   ${taito_secrets}
-  $taito_project-$taito_env-webhook.urlprefix:random
-  $taito_project-$taito_env-webhook.gittoken:manual
-  $taito_project-$taito_env-webhook.slackurl:manual
 "
 
 # Secrets for local environment only
@@ -54,8 +50,12 @@ taito_local_secrets="
 "
 
 # Secrets for non-local environments
+# TODO: Add webhook secrets only if webhook is enabled
 taito_remote_secrets="
   $taito_project-$taito_env-basic-auth.auth:htpasswd-plain
+  $taito_project-$taito_env-webhook.urlprefix:random
+  $taito_project-$taito_env-webhook.gittoken:manual
+  $taito_project-$taito_env-webhook.slackurl:manual
 "
 
 # Secrets required by CI/CD
@@ -69,7 +69,9 @@ taito_testing_secrets="
 
 # Secret hints and descriptions
 taito_secret_hints="
-  * basic-auth=Basic authentication is used to hide non-production environments from public
+  * basic-auth=Basic authentication is used to hide non-production environments from public.
+  * webhook.gittoken=Git token used by webhook to pull latest changes from Git. Valid token required only if VC_PULL_ENABLED is true.
+  * webhook.slackurl=Slack url used by webhook to send slack messages. Valid url required only if SLACK_CHANNEL has been set.
 "
 
 # ------ Links ------
