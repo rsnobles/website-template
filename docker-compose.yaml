@@ -20,7 +20,6 @@ services:
       # FOR GATSBY ONLY:
       # - "/develop/site/node_modules"
     environment:
-      HOST_OS: ${taito_host_os}
       COMMON_PUBLIC_PORT: 9999
       BASE_PATH: ''
       ASSETS_PATH: ''
@@ -46,7 +45,6 @@ services:
   #     - SLACK_WEBHOOK_URL
   #     - VC_TOKEN
   #   environment:
-  #     HOST_OS: ${taito_host_os}
   #     COMMON_PUBLIC_PORT: 9754
   #     COMMON_ENV: dev
   #     WEBSITE_URL: http://localhost:9754

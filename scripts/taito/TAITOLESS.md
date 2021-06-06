@@ -22,16 +22,11 @@ Install mandatory libraries on host:
 
 Install additional libraries on host for autocompletion/linting on editor (optional):
 
-    # TODO: Support for Windows without bash
     npm run install-dev
 
 Set up environment variables required by `docker-compose.yaml`:
 
-    # On unix-like shell
     . ./taito-config.sh
-
-    # On Windows shell
-    taitoless.bat  # Copy from scripts/taito/examples to project root
 
 Start containers defined in `docker-compose.yaml`:
 
