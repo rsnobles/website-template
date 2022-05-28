@@ -1,5 +1,5 @@
 # Builder, tester and runtime container for local development
-FROM node:lts-buster-slim
+FROM node:16.15.0-slim
 ARG SERVICE_DIR=.
 ENV NODE_ENV development
 
