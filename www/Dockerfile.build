@@ -37,7 +37,7 @@ RUN npm run build && \
 
 
 # Production runtime
-FROM nginx:stable-alpine
+FROM nginx:1.24-alpine3.17
 ARG BUILD_VERSION
 LABEL version=${BUILD_VERSION} \
       company=taito \
